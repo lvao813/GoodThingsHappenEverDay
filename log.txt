@@ -1,0 +1,1 @@
+react-native-device-info会自动修改build:gradle，会造成严重的后果
