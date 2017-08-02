@@ -1,33 +1,24 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Button,
 } from 'react-native';
-import { StackNavigator,TabNavigator } from 'react-navigation';
-import luck from './luck'
-export default class GoodThingsHappenEverDay extends Component {
-  static navigationOptions = {
-    title: 'Welcome',
-  };
+export default class Journl extends Component {
+  
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome} >
-          This is react-navigation!
+          This is Journl!
         </Text>
       
       </View>
     );
   }
 }
-const App = StackNavigator({
-  App: { screen: GoodThingsHappenEverDay },
-  
-});
+
 
 const styles = StyleSheet.create({
   container: {
@@ -47,5 +38,3 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
-AppRegistry.registerComponent('GoodThingsHappenEverDay', () => App);
