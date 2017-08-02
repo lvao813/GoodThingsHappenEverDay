@@ -4,14 +4,14 @@ import {
   Text,
   View,
 } from 'react-native';
-export default class Setting extends Component {
+export default class Settings extends Component {
   
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome} >
-          This is Setting!
+          This is Settings!
         </Text>
       
       </View>
