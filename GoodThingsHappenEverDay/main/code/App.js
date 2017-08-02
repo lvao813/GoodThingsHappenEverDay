@@ -5,8 +5,12 @@ import {
   Text,
   View
 } from 'react-native';
-
+import { StackNavigator } from 'react-navigation';
 export default class GoodThingsHappenEverDay extends Component {
+  static navigationOptions = {
+    title: 'Welcome',
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -18,6 +22,9 @@ export default class GoodThingsHappenEverDay extends Component {
     );
   }
 }
+const App = StackNavigator({
+  App: { screen: GoodThingsHappenEverDay },
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -38,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('GoodThingsHappenEverDay', () => GoodThingsHappenEverDay);
+AppRegistry.registerComponent('GoodThingsHappenEverDay', () => App);
