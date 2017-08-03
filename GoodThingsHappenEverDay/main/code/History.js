@@ -4,7 +4,7 @@ import {
   Text,
   View,
 } from 'react-native';
-export default class History extends Component {
+ class History extends Component {
   
 
   render() {
@@ -38,3 +38,4 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+export default History

@@ -7,17 +7,17 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
+// import Roots from './Roots';
+import Roots from './Roots';
 import Calender from './Calender';
+import { TabBar, SearchBar } from 'antd-mobile';
 import History from './History';
 import Journl from './Journl';
 import Settings from './Settings';
 import Profile from './Profile';
 import { StackNavigator,TabNavigator } from 'react-navigation';
 
-export default class GoodThingsHappenEverDay extends Component {
-  static navigationOptions = {
-    title: 'Welcome',
-  };
+
 //   const GoodThingsHappenEverDay = TabNavigator({
 //     Calender: {
 //         screen: Calender,
@@ -105,24 +105,39 @@ export default class GoodThingsHappenEverDay extends Component {
 //     }
 
 // });
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome} >
-          This is react-navigation!
-        </Text>
-        <TouchableOpacity  onPress={()=>{
-          const { navigate } = this.props.navigation;
-              navigate('History');
-        }}>
-          <Text>跳转</Text>
-        </TouchableOpacity>
-      </View>
-    );
+const SimApp = TabNavigator({
+  
+  "Journl":{ screen: Journl},
+  "History":{ screen: History},
+  "Calender":{ screen: Calender},
+  
+  "Profile":{ screen: Profile},
+  "Settings":{ screen:Settings},
+},
+  {
+    initialRouteName:'Journl',
+    // tabBarComponent:TabNavigator.TabBarBottom,
+    tabBarPosition:'bottom',
+    swipeEnabled:false,
+    animationEnabled:false,
+    lazy:true,
+    tabBarOptions: {
+      showIcon:true,
+      showLabel:true,
+      indicatorStyle:{backgroundColor:'rgb(249,249,249)'},
+      activeTintColor: 'rgb(164,0,0)', // 文字和图片选中颜色
+      inactiveTintColor: 'rgb(106,106,106)', // 文字和图片默认颜色
+      style: {
+        height:60,
+        backgroundColor: 'rgb(249,249,249)',
+      },
+    }
   }
-}
+)
+ 
 const App = StackNavigator({
-  App: { screen: GoodThingsHappenEverDay },
+  //  Roots:{ screen: Roots},
+  Roots:{ screen: Roots},
   History:{ screen: History},
   Calender:{ screen: Calender},
   Journl:{ screen: Journl},
@@ -131,23 +146,6 @@ const App = StackNavigator({
   
 });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+
 
 AppRegistry.registerComponent('GoodThingsHappenEverDay', () => App);
