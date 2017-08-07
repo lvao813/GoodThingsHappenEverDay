@@ -3,30 +3,45 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView
 } from 'react-native';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
  class Calender extends Component {
+     constructor(props) {
+        super(props);
+        this.state = {};
+        this.onDayPress = this.onDayPress.bind(this);
+      }
   
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome} >
-          This is Calender!
-        </Text>
+      <ScrollView style={styles.container}>
+        <Text style={styles.text}>Calendar with selectable date and arrows</Text>
+        <Calendar
+          onDayPress={this.onDayPress}
+          style={styles.calendar}
+          hideExtraDays
+          markedDates={{[this.state.selected]: {selected: true}}}
+        />
+       
+       
+      </ScrollView>
       
-      </View>
     );
+  }
+  onDayPress(day) {
+    this.setState({
+      selected: day.dateString
+    });
   }
 }
 
 
+
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
+  
   welcome: {
     fontSize: 20,
     textAlign: 'center',
@@ -37,5 +52,22 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  calendar: {
+    borderTopWidth: 1,
+    paddingTop: 5,
+    borderBottomWidth: 1,
+    borderColor: '#eee',
+    height: 350
+  },
+  text: {
+    textAlign: 'center',
+    borderColor: '#bbb',
+    padding: 10,
+    backgroundColor: '#eee'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  }
 });
 export default Calender
