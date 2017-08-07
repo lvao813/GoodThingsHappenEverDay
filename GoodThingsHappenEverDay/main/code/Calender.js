@@ -6,13 +6,20 @@ import {
   ScrollView
 } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { getItem, saveItem} from './common/AsyncStorage'
  class Calender extends Component {
      constructor(props) {
         super(props);
         this.state = {};
         this.onDayPress = this.onDayPress.bind(this);
       }
-  
+  componentWillMount() {
+    var promise = saveItem("one", '3', () => { }).then((result) => {
+          // alert('1')
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+  }
 
   render() {
     return (
