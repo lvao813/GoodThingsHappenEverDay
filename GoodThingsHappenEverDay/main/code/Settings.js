@@ -4,15 +4,32 @@ import {
   Text,
   View,
 } from 'react-native';
+import { List } from 'antd-mobile';
+
+const Item = List.Item;
+const Brief = Item.Brief;
+
  class Settings extends Component {
   
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome} >
-          This is Settings!
-        </Text>
+      <View >
+      <List renderHeader={() => ''} className="my-list">
+        <Item  arrow="horizontal">Title</Item>
+      </List>
+      <List renderHeader={() => ''} className="my-list2">
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {} }>About</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Send feedback or suggestions</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Contact the developer</Item>
+      </List>
+      <List renderHeader={() => ''} className="my-list3">
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {} }>Love the app? Rate us in the App Store</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Facebook</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Twitter</Item>
+      </List>
+      
+        
       
       </View>
     );
