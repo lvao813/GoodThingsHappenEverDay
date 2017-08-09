@@ -4,10 +4,13 @@ import {
   Text,
   View,
   Switch,
+  Image,
 } from 'react-native';
 import {  List } from 'antd-mobile';
-
-
+import { NavBar, Icon } from 'antd-mobile';
+var Dimensions = require('Dimensions');
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -32,6 +35,16 @@ const Brief = Item.Brief;
    
     return (
       <View >
+      <View style={{flexDirection:'row',backgroundColor:'#fff',borderColor:'#666',borderBottomWidth:1}}>
+          <View style={styles.topView}>
+                <Text style={styles.topText}>Settings</Text>
+                
+                </View>
+                <Image style={{height:40,width:40,alignItems:'center',justifyContent:'center'}} 
+                source={require('./image/hot.png')}
+                ><Text style={{textAlign:'center',fontWeight:'bold',fontSize:20}}
+                >1</Text></Image>
+        </View>
       <List renderHeader={() => ''} className="my-list">
         <Item   extra={<Switch value={this.state.value} onValueChange={(value)=>{
                         this.setState({
@@ -61,6 +74,7 @@ const Brief = Item.Brief;
         
       
       </View>
+      
     );
   }
 }
@@ -83,5 +97,19 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  topView:{
+    height:50,
+    width:width-50,
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'row',
+  },
+  topText:{
+    textAlign:'center',
+    fontSize:20,
+    fontWeight:'bold',
+    color:'#000',
+    paddingLeft:20
+  }
 });
 export default Settings

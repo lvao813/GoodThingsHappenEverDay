@@ -80,15 +80,7 @@ const App = StackNavigator({
         }},
   Settings:{ screen:Settings,
    navigationOptions:{
-            headerTitle:'About',
-            headerBackTitle:null,
-            headerRight:(<Image style={{height:40,width:40,alignItems:'center',justifyContent:'center'}} 
-            source={require('./image/hot.png')}
-            ><Text style={{textAlign:'center',fontWeight:'bold',fontSize:20}}
-            >1</Text></Image>),
-            headerTitleStyle:{
-                alignSelf:'center'
-            },
+            header:null
         }},
   About:{ screen:About,
     navigationOptions:{
