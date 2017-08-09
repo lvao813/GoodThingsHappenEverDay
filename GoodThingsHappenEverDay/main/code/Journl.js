@@ -13,7 +13,9 @@ import { getItem,saveItem} from './common/AsyncStorage'
    constructor(props) {
         super(props);
         this.state = {
-
+            textInput1:'',
+            textInput2:'',
+            textInput3:'',
         };
         
       }
@@ -24,7 +26,20 @@ import { getItem,saveItem} from './common/AsyncStorage'
           console.error(new Error("失败"));
         })
   }
+  textI1(){
+    // alert(this.state.textInput1)
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var onlyDate = year + '-' + month + '-' + day;
+    var GoodTthingsTime = new Array();
 
+    GoodTthingsTime[0]=this.state.textInput1;
+    // alert(GoodTthingsTime.length)
+    console.log(onlyDate);
+
+  }
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -41,6 +56,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
               <View style={styles.inputViewRight}>
                   <TextInput
                     style={styles.TextInputStyle}
+                    // defaultValue='45641611'
                     underlineColorAndroid="transparent"
                     multiline={true}
                     numberOfLines={20}
@@ -49,10 +65,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     autoCapitalize='sentences'
                     clearButtonMode='never'
                     editable={true}//如果值为假，文本是不可编辑，默认值为真
+                    onChangeText={(Text) => {this.setState({textInput1:Text})}}
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
                     onFocus={() => {}}//当文本框获得焦点的时候调用此回调函数
-                    onBlur={() => {}}//当文本框失去焦点的时候调用此回调函数
+                    onBlur={() => {this.textI1()}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>

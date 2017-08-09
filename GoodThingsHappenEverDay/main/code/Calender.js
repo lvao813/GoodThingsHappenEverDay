@@ -26,10 +26,13 @@ import { getItem, saveItem} from './common/AsyncStorage'
       <ScrollView style={styles.container}>
         <Text style={styles.text}>Calendar with selectable date and arrows</Text>
         <Calendar
+        // maxDate={'2017-08-8'}
           onDayPress={this.onDayPress}
           style={styles.calendar}
-          hideExtraDays
+          // hideExtraDays
+          // hideExtraDays={true}
           markedDates={{[this.state.selected]: {selected: true}}}
+           
         />
        
        
