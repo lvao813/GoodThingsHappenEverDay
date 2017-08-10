@@ -92,6 +92,7 @@ import { StackNavigator } from 'react-navigation';
                 </Text>
                 <TextInput
                     underlineColorAndroid="transparent"
+                    autoCapitalize='words'
                     placeholder="Enter your name here to get started!"
                     onBlur={() =>{this.seve()}}
                     onChangeText={(Text) => {this.setState({name:Text})}}
