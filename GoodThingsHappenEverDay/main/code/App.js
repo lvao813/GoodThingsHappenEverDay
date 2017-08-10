@@ -18,6 +18,9 @@ import Settings from './Settings';
 import Profile from './Profile';
 import About from './About';
 import Control from './Control';
+import Wel from './welcome/Wel';
+
+
 import { StackNavigator,TabNavigator } from 'react-navigation';
 
 
@@ -26,11 +29,24 @@ import { StackNavigator,TabNavigator } from 'react-navigation';
  
 const App = StackNavigator({
   //  Roots:{ screen: Roots},
+  Control:{ screen: Control,
+    
+    navigationOptions:{
+        
+      header:null,
+    }
+   },
   Roots:{ screen: Roots,
     navigationOptions:{
       header:null
     }
    },
+   Wel:{ screen: Wel,
+    navigationOptions:{
+      header:null
+    }
+   },
+   
   History:{ screen: History,
    navigationOptions:{
             headerTitle:'About',
@@ -99,7 +115,7 @@ const App = StackNavigator({
   
   
 },{
-  headerMode: 'screen',
+  headerMode: 'float',
   navigationOptions:{
             // header:null
         }

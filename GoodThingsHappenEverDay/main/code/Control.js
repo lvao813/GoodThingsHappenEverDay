@@ -4,18 +4,22 @@ import {
   Text,
   View,
 } from 'react-native';
+import Loading from './common/Loading' 
 import { StackNavigator } from 'react-navigation';
  export default class Control extends Component {
-  
-
+  componentWillMount() {
+    const { navigate } = this.props.navigation;
+    +          navigate('Wel');
+  }
+  goTo(){
+      if(true){
+        const { navigate } = this.props.navigation;
+    +          navigate('Roots');
+      }
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome} >
-          This is About!
-        </Text>
-      
-      </View>
+      <Loading />
     );
   }
 }

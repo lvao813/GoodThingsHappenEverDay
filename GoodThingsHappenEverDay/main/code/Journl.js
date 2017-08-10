@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#13227a',
   },
   welcome: {
     fontSize: 30,
