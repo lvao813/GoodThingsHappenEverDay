@@ -17,6 +17,7 @@ import Journl from './Journl';
 import Settings from './Settings';
 import Profile from './Profile';
 import About from './About';
+import Control from './Control';
 import { StackNavigator,TabNavigator } from 'react-navigation';
 
 
