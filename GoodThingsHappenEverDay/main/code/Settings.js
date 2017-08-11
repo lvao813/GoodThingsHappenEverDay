@@ -5,6 +5,7 @@ import {
   View,
   Switch,
   Image,
+  Linking,
 } from 'react-native';
 import {  List } from 'antd-mobile';
 import { NavBar, Icon } from 'antd-mobile';
@@ -28,7 +29,19 @@ const Brief = Item.Brief;
         };
         
       }
-        
+   _Link(Url) {
+    // alert('1')
+    // 打开外部URL链接
+
+    //  alert(Url)
+    Linking.canOpenURL(Url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + Url);
+      } else {
+        return Linking.openURL(Url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  }     
     
 
   render() {
@@ -62,13 +75,13 @@ const Brief = Item.Brief;
       <List renderHeader={() => ''} className="my-list2">
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {const { navigate } = this.props.navigation;
  +              navigate('About');} }>About</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Send feedback or suggestions</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Contact the developer</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('mailto:991386280@163.com')}}>Send feedback or suggestions</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('tel:18651833910')}}>Contact the developer</Item>
       </List>
       <List renderHeader={() => ''} className="my-list3">
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {} }>Love the app? Rate us in the App Store</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Facebook</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>Twitter</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://weibo.com/')}}>Facebook</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://www.qq.com/')}}>Twitter</Item>
       </List>
       
         
