@@ -12,7 +12,8 @@ var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 import { getItem, saveItem} from './common/AsyncStorage'
-var img = 'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg'
+import ImagePicker from 'react-native-image-picker'
+
  class Profile extends Component {
   constructor(props) {
         super(props);
@@ -23,8 +24,31 @@ var img = 'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg'
             longest:0,
             dayS:0,
             things:0,
+            img:'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg',
 
         };
+          this.options = {
+      title: '请选择',
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '拍照',
+      chooseFromLibraryButtonTitle: '从照片库选择...',
+
+      // durationLimit: 10,
+      // maxWidth: 100,
+      // maxHeight: 100,
+      // aspectX: 2,
+      // aspectY: 1,
+      quality: 0.75,
+      angle: 0,
+      allowsEditing: true,
+      noData: false,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+        cameraRoll: true,
+
+      }
+    };
         
       }
     componentWillMount() {
@@ -47,6 +71,28 @@ var img = 'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg'
                 })
           }
       }
+    _showImagePicker() {//头像选择，相机，相册
+    ImagePicker.showImagePicker(this.options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker')
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error)
+      } else {
+        this.setState({img:response.uri})
+        alert(response.uri)
+        //改
+
+        // console.log(baseUri)
+        
+        
+
+      }
+
+
+    })
+
+
+  }
   render() {
     return (
       <ScrollView style={{backgroundColor:'#cdccc8'}}>
@@ -63,8 +109,10 @@ var img = 'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg'
 
         <View style={styles.TopView2}>
             <View style={styles.TopView3}>
-                  <TouchableOpacity style={styles.LifeView}>
-                      <Image source={{uri: 'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg'}} style={{height:90,width:90,borderRadius:50, resizeMode:'cover',marginTop:10}}></Image>
+                  <TouchableOpacity style={styles.LifeView}
+                    onPress={()=>{this._showImagePicker()}}
+                  >
+                      <Image source={{uri:this.state.img}} style={{height:90,width:90,borderRadius:50, resizeMode:'cover',marginTop:10}}></Image>
                   </TouchableOpacity>
                   <View style={styles.RightView}>
                       <TextInput
