@@ -9,6 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import { getItem, saveItem} from '../common/AsyncStorage'
+import { toastShort} from '../common/ToastUtils'
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -23,7 +24,7 @@ import { StackNavigator } from 'react-navigation';
       }
       seve(){
           if(this.state.name==''){
-              alert('请输入您的姓名')
+              toastShort('请输入您的姓名')
           }else{
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
                     const { navigate } = this.props.navigation;
