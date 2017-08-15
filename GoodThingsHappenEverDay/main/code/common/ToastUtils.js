@@ -22,7 +22,7 @@ export const toastLong = (content) => {
   }
   toast = Toast.show(content.toString(), {
     duration: Toast.durations.LONG,
-    position: Toast.positions.CENTER,
+    position: Toast.positions.BOTTOM,
     shadow: true,
     animation: true,
     hideOnPress: true,

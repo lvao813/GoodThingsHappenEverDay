@@ -6,11 +6,13 @@ import {
   TextInput,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
 import {  InputItem } from 'antd-mobile';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
+import { toastLong} from './common/ToastUtils'
 import { getItem,saveItem} from './common/AsyncStorage'
  class Journl extends Component {
    constructor(props) {
@@ -23,11 +25,39 @@ import { getItem,saveItem} from './common/AsyncStorage'
         
       }
   componentWillMount() {
-    var promise = getItem("one").then((result) => {
-          // alert(result)
+      var promise = getItem("NaverAsk").then((result) => {
+          
+          if(result=='1'){
+              
+          }else{
+              Alert.alert(
+                  '是否登陆？',
+                  '登陆之后可以保存数据，避免数据丢失',
+                  [
+                    {text: '不再提示', onPress: () => {this._NaverAsk()}},
+                    {text: '登陆', onPress: () => {this._ononLine()}, style: 'cancel'},
+                    {text: '取消', onPress: () => console.log('OK Pressed')},
+                  ],
+                  { cancelable: false }
+                )
+          }
         }).catch((error) => {
-          console.error(new Error("失败"));
+          // console.log('1');
+          
+          
         })
+    
+          
+  }
+  _ononLine(){
+      toastLong('跳转到登陆页')
+  }
+  _NaverAsk(){
+      var promise = saveItem("NaverAsk", '1', () => { }).then((result) => {
+                    toastLong('修改成功')
+                }).catch((error) => {
+                console.error(new Error("失败"));
+                })
   }
   textI1(){
     // alert(this.state.textInput1)

@@ -12,7 +12,7 @@ var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 import { getItem, saveItem} from './common/AsyncStorage'
-import { toastShort} from './common/ToastUtils'
+import { toastLong} from './common/ToastUtils'
 import ImagePicker from 'react-native-image-picker'
 
  class Profile extends Component {
@@ -64,10 +64,10 @@ import ImagePicker from 'react-native-image-picker'
     }
       seve(){
           if(this.state.name==''){
-              toastShort('请输入您的姓名')
+              toastLong('请输入您的姓名')
           }else{
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
-                   toastShort('修改成功');
+                   toastLong('修改成功');
                 }).catch((error) => {
                 console.log('1');
                 })
@@ -81,7 +81,7 @@ import ImagePicker from 'react-native-image-picker'
         console.log('ImagePicker Error: ', response.error)
       } else {
         this.setState({img:response.uri})
-        toastShort(response.uri)
+        toastLong(response.uri)
         //改
 
         // console.log(baseUri)
