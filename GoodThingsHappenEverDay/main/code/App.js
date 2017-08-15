@@ -19,6 +19,7 @@ import Profile from './Profile';
 import About from './About';
 import Control from './Control';
 import Wel from './welcome/Wel';
+import Register from './onLine/Register';
 
 
 import { StackNavigator,TabNavigator } from 'react-navigation';
@@ -46,6 +47,11 @@ const App = StackNavigator({
       header:null
     }
    },
+    Register:{ screen: Register,
+        navigationOptions:{
+        header:null
+        }
+    },
    
   History:{ screen: History,
    navigationOptions:{

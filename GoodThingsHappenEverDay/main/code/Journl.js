@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {  InputItem } from 'antd-mobile';
 var Dimensions = require('Dimensions');
@@ -21,6 +22,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
             textInput1:'',
             textInput2:'',
             textInput3:'',
+            image1:false,
+            image2:false,
+            image3:false,
+            BottomHeight:false,
         };
         
       }
@@ -94,7 +99,15 @@ import { getItem,saveItem} from './common/AsyncStorage'
           </View>
           <View style={ styles.inputView}>
               <View style={styles.inputViewLeft}>
+                  <View style={styles.leftImageTop}></View>
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
+                  {this.state.image1?
+                      <TouchableOpacity style={styles.leftImageBottom}>
+                          <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
+                      </TouchableOpacity>
+                      :<View style={styles.leftImageBottom}/>
+                  }
+                  
               </View>
               <View style={styles.inputViewRight}>
                   <TextInput
@@ -111,7 +124,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     onChangeText={(Text) => {this.setState({textInput1:Text})}}
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
-                    onFocus={() => {}}//当文本框获得焦点的时候调用此回调函数
+                    onFocus={() => {this.setState({image1:true})}}//当文本框获得焦点的时候调用此回调函数
                     onBlur={() => {this.textI1()}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
@@ -119,7 +132,14 @@ import { getItem,saveItem} from './common/AsyncStorage'
           </View>
           <View style={ styles.inputView}>
               <View style={styles.inputViewLeft}>
+                  <View style={styles.leftImageTop}></View>
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
+                  {this.state.image2?
+                      <TouchableOpacity style={styles.leftImageBottom}>
+                          <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
+                      </TouchableOpacity>
+                      :<View style={styles.leftImageBottom}/>
+                  }
               </View>
               <View style={styles.inputViewRight}>
                   <TextInput
@@ -134,17 +154,24 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     editable={true}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
-                    onFocus={() => {}}//当文本框获得焦点的时候调用此回调函数
+                    onFocus={() => {this.setState({image2:true})}}//当文本框获得焦点的时候调用此回调函数
                     onBlur={() => {}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
           </View>
-          <View style={ styles.inputView}>
+          <View style={ styles.inputView} >
               <View style={styles.inputViewLeft}>
+                 <View style={styles.leftImageTop}></View>
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
+                  {this.state.image3?
+                      <TouchableOpacity style={styles.leftImageBottom}>
+                          <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
+                      </TouchableOpacity>
+                      :<View style={styles.leftImageBottom}/>
+                  }
               </View>
-              <View style={styles.inputViewRight}>
+              <View style={styles.inputViewRight} >
                   <TextInput
                     style={styles.TextInputStyle}
                     underlineColorAndroid="transparent"
@@ -156,12 +183,18 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     editable={true}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
-                    onFocus={() => {}}//当文本框获得焦点的时候调用此回调函数
-                    onBlur={() => {}}//当文本框失去焦点的时候调用此回调函数
+                    onFocus={() => {this.setState({image3:true,BottomHeight:true})}}//当文本框获得焦点的时候调用此回调函数
+                    onBlur={() => {this.setState({BottomHeight:false})}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
           </View>
+          {this.state.BottomHeight?
+              <View style={{height:200}}></View>
+              :<View></View>
+          
+          }
+          
 
       </ScrollView>
     );
@@ -211,6 +244,16 @@ const styles = StyleSheet.create({
   leftImage:{
     height:50,
     width:50,
+  },
+  leftImageTop:{
+    height:24,
+    flex:1,
+    marginBottom:30,
+  },
+  leftImageBottom:{
+    height:24,
+    flex:1,
+    marginTop:20,
   },
   TextInputStyle:{
     // flex:1,
