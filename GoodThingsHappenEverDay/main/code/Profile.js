@@ -126,10 +126,12 @@ import ImagePicker from 'react-native-image-picker'
                         style={styles.RightInp}
                         onChangeText={(Text) => {this.setState({name:Text})}}
                       ></TextInput>
+                      
                       <View style={styles.RighitTV}>
                           <Text style={styles.RightText}>Level  </Text>
                           <Text style={styles.RightText}>{this.state.level}</Text>
                       </View>
+
                   </View>
             
             </View>
