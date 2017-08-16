@@ -26,6 +26,8 @@ import ImagePicker from 'react-native-image-picker'
             longest:0,
             dayS:0,
             things:0,
+            progress:0,
+            badge:1,
             img:'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg',
 
         };
@@ -69,10 +71,49 @@ import ImagePicker from 'react-native-image-picker'
           }else{
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
                    toastLong('修改成功');
+                   this._level(49)
                 }).catch((error) => {
                 console.log('1');
                 })
           }
+      }
+      _level(exp){
+        let ex;
+          if(0<exp<50){
+            ex=exp/50;
+            this.setState({level:1,progress:ex})
+          }else if(50<=exp<100){
+            ex=(exp-50)/50;
+            this.setState({level:2,progress:ex})
+          }else if(100<=exp<200){
+            ex=(exp-100)/100;
+            this.setState({level:3,progress:ex})
+          }else if(200<=exp<350){
+            ex=(exp-200)/150;
+            this.setState({level:4,progress:ex})
+          }else if(350<=exp<550){
+            ex=(exp-350)/200;
+            this.setState({level:5,progress:ex,badge:2})
+          }else if(550<=exp<800){
+            ex=(exp-550)/250;
+            this.setState({level:6,progress:ex,badge:2})
+          }else if(800<=exp<1100){
+            ex=(exp-800)/300;
+            this.setState({level:7,progress:ex,badge:3})
+          }else if(1100<=exp<1450){
+            ex=(exp-1100)/350;
+            this.setState({level:8,progress:ex,badge:3})
+          }else if(1450<=exp<1850){
+            ex=(exp-1450)/400;
+            this.setState({level:9,progress:ex,badge:4})
+          }else if(1850<=exp<2300){
+            ex=(exp-1850)/450;
+            this.setState({level:10,progress:ex,badge:4})
+          }else {
+            ex=(exp-2300)/500;
+            this.setState({level:11,progress:ex,badge:4})
+          }
+
       }
     _showImagePicker() {//头像选择，相机，相册
     ImagePicker.showImagePicker(this.options, (response) => {
