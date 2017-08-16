@@ -84,3 +84,32 @@ export const request_weChat_userInfo = (url, method) => {
         });
   });
 }
+
+
+export const uploadImages = (url, imgArray) => {
+  let formData = new FormData();
+  for(var i = 0; i< imgArray; i++) { //这里的是图片的绝对路径
+    let file = {uri:imgArray[i], type: 'multipart/form-data',name:'image.png'}
+    formData.append("files", file);  //这里的files就是后台所需要的key
+  }
+  return new Promise((resolve, reject) => {
+    fetch(url,{
+    method: 'POST',
+    headers: {
+      'Content-Type':'multipart/form-data',
+    }, 
+    body: formData
+    })
+  }).then((response) => {
+        return response.json();
+      }).then((responseData) => {
+        //1 表示成功
+        if(responseData.code == 1) {
+          resolve(responseData)
+        }else {
+          reject(responseData)
+        }
+      }).catch((error) => {
+        reject(new Error("上传图片失败"))
+      })
+};

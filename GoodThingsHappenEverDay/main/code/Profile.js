@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ProgressBarAndroid,
 } from 'react-native';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
@@ -133,7 +134,8 @@ import ImagePicker from 'react-native-image-picker'
             
             </View>
             <View style={styles.TopView4}>
-              <View style={styles.TopView4T}></View>
+               <ProgressBarAndroid  color="green" styleAttr='Horizontal' progress={0.2}  
+            indeterminate={false} style={{width:250}} />  
               <View style={styles.TopView4B}><Text style={styles.View4BText}>10 xp To Next Level</Text></View>
             </View>
         </View>
@@ -242,9 +244,9 @@ const styles = StyleSheet.create({
     height:10,
     width:width-80,
     marginTop:15,
-    backgroundColor:'#666',
+    
    
-    borderRadius:10,
+   
   },
   TopView4B:{
     
