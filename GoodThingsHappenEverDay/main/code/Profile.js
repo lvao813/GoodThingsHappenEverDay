@@ -21,13 +21,14 @@ import ImagePicker from 'react-native-image-picker'
         super(props);
         this.state = {
             name:'',
-            level:0,
+            level:1,//等级
             current:0,
             longest:0,
             dayS:0,
             things:0,
-            progress:0,
-            badge:1,
+            progress:0,//进度
+            badge:1,//徽章
+            nextexp:0,
             img:'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg',
 
         };
@@ -71,7 +72,7 @@ import ImagePicker from 'react-native-image-picker'
           }else{
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
                    toastLong('修改成功');
-                   this._level(49)
+                   this._level(2630)
                 }).catch((error) => {
                 console.log('1');
                 })
@@ -79,41 +80,54 @@ import ImagePicker from 'react-native-image-picker'
       }
       _level(exp){
         let ex;
-          if(0<exp<50){
+        let ext;
+          if(0<exp&&exp<50){
+            ext=50-exp;
             ex=exp/50;
-            this.setState({level:1,progress:ex})
-          }else if(50<=exp<100){
+            this.setState({level:1,progress:ex,nextexp:ext})
+          }else if(49<exp&&exp<100){
+            ext=100-exp;
             ex=(exp-50)/50;
-            this.setState({level:2,progress:ex})
-          }else if(100<=exp<200){
+            this.setState({level:2,progress:ex,nextexp:ext})
+            
+          }else if(99<exp&&exp<200){
+            ext=200-exp;
             ex=(exp-100)/100;
-            this.setState({level:3,progress:ex})
-          }else if(200<=exp<350){
+            this.setState({level:3,progress:ex,nextexp:ext})
+          }else if(199<exp&&exp<350){
+            ext=350-exp;
             ex=(exp-200)/150;
-            this.setState({level:4,progress:ex})
-          }else if(350<=exp<550){
+            this.setState({level:4,progress:ex,nextexp:ext})
+          }else if(349<exp&&exp<550){
+            ext=550-exp;
             ex=(exp-350)/200;
-            this.setState({level:5,progress:ex,badge:2})
-          }else if(550<=exp<800){
+            this.setState({level:5,progress:ex,badge:2,nextexp:ext})
+          }else if(549<exp&&exp<800){
+            ext=800-exp;
             ex=(exp-550)/250;
-            this.setState({level:6,progress:ex,badge:2})
-          }else if(800<=exp<1100){
+            this.setState({level:6,progress:ex,badge:2,nextexp:ext})
+          }else if(799<exp&&exp<1100){
+            ext=1100-exp;
             ex=(exp-800)/300;
-            this.setState({level:7,progress:ex,badge:3})
-          }else if(1100<=exp<1450){
+            this.setState({level:7,progress:ex,badge:3,nextexp:ext})
+          }else if(1099<exp&&exp<1450){
+            ext=1450-exp;
             ex=(exp-1100)/350;
-            this.setState({level:8,progress:ex,badge:3})
-          }else if(1450<=exp<1850){
+            this.setState({level:8,progress:ex,badge:3,nextexp:ext})
+          }else if(1449<exp&&exp<1850){
+            ext=1850-exp;
             ex=(exp-1450)/400;
-            this.setState({level:9,progress:ex,badge:4})
-          }else if(1850<=exp<2300){
+            this.setState({level:9,progress:ex,badge:4,nextexp:ext})
+          }else if(1849<exp&&exp<2300){
+            ext=2300-exp;
             ex=(exp-1850)/450;
-            this.setState({level:10,progress:ex,badge:4})
+            this.setState({level:10,progress:ex,badge:4,nextexp:ext})
           }else {
+            ext=2800-exp;
             ex=(exp-2300)/500;
-            this.setState({level:11,progress:ex,badge:4})
+            this.setState({level:11,progress:ex,badge:4,nextexp:ext})
           }
-
+            
       }
     _showImagePicker() {//头像选择，相机，相册
     ImagePicker.showImagePicker(this.options, (response) => {
@@ -177,9 +191,10 @@ import ImagePicker from 'react-native-image-picker'
             
             </View>
             <View style={styles.TopView4}>
-               <ProgressBarAndroid  color="green" styleAttr='Horizontal' progress={0.2}  
+               <ProgressBarAndroid  color="green" styleAttr='Horizontal' progress={this.state.progress}  
             indeterminate={false} style={{width:250}} />  
-              <View style={styles.TopView4B}><Text style={styles.View4BText}>10 xp To Next Level</Text></View>
+              <View style={styles.TopView4B}>
+              <Text style={styles.View4BText}>{this.state.nextexp} xp To Next Level</Text></View>
             </View>
         </View>
         <View style={styles.AllBoxView}>
