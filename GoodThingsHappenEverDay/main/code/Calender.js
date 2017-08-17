@@ -10,6 +10,7 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
+import Modal from 'react-native-root-modal';
 import { getItem, saveItem} from './common/AsyncStorage'
  class Calender extends Component {
      constructor(props) {
@@ -39,14 +40,32 @@ import { getItem, saveItem} from './common/AsyncStorage'
                 >1</Text></Image>
             </View>
         <Text style={styles.text}>Calendar with selectable date and arrows</Text>
-        <Calendar
-        // maxDate={'2017-08-8'}
-          onDayPress={this.onDayPress}
+         <Calendar
           style={styles.calendar}
-          // hideExtraDays
-          // hideExtraDays={true}
-          markedDates={{[this.state.selected]: {selected: true}}}
-           
+          current={'2017-08-16'}
+          minDate={'2017-08-10'}
+          displayLoadingIndicator
+          markingType={'interactive'}
+          theme={{
+            calendarBackground: '#333248',
+            textSectionTitleColor: 'white',
+            dayTextColor: 'white',
+            todayTextColor: 'white',
+            selectedDayTextColor: 'white',
+            monthTextColor: 'white',
+            selectedDayBackgroundColor: '#333248',
+            arrowColor: 'white'
+          }}
+          markedDates={{
+            '2017-08-08': [{textColor: '#666'}],
+            '2017-08-09': [{textColor: '#666'}],
+            '2017-08-14': [{startingDay: true, color: 'blue'}, {endingDay: true, color: 'blue'}],
+            '2017-08-21': [{startingDay: true, color: 'blue'}],
+            '2017-08-22': [{endingDay: true, color: 'gray'}],
+            '2017-08-24': [{startingDay: true, color: 'gray'}],
+            '2017-08-25': [{color: 'gray'}],
+            '2017-08-26': [{endingDay: true, color: 'gray'}]}}
+          hideArrows={false}
         />
        
        

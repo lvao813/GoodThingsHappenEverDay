@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {  List } from 'antd-mobile';
 import { NavBar, Icon } from 'antd-mobile';
+import Activity from './common/ModalActivity'
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -25,6 +26,7 @@ const Brief = Item.Brief;
            value: false,
         disabled: false,
         changeTxt:'是否接受通知？',
+        activtityVisible:false,
        
         };
         
@@ -85,7 +87,7 @@ const Brief = Item.Brief;
       </List>
       
         
-      
+      <Activity visible={this.state.activtityVisible} />
       </View>
       
     );

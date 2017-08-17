@@ -60,6 +60,16 @@ import ImagePicker from 'react-native-image-picker'
 
      var promise = getItem("name1").then((result) => {
           this.setState({name:result})
+                  var promise = getItem("img").then((result) => {
+                    if (result==null){
+
+
+                    }else{this.setState({img:result})}
+                  
+                  
+                  }).catch((error) => {
+                  // console.log('1');
+                  })
         }).catch((error) => {
           // console.log('1');
           
@@ -137,7 +147,12 @@ import ImagePicker from 'react-native-image-picker'
         console.log('ImagePicker Error: ', response.error)
       } else {
         this.setState({img:response.uri})
-        toastLong(response.uri)
+        var promise = saveItem("img", response.uri, () => { }).then((result) => {
+                   toastLong('修改成功');
+                   
+                }).catch((error) => {
+                console.log('1');
+                })
         //改
 
         // console.log(baseUri)
