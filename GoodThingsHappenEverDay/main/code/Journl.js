@@ -13,7 +13,9 @@ import {  InputItem } from 'antd-mobile';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
-import { toastLong} from './common/ToastUtils'
+import { toastLong} from './common/ToastUtils';
+import * as WeChat from 'react-native-wechat';
+const weChatAppId = 'wx6000a418f168ac83';
 import { getItem,saveItem} from './common/AsyncStorage'
  class Journl extends Component {
    constructor(props) {
@@ -27,7 +29,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
             image3:false,
             BottomHeight:false,
         };
-        
+        WeChat.registerApp('wx6000a418f168ac83');
       }
   componentWillMount() {
       var promise = getItem("NaverAsk").then((result) => {
@@ -102,7 +104,27 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   <View style={styles.leftImageTop}></View>
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
                   {this.state.image1?
-                      <TouchableOpacity style={styles.leftImageBottom}>
+                      <TouchableOpacity style={styles.leftImageBottom} 
+                        onPress={() => {
+                          WeChat.isWXAppInstalled()
+                            .then((isInstalled) => {
+                              if (isInstalled) {
+                                WeChat.shareToSession({
+                                  title:'微信好友测试链接',
+                                  description: '分享自吕翱的APP',
+                                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
+                                  type: 'news',
+                                  webpageUrl: 'http://www.marno.cn/'
+                                })
+                                .catch((error) => {
+                                  alert('error')
+                                });
+                              } else {
+                                alert('没有安装微信软件，请您安装微信之后再试')
+                              }
+                            });
+                      }}
+                      >
                           <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
                       </TouchableOpacity>
                       :<View style={styles.leftImageBottom}/>
