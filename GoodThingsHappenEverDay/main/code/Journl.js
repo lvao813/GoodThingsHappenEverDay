@@ -28,6 +28,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
             image2:false,
             image3:false,
             BottomHeight:false,
+            ban1:true,
+            ban2:true,
+            ban3:true,
+            keyarry:'',
+            Test1:'',
         };
         WeChat.registerApp('wx6000a418f168ac83');
       }
@@ -48,6 +53,15 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   { cancelable: false }
                 )
           }
+              var promise = getItem("keyarry").then((result) => {
+                        // alert(JSON.parse(result)) 
+                        this.setState({keyarry:JSON.parse(result)})
+                        alert(this.state.keyarry)
+              }).catch((error) => {
+                // console.log('1');
+                
+                
+              })
         }).catch((error) => {
           // console.log('1');
           
@@ -56,6 +70,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     
           
   }
+    
   _ononLine(){
       toastLong('跳转到登陆页')
   }
@@ -67,17 +82,94 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 })
   }
   textI1(){
-    // alert(this.state.textInput1)
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var onlyDate = year + '-' + month + '-' + day;
-    var GoodTthingsTime = new Array();
+    
+    let newDate = new Date();
+    let newDay = newDate.toJSON();
+    let thisday = newDay.slice(0,10)//yy-mm-dd格式时间
+    let timestamp = Date.parse(new Date());//毫秒时间戳
+    let AsyncStorageKey = thisday+'-'+timestamp+'-'+'textinstall1'
+    let input = thisday+'-'+this.state.textInput1
+    // alert(AsyncStorageKey)
 
-    GoodTthingsTime[0]=this.state.textInput1;
-    // alert(GoodTthingsTime.length)
-    console.log(onlyDate);
+    // alert(newDay.slice(0,10))
+
+    // keyarry.push();
+    
+    // alert(this.state.keyarry)
+    if(this.state.textInput1==''){
+      this.setState({image1:false})
+    }else{
+          
+              
+      var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+          this.state.keyarry.push(AsyncStorageKey)
+          this.setState({ban1:false,Test1:AsyncStorageKey});
+              var promise = saveItem("keyarry", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+                
+                  
+              }).catch((error) => {
+              console.error(new Error("失败"));
+              })
+        }).catch((error) => {
+        console.error(new Error("失败"));
+        })
+    }
+   
+
+  }
+  textI2(){
+    
+    let newDate = new Date();
+    let newDay = newDate.toJSON();
+    let thisday = newDay.slice(0,10)//yy-mm-dd格式时间
+    let timestamp = Date.parse(new Date());//毫秒时间戳
+    let AsyncStorageKey = thisday+'-'+timestamp+'-'+'textinstall2'
+    let input = thisday+'-'+this.state.textInput2
+    // alert(newDay.slice(0,10))
+    if(this.state.textInput2==''){
+      this.setState({image2:false})
+    }else{
+      var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+          this.state.keyarry.push(AsyncStorageKey)
+          this.setState({ban2:false}); 
+              var promise = saveItem("keyarry", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+                
+                  
+              }).catch((error) => {
+              console.error(new Error("失败"));
+              }) 
+        }).catch((error) => {
+        console.error(new Error("失败"));
+        })
+    }
+  }
+
+  textI3(){
+    // alert(this.state.keyarry)
+    let newDate = new Date();
+    let newDay = newDate.toJSON();
+    let thisday = newDay.slice(0,10)//yy-mm-dd格式时间
+    let timestamp = Date.parse(new Date());//毫秒时间戳
+    let AsyncStorageKey = thisday+'-'+timestamp+'-'+'textinstall3'
+    let input = thisday+'-'+this.state.textInput3
+    // alert(newDay.slice(0,10))
+    if(this.state.textInput3==''){
+      this.setState({image3:false,BottomHeight:false})
+    }else{
+      var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+          this.setState({ban3:false,BottomHeight:false}); 
+          this.state.keyarry.push(AsyncStorageKey);
+              var promise = saveItem("keyarry", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+                
+                  
+              }).catch((error) => {
+              console.error(new Error("失败"));
+              })  
+        }).catch((error) => {
+        console.error(new Error("失败"));
+        })
+    }
+   
 
   }
   render() {
@@ -107,22 +199,22 @@ import { getItem,saveItem} from './common/AsyncStorage'
                       <TouchableOpacity style={styles.leftImageBottom} 
                         onPress={() => {
                           WeChat.isWXAppInstalled()
-                            .then((isInstalled) => {
-                              if (isInstalled) {
-                                WeChat.shareToSession({
-                                  title:'微信好友测试链接',
-                                  description: '分享自吕翱的APP',
-                                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
-                                  type: 'news',
-                                  webpageUrl: 'http://www.marno.cn/'
-                                })
-                                .catch((error) => {
-                                  alert('error')
-                                });
-                              } else {
-                                alert('没有安装微信软件，请您安装微信之后再试')
-                              }
-                            });
+                          .then((isInstalled) => {
+                            if (isInstalled) {
+                              WeChat.shareToTimeline({
+                                title:'微信朋友圈测试链接',
+                                description: '分享自吕翱的APP',
+                                thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
+                                type: 'news',
+                                webpageUrl: 'http://www.marno.cn/'
+                              })
+                              .catch((error) => {
+                                alert('error')
+                              });
+                            } else {
+                              alert('没有安装微信软件，请您安装微信之后再试')
+                            }
+                          });
                       }}
                       >
                           <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
@@ -142,7 +234,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     placeholder="Press here to begin typing..."
                     autoCapitalize='sentences'
                     clearButtonMode='never'
-                    editable={true}//如果值为假，文本是不可编辑，默认值为真
+                    editable={this.state.ban1}//如果值为假，文本是不可编辑，默认值为真
                     onChangeText={(Text) => {this.setState({textInput1:Text})}}
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
@@ -157,7 +249,27 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   <View style={styles.leftImageTop}></View>
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
                   {this.state.image2?
-                      <TouchableOpacity style={styles.leftImageBottom}>
+                      <TouchableOpacity style={styles.leftImageBottom}
+                          onPress={() => {
+                            WeChat.isWXAppInstalled()
+                            .then((isInstalled) => {
+                              if (isInstalled) {
+                                WeChat.shareToTimeline({
+                                  title:'微信朋友圈测试链接',
+                                  description: '分享自吕翱的APP',
+                                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
+                                  type: 'news',
+                                  webpageUrl: 'http://www.marno.cn/'
+                                })
+                                .catch((error) => {
+                                  alert('error')
+                                });
+                              } else {
+                                alert('没有安装微信软件，请您安装微信之后再试')
+                              }
+                            });
+                        }}
+                      >
                           <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
                       </TouchableOpacity>
                       :<View style={styles.leftImageBottom}/>
@@ -173,11 +285,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
                    
                     autoCapitalize='sentences'
                     clearButtonMode='never'
-                    editable={true}//如果值为假，文本是不可编辑，默认值为真
+                    editable={this.state.ban2}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
-                    onChange={() => {}}//当文本框内容变化时调用此回调函数
+                    onChangeText={(Text) => {this.setState({textInput2:Text})}}//当文本框内容变化时调用此回调函数
                     onFocus={() => {this.setState({image2:true})}}//当文本框获得焦点的时候调用此回调函数
-                    onBlur={() => {}}//当文本框失去焦点的时候调用此回调函数
+                    onBlur={() => {this.textI2()}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
@@ -187,7 +299,28 @@ import { getItem,saveItem} from './common/AsyncStorage'
                  <View style={styles.leftImageTop}></View>
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
                   {this.state.image3?
-                      <TouchableOpacity style={styles.leftImageBottom}>
+                      <TouchableOpacity style={styles.leftImageBottom}
+                          onPress={() => {
+                            WeChat.isWXAppInstalled()
+                            .then((isInstalled) => {
+                              if (isInstalled) {
+                                WeChat.shareToTimeline({
+                                  title:'微信朋友圈测试链接',
+                                  description: '分享自吕翱的APP',
+                                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
+                                  type: 'news',
+                                  webpageUrl: 'http://www.marno.cn/'
+                                })
+                                .catch((error) => {
+                                  alert('error')
+                                });
+                              } else {
+                                alert('没有安装微信软件，请您安装微信之后再试')
+                              }
+                            });
+                        }}
+                      
+                      >
                           <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
                       </TouchableOpacity>
                       :<View style={styles.leftImageBottom}/>
@@ -202,11 +335,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     maxLength={100}
                     autoCapitalize='sentences'
                     clearButtonMode='never'
-                    editable={true}//如果值为假，文本是不可编辑，默认值为真
+                    editable={this.state.ban3}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
-                    onChange={() => {}}//当文本框内容变化时调用此回调函数
+                    onChangeText={(Text) => {this.setState({textInput3:Text})}}//当文本框内容变化时调用此回调函数
                     onFocus={() => {this.setState({image3:true,BottomHeight:true})}}//当文本框获得焦点的时候调用此回调函数
-                    onBlur={() => {this.setState({BottomHeight:false})}}//当文本框失去焦点的时候调用此回调函数
+                    onBlur={() => {this.textI3()}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>

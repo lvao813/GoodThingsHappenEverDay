@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import {  List } from 'antd-mobile';
 import { NavBar, Icon } from 'antd-mobile';
-import Activity from './common/ModalActivity'
+import Activity from './common/ModalActivity';
+import * as WeChat from 'react-native-wechat';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -29,6 +30,7 @@ const Brief = Item.Brief;
         activtityVisible:false,
        
         };
+        WeChat.registerApp('wx6000a418f168ac83');
         
       }
    _Link(Url) {
@@ -81,7 +83,26 @@ const Brief = Item.Brief;
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('tel:18651833910')}}>Contact the developer</Item>
       </List>
       <List renderHeader={() => ''} className="my-list3">
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {} }>Love the app? Rate us in the App Store</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {
+            WeChat.isWXAppInstalled()
+            .then((isInstalled) => {
+              if (isInstalled) {
+                WeChat.shareToSession({
+                  title:'微信好友测试链接',
+                  description: '分享自吕翱的APP',
+                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
+                  type: 'news',
+                  webpageUrl: 'http://www.marno.cn/'
+                })
+                .catch((error) => {
+                  alert('error')
+                });
+              } else {
+                alert('没有安装微信软件，请您安装微信之后再试')
+              }
+            });
+
+          } }>Love the app? Rate us in the App Store</Item>
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://weibo.com/')}}>Facebook</Item>
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://www.qq.com/')}}>Twitter</Item>
       </List>
