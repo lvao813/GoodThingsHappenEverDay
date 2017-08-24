@@ -36,7 +36,7 @@ import { StackNavigator } from 'react-navigation';
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
                     var promise = saveItem("uuid", uuid, () => { }).then((result) => {
                         // alert(uuid)
-                        var promise = saveItem("keyarry", JSON.stringify(keyarry1), () => { }).then((result) => {
+                        var promise = saveItem("keyarry1", JSON.stringify(keyarry1), () => { }).then((result) => {
                             // alert(uuid)
                             const { navigate } = this.props.navigation;
                             navigate('Roots');
