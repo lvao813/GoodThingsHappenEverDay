@@ -30,6 +30,10 @@ import { StackNavigator } from 'react-navigation';
             d = Math.floor(d/16);
             return (c=='x' ? r : (r&0x3|0x8)).toString(16);
         });
+        let exp = 0;
+        let streak = 0;
+        let longstreak = 0;
+        let daythings = 0; 
           if(this.state.name==''){
               toastLong('请输入您的姓名')
           }else{
@@ -37,9 +41,29 @@ import { StackNavigator } from 'react-navigation';
                     var promise = saveItem("uuid", uuid, () => { }).then((result) => {
                         // alert(uuid)
                         var promise = saveItem("keyarry1", JSON.stringify(keyarry1), () => { }).then((result) => {
-                            // alert(uuid)
-                            const { navigate } = this.props.navigation;
-                            navigate('Roots');
+                            alert(uuid)
+                             var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                // 经验值
+                                var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+                                    // 连续记录
+                                    var promise = saveItem("longstreak", longstreak.toString(), () => { }).then((result) => {
+                                        // 最长记录
+                                        var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
+                                            // 几件事
+                                            const { navigate } = this.props.navigation;
+                                            navigate('Roots');
+                                        }).catch((error) => {
+                                        console.error(new Error("失败"));
+                                        })
+                                    }).catch((error) => {
+                                    console.error(new Error("失败"));
+                                    })
+                                }).catch((error) => {
+                                console.error(new Error("失败"));
+                                })
+                            }).catch((error) => {
+                            console.error(new Error("失败"));
+                            })
                         }).catch((error) => {
                         console.error(new Error("失败"));
                         })

@@ -30,6 +30,7 @@ import ImagePicker from 'react-native-image-picker'
             badge:1,//徽章
             nextexp:0,
             img:'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg',
+            exp:0,
 
         };
           this.options = {
@@ -60,16 +61,45 @@ import ImagePicker from 'react-native-image-picker'
 
      var promise = getItem("name1").then((result) => {
           this.setState({name:result})
-                  var promise = getItem("img").then((result) => {
-                    if (result==null){
+          var promise = getItem("img").then((result) => {
+              if (result==null){
 
 
-                    }else{this.setState({img:result})}
-                  
-                  
+                  }else{this.setState({img:result})}
+                  var promise = getItem("exp").then((result) => { 
+                      // alert(parseInt(result)+30)
+                      this._level(parseInt(result))
+                        var promise = getItem("streak").then((result) => { 
+                          
+                            this.setState({current:result})
+                            var promise = getItem("longstreak").then((result) => { 
+                              
+                                this.setState({longest:result})
+                                var promise = getItem("daythings").then((result) => { 
+                                  
+                                    this.setState({dayS:result})
+                                    var promise = getItem("keyarry1").then((result) => { 
+                                        let keyarry = JSON.parse(result);
+                                          // alert(keyarry.length)
+                                        this.setState({things:keyarry.length})
+                                    }).catch((error) => {
+                                      // console.log('1');
+                                    })
+                                }).catch((error) => {
+                                  // console.log('1');
+                                })
+                            }).catch((error) => {
+                              // console.log('1');
+                            })
+                        }).catch((error) => {
+                          // console.log('1');
+                        })
                   }).catch((error) => {
-                  // console.log('1');
+                    // console.log('1');
                   })
+          }).catch((error) => {
+                  // console.log('1');
+          })
         }).catch((error) => {
           // console.log('1');
           
@@ -82,7 +112,7 @@ import ImagePicker from 'react-native-image-picker'
           }else{
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
                    toastLong('修改成功');
-                   this._level(2630)
+                   
                 }).catch((error) => {
                 console.log('1');
                 })
