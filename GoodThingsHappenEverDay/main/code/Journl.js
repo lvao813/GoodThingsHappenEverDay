@@ -70,7 +70,36 @@ import { getItem,saveItem} from './common/AsyncStorage'
     
           
   }
-    
+  componentDidMount() {
+    let newDate = new Date();
+    let newDay = newDate.toJSON();
+    let thisday = newDay.slice(0,10)
+      var promise = getItem("texinput1").then((result) => {
+      // alert(result.slice(0,10))
+      if(thisday==result.slice(0,10)){
+        this.setState({textInput1:result.slice(11),ban1:false,image1:true})
+      }
+          var promise = getItem("texinput2").then((result) => {
+            // alert(result.slice(0,10))
+            if(thisday==result.slice(0,10)){
+              this.setState({textInput2:result.slice(11),ban2:false,image2:true})
+            }
+                var promise = getItem("texinput3").then((result) => {
+                  // alert(result.slice(0,10))
+                  if(thisday==result.slice(0,10)){
+                    this.setState({textInput3:result.slice(11),ban3:false,image3:true})
+                  }
+                
+                  }).catch((error) => {
+                  // console.log('1');
+                  })
+            }).catch((error) => {
+            // console.log('1');
+            })
+      }).catch((error) => {
+      // console.log('1');
+      })
+  }  
   _ononLine(){
       toastLong('跳转到登陆页')
   }
@@ -89,6 +118,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     let timestamp = Date.parse(new Date());//毫秒时间戳
     let AsyncStorageKey =''+timestamp+''
     let input = thisday+'-'+this.state.textInput1
+    let Dayinput = thisday+'-'+'1'
     // alert(AsyncStorageKey)
 
     // alert(newDay.slice(0,10))
@@ -105,7 +135,12 @@ import { getItem,saveItem} from './common/AsyncStorage'
           this.state.keyarry.push(AsyncStorageKey)
           this.setState({ban1:false,Test1:AsyncStorageKey});
               var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
-                
+                  var promise = saveItem("texinput1", input, () => { }).then((result) => {
+                    
+                    
+                  }).catch((error) => {
+                  console.error(new Error("失败"));
+                  })
                   
               }).catch((error) => {
               console.error(new Error("失败"));
@@ -133,7 +168,12 @@ import { getItem,saveItem} from './common/AsyncStorage'
           this.state.keyarry.push(AsyncStorageKey)
           this.setState({ban2:false}); 
               var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
-                
+                var promise = saveItem("texinput2", input, () => { }).then((result) => {
+                  
+                  
+                }).catch((error) => {
+                console.error(new Error("失败"));
+                })
                   
               }).catch((error) => {
               console.error(new Error("失败"));
@@ -160,7 +200,12 @@ import { getItem,saveItem} from './common/AsyncStorage'
           this.setState({ban3:false,BottomHeight:false}); 
           this.state.keyarry.push(AsyncStorageKey);
               var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
-                
+                var promise = saveItem("texinput3", input, () => { }).then((result) => {
+                  
+                  
+                }).catch((error) => {
+                console.error(new Error("失败"));
+                })
                   
               }).catch((error) => {
               console.error(new Error("失败"));
@@ -236,6 +281,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     clearButtonMode='never'
                     editable={this.state.ban1}//如果值为假，文本是不可编辑，默认值为真
                     onChangeText={(Text) => {this.setState({textInput1:Text})}}
+                    value={this.state.textInput1}
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
                     onFocus={() => {this.setState({image1:true})}}//当文本框获得焦点的时候调用此回调函数
@@ -287,6 +333,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     clearButtonMode='never'
                     editable={this.state.ban2}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
+                    value={this.state.textInput2}
                     onChangeText={(Text) => {this.setState({textInput2:Text})}}//当文本框内容变化时调用此回调函数
                     onFocus={() => {this.setState({image2:true})}}//当文本框获得焦点的时候调用此回调函数
                     onBlur={() => {this.textI2()}}//当文本框失去焦点的时候调用此回调函数
@@ -337,6 +384,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     clearButtonMode='never'
                     editable={this.state.ban3}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
+                    value={this.state.textInput3}
                     onChangeText={(Text) => {this.setState({textInput3:Text})}}//当文本框内容变化时调用此回调函数
                     onFocus={() => {this.setState({image3:true,BottomHeight:true})}}//当文本框获得焦点的时候调用此回调函数
                     onBlur={() => {this.textI3()}}//当文本框失去焦点的时候调用此回调函数
