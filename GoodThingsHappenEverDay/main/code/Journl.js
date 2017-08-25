@@ -453,18 +453,18 @@ import { getItem,saveItem} from './common/AsyncStorage'
   }
   _weixin1(text){
     if(text==''){
-
+        toastLong('请输入内容')
     }else{
       WeChat.isWXAppInstalled()
       .then((isInstalled) => {
         if (isInstalled) {
           WeChat.shareToTimeline({type: 'text', description: text})
-            // this._alert(20)
+            this._alert(20)
           .catch((error) => {
-            ToastShort(error.message);
+            toastLong(error.message);
           });
         } else {
-          ToastShort('没有安装微信软件，请您安装微信之后再试');
+          alert('没有安装微信软件，请您安装微信之后再试');
         }
       });
     }

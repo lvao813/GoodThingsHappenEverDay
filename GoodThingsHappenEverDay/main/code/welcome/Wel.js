@@ -41,7 +41,7 @@ import { StackNavigator } from 'react-navigation';
                     var promise = saveItem("uuid", uuid, () => { }).then((result) => {
                         // alert(uuid)
                         var promise = saveItem("keyarry1", JSON.stringify(keyarry1), () => { }).then((result) => {
-                            alert(uuid)
+                            // alert(uuid)
                              var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
                                 // 经验值
                                 var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
@@ -105,16 +105,19 @@ import { StackNavigator } from 'react-navigation';
             
                 <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/brush.png')}></Image>
                 <Text style={styles.welcome} >
-                Good Things Happen Ever Day!
+                Log Your Highlights
+                </Text>
+                <Text style={styles.instructions} >
+                Studies have shown that writing down
                 </Text>
                 <Text style={styles.instructions}>
-                    In just 5 minuttes a day,increase your
+                    there good Things every day has
                 </Text>
                 <Text style={styles.instructions}>
-                    happeniness and rewire your brain to
+                    lasting effects on one's happiness,
                 </Text>
                 <Text style={styles.instructions}>
-                    focus on the positive.
+                    positivity,and optimism.
                 </Text>
            
         </View>
@@ -122,16 +125,19 @@ import { StackNavigator } from 'react-navigation';
            
                 <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/medal.png')}></Image>
                 <Text style={styles.welcome} >
-                Good Things Happen Ever Day!
+                Engage and Improve
+                </Text>
+                <Text style={styles.instructions} >
+                Level up,gain experience points(XP),
                 </Text>
                 <Text style={styles.instructions}>
-                    In just 5 minuttes a day,increase your
+                    view previous entries,set a
                 </Text>
                 <Text style={styles.instructions}>
-                    happeniness and rewire your brain to
+                    customizable notification,choose a
                 </Text>
                 <Text style={styles.instructions}>
-                    focus on the positive.
+                    profile picture,and more.
                 </Text>
                 <TextInput
                     underlineColorAndroid="transparent"
@@ -175,6 +181,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     marginTop:20,
+    marginBottom:30,
     color:'#13227a',
     fontWeight:'bold'
 

@@ -6,6 +6,7 @@ import {
   Switch,
   Image,
   Linking,
+  Alert,
 } from 'react-native';
 import {  List } from 'antd-mobile';
 import { NavBar, Icon } from 'antd-mobile';
@@ -45,8 +46,55 @@ const Brief = Item.Brief;
         return Linking.openURL(Url);
       }
     }).catch(err => console.error('An error occurred', err));
+  }
+  _alert(exp){
+    Alert.alert(
+      'Congratulations to gain experience',
+      '+'+exp+' exp',
+      [
+        
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+    )
+  }
+  exp(){
+    var promise = getItem("exp").then((result) => {
+      let exp = parseInt(result)+50;
+        
+        var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+          this._alert(50)
+
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+      
+    }).catch((error) => {
+      console.error(new Error("失败"));
+    })
+
   }     
+  _weixin(){
     
+    WeChat.isWXAppInstalled()
+    .then((isInstalled) => {
+      if (isInstalled) {
+        WeChat.shareToSession({
+          title:'微信好友测试链接',
+          description: '分享自吕翱的APP',
+          thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
+          type: 'news',
+          webpageUrl: 'http://www.marno.cn/'
+        })
+         
+        .catch((error) => {
+          alert('error')
+        });
+      } else {
+        alert('没有安装微信软件，请您安装微信之后再试')
+      }
+    });
+  }
 
   render() {
    
@@ -83,26 +131,7 @@ const Brief = Item.Brief;
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('tel:18651833910')}}>Contact the developer</Item>
       </List>
       <List renderHeader={() => ''} className="my-list3">
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {
-            WeChat.isWXAppInstalled()
-            .then((isInstalled) => {
-              if (isInstalled) {
-                WeChat.shareToSession({
-                  title:'微信好友测试链接',
-                  description: '分享自吕翱的APP',
-                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
-                  type: 'news',
-                  webpageUrl: 'http://www.marno.cn/'
-                })
-                .catch((error) => {
-                  alert('error')
-                });
-              } else {
-                alert('没有安装微信软件，请您安装微信之后再试')
-              }
-            });
-
-          } }>Love the app? Rate us in the App Store</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._weixin()} }>Love the app? Rate us in the App Store</Item>
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://weibo.com/')}}>Facebook</Item>
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://www.qq.com/')}}>Twitter</Item>
       </List>

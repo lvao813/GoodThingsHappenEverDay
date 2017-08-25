@@ -68,6 +68,7 @@ import ImagePicker from 'react-native-image-picker'
                   }else{this.setState({img:result})}
                   var promise = getItem("exp").then((result) => { 
                       // alert(parseInt(result)+30)
+
                       this._level(parseInt(result))
                         var promise = getItem("streak").then((result) => { 
                           
@@ -119,6 +120,7 @@ import ImagePicker from 'react-native-image-picker'
           }
       }
       _level(exp){
+        // alert(exp);
         let ex;
         let ext;
           if(0<exp&&exp<50){
@@ -162,6 +164,10 @@ import ImagePicker from 'react-native-image-picker'
             ext=2300-exp;
             ex=(exp-1850)/450;
             this.setState({level:10,progress:ex,badge:4,nextexp:ext})
+          }else if(exp==0){
+            ext=50-exp;
+            ex=exp/50;
+            this.setState({level:1,progress:ex,nextexp:ext})
           }else {
             ext=2800-exp;
             ex=(exp-2300)/500;

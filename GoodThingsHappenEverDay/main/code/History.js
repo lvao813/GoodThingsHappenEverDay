@@ -143,6 +143,7 @@ var ScreenWidth = Dimensions.get('window').width;
                   renderTabBar={() => <DefaultTabBar />}
                   tabBarUnderlineStyle={styles.lineStyle}
                   tabBarActiveTextColor='#FF0000'>
+                
                   <ScrollView tabLabel="Past Week" style={styles.tabView}>
                       <FlatList
                     
