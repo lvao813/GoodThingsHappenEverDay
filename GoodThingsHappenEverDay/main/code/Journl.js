@@ -55,6 +55,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
           }
               var promise = getItem("keyarry1").then((result) => {
                         // alert(JSON.parse(result)) 
+                        // this._alert(30)
+                        // alert(7%3)
                         this.setState({keyarry:JSON.parse(result)})
                         // alert(this.state.keyarry)
               }).catch((error) => {
@@ -84,6 +86,94 @@ import { getItem,saveItem} from './common/AsyncStorage'
           // alert(result)
               let streak1 = parseInt(result)
               let streak = parseInt(result)+1;
+            if(streak1<30){
+              if(streak1%3==0&&streak1%30!=0){
+
+                var promise = getItem("exp").then((result) => {
+                  let exp = parseInt(result)+10;
+                    
+                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                       
+
+                    }).catch((error) => {
+                      console.error(new Error("失败"));
+                    })
+                  
+                }).catch((error) => {
+                  console.error(new Error("失败"));
+                })
+              }else if(streak1%5==0&&streak1%10!=0&&streak1%15!=0&&streak1%20!=0&&streak1%25!=0&&30){
+                var promise = getItem("exp").then((result) => {
+                  let exp = parseInt(result)+20;
+                    
+                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                       
+
+                    }).catch((error) => {
+                      console.error(new Error("失败"));
+                    })
+                  
+                }).catch((error) => {
+                  console.error(new Error("失败"));
+                })
+              }else if(streak1%7==0&&streak1%14!=0&&streak1%21!=0&&streak1%28!=0){
+                var promise = getItem("exp").then((result) => {
+                  let exp = parseInt(result)+30;
+                    
+                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                       
+
+                    }).catch((error) => {
+                      console.error(new Error("失败"));
+                    })
+                  
+                }).catch((error) => {
+                  console.error(new Error("失败"));
+                })
+              }else if(streak1%14==0&&streak1%28!=0){
+                var promise = getItem("exp").then((result) => {
+                  let exp = parseInt(result)+30;
+                    
+                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                       
+
+                    }).catch((error) => {
+                      console.error(new Error("失败"));
+                    })
+                  
+                }).catch((error) => {
+                  console.error(new Error("失败"));
+                })
+              }else if(streak1%30==0){
+                var promise = getItem("exp").then((result) => {
+                  let exp = parseInt(result)+30;
+                    
+                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                       
+
+                    }).catch((error) => {
+                      console.error(new Error("失败"));
+                    })
+                  
+                }).catch((error) => {
+                  console.error(new Error("失败"));
+                })
+              }
+            }else{
+              var promise = getItem("exp").then((result) => {
+                let exp = parseInt(result)+5;
+                  
+                  var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                     
+
+                  }).catch((error) => {
+                    console.error(new Error("失败"));
+                  })
+                
+              }).catch((error) => {
+                console.error(new Error("失败"));
+              })
+            }
               var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
 
                     var promise = getItem("longstreak").then((result) => {
@@ -92,6 +182,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                         var promise = saveItem("longstreak", streak1.toString(), () => { }).then((result) => {
                             var promise = getItem("daythings").then((result) => {
                               // alert(result)
+
                                 let streak1 = 0;
                                 var promise = saveItem("daythings", streak1.toString(), () => { }).then((result) => {
         
@@ -168,6 +259,17 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 console.error(new Error("失败"));
                 })
   }
+  _alert(exp){
+    Alert.alert(
+      'Congratulations to gain experience',
+      '+'+exp+' exp',
+      [
+        
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+    )
+  }
   textI1(){
     
     let newDate = new Date();
@@ -200,10 +302,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
                         
                         var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
                           var promise = getItem("exp").then((result) => {
-                            let exp = parseInt(result)+30;
+                            let exp = parseInt(result)+10;
                               
                               var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-    
+                                  this._alert(10)
     
                               }).catch((error) => {
                                 console.error(new Error("失败"));
@@ -257,10 +359,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
                       
                       var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
                         var promise = getItem("exp").then((result) => {
-                          let exp = parseInt(result)+30;
+                          let exp = parseInt(result)+10;
                             
                             var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-  
+                              this._alert(10)
   
                             }).catch((error) => {
                               console.error(new Error("失败"));
@@ -314,10 +416,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
                       
                       var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
                         var promise = getItem("exp").then((result) => {
-                          let exp = parseInt(result)+30;
+                          let exp = parseInt(result)+10;
                             
                             var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-  
+                              this._alert(10)
   
                             }).catch((error) => {
                               console.error(new Error("失败"));
@@ -349,6 +451,25 @@ import { getItem,saveItem} from './common/AsyncStorage'
    
 
   }
+  _weixin1(text){
+    if(text==''){
+
+    }else{
+      WeChat.isWXAppInstalled()
+      .then((isInstalled) => {
+        if (isInstalled) {
+          WeChat.shareToTimeline({type: 'text', description: text})
+            // this._alert(20)
+          .catch((error) => {
+            ToastShort(error.message);
+          });
+        } else {
+          ToastShort('没有安装微信软件，请您安装微信之后再试');
+        }
+      });
+    }
+    
+  }
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -374,25 +495,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
                   {this.state.image1?
                       <TouchableOpacity style={styles.leftImageBottom} 
-                        onPress={() => {
-                          WeChat.isWXAppInstalled()
-                          .then((isInstalled) => {
-                            if (isInstalled) {
-                              WeChat.shareToTimeline({
-                                title:'微信朋友圈测试链接',
-                                description: '分享自吕翱的APP',
-                                thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
-                                type: 'news',
-                                webpageUrl: 'http://www.marno.cn/'
-                              })
-                              .catch((error) => {
-                                alert('error')
-                              });
-                            } else {
-                              alert('没有安装微信软件，请您安装微信之后再试')
-                            }
-                          });
-                      }}
+                        onPress={() => {this._weixin1(this.state.textInput1)}}
                       >
                           <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
                       </TouchableOpacity>
@@ -428,25 +531,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
                   {this.state.image2?
                       <TouchableOpacity style={styles.leftImageBottom}
-                          onPress={() => {
-                            WeChat.isWXAppInstalled()
-                            .then((isInstalled) => {
-                              if (isInstalled) {
-                                WeChat.shareToTimeline({
-                                  title:'微信朋友圈测试链接',
-                                  description: '分享自吕翱的APP',
-                                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
-                                  type: 'news',
-                                  webpageUrl: 'http://www.marno.cn/'
-                                })
-                                .catch((error) => {
-                                  alert('error')
-                                });
-                              } else {
-                                alert('没有安装微信软件，请您安装微信之后再试')
-                              }
-                            });
-                        }}
+                          onPress={() => {this._weixin1(this.state.textInput2)}}
                       >
                           <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
                       </TouchableOpacity>
@@ -479,25 +564,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
                   {this.state.image3?
                       <TouchableOpacity style={styles.leftImageBottom}
-                          onPress={() => {
-                            WeChat.isWXAppInstalled()
-                            .then((isInstalled) => {
-                              if (isInstalled) {
-                                WeChat.shareToTimeline({
-                                  title:'微信朋友圈测试链接',
-                                  description: '分享自吕翱的APP',
-                                  thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
-                                  type: 'news',
-                                  webpageUrl: 'http://www.marno.cn/'
-                                })
-                                .catch((error) => {
-                                  alert('error')
-                                });
-                              } else {
-                                alert('没有安装微信软件，请您安装微信之后再试')
-                              }
-                            });
-                        }}
+                          onPress={() => {this._weixin1(this.state.textInput3)}}
                       
                       >
                           <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
