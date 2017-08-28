@@ -29,8 +29,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
             image3:false,
             BottomHeight:false,
             ban1:true,
-            ban2:true,
-            ban3:true,
+            ban2:false,
+            ban3:false,
             keyarry:'',
             Test1:'',
         };
@@ -80,113 +80,31 @@ import { getItem,saveItem} from './common/AsyncStorage'
       // alert(result.slice(0,10))
         // alert(thisday.slice(9,10)-result.slice(9,10))
       if(thisday==result.slice(0,10)){
-        this.setState({textInput1:result.slice(11),ban1:false,image1:true})
-      }else if(thisday.slice(9,10)-result.slice(9,10)==1){
-        var promise = getItem("streak").then((result) => {
-          // alert(result)
-              let streak1 = parseInt(result)
-              let streak = parseInt(result)+1;
-            if(streak1<30){
-              if(streak1%3==0&&streak1%30!=0){
-
-                var promise = getItem("exp").then((result) => {
-                  let exp = parseInt(result)+10;
-                    
-                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                       
-
-                    }).catch((error) => {
-                      console.error(new Error("失败"));
-                    })
-                  
-                }).catch((error) => {
-                  console.error(new Error("失败"));
-                })
-              }else if(streak1%5==0&&streak1%10!=0&&streak1%15!=0&&streak1%20!=0&&streak1%25!=0&&30){
-                var promise = getItem("exp").then((result) => {
-                  let exp = parseInt(result)+20;
-                    
-                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                       
-
-                    }).catch((error) => {
-                      console.error(new Error("失败"));
-                    })
-                  
-                }).catch((error) => {
-                  console.error(new Error("失败"));
-                })
-              }else if(streak1%7==0&&streak1%14!=0&&streak1%21!=0&&streak1%28!=0){
-                var promise = getItem("exp").then((result) => {
-                  let exp = parseInt(result)+30;
-                    
-                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                       
-
-                    }).catch((error) => {
-                      console.error(new Error("失败"));
-                    })
-                  
-                }).catch((error) => {
-                  console.error(new Error("失败"));
-                })
-              }else if(streak1%14==0&&streak1%28!=0){
-                var promise = getItem("exp").then((result) => {
-                  let exp = parseInt(result)+30;
-                    
-                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                       
-
-                    }).catch((error) => {
-                      console.error(new Error("失败"));
-                    })
-                  
-                }).catch((error) => {
-                  console.error(new Error("失败"));
-                })
-              }else if(streak1%30==0){
-                var promise = getItem("exp").then((result) => {
-                  let exp = parseInt(result)+30;
-                    
-                    var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                       
-
-                    }).catch((error) => {
-                      console.error(new Error("失败"));
-                    })
-                  
-                }).catch((error) => {
-                  console.error(new Error("失败"));
-                })
-              }
-            }else{
-              var promise = getItem("exp").then((result) => {
-                let exp = parseInt(result)+5;
-                  
-                  var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                     
-
-                  }).catch((error) => {
-                    console.error(new Error("失败"));
-                  })
-                
-              }).catch((error) => {
-                console.error(new Error("失败"));
-              })
+        this.setState({textInput1:result.slice(11),ban1:false,image1:true,ban2:true})
+      }
+          var promise = getItem("texinput2").then((result) => {
+            // alert(result.slice(0,10))
+            if(thisday==result.slice(0,10)){
+              this.setState({textInput2:result.slice(11),ban2:false,image2:true,ban3:true})
             }
-              var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
-
-                    var promise = getItem("longstreak").then((result) => {
+                var promise = getItem("texinput3").then((result) => {
+                  // alert(result.slice(0,10))
+                  if(thisday==result.slice(0,10)){
+                    this.setState({textInput3:result.slice(11),ban3:false,image3:true})
+                  }else if(thisday.slice(9,10)-result.slice(9,10)==1){
+                    var promise = getItem("streak").then((result) => {
                       // alert(result)
-                      if(parseInt(result)<streak1){
-                        var promise = saveItem("longstreak", streak1.toString(), () => { }).then((result) => {
-                            var promise = getItem("daythings").then((result) => {
-                              // alert(result)
-
-                                let streak1 = 0;
-                                var promise = saveItem("daythings", streak1.toString(), () => { }).then((result) => {
-        
-        
+                          let streak1 = parseInt(result)
+                          let streak = parseInt(result)+1;
+                        if(streak1<30){
+                          if(streak1%3==0&&streak1%30!=0){
+            
+                            var promise = getItem("exp").then((result) => {
+                              let exp = parseInt(result)+10;
+                                
+                                var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                   
+            
                                 }).catch((error) => {
                                   console.error(new Error("失败"));
                                 })
@@ -194,49 +112,131 @@ import { getItem,saveItem} from './common/AsyncStorage'
                             }).catch((error) => {
                               console.error(new Error("失败"));
                             })
-
+                          }else if(streak1%5==0&&streak1%10!=0&&streak1%15!=0&&streak1%20!=0&&streak1%25!=0&&30){
+                            var promise = getItem("exp").then((result) => {
+                              let exp = parseInt(result)+20;
+                                
+                                var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                   
+            
+                                }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                })
+                              
+                            }).catch((error) => {
+                              console.error(new Error("失败"));
+                            })
+                          }else if(streak1%7==0&&streak1%14!=0&&streak1%21!=0&&streak1%28!=0){
+                            var promise = getItem("exp").then((result) => {
+                              let exp = parseInt(result)+30;
+                                
+                                var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                   
+            
+                                }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                })
+                              
+                            }).catch((error) => {
+                              console.error(new Error("失败"));
+                            })
+                          }else if(streak1%14==0&&streak1%28!=0){
+                            var promise = getItem("exp").then((result) => {
+                              let exp = parseInt(result)+30;
+                                
+                                var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                   
+            
+                                }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                })
+                              
+                            }).catch((error) => {
+                              console.error(new Error("失败"));
+                            })
+                          }else if(streak1%30==0){
+                            var promise = getItem("exp").then((result) => {
+                              let exp = parseInt(result)+30;
+                                
+                                var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                   
+            
+                                }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                })
+                              
+                            }).catch((error) => {
+                              console.error(new Error("失败"));
+                            })
+                          }
+                        }else{
+                          var promise = getItem("exp").then((result) => {
+                            let exp = parseInt(result)+5;
+                              
+                              var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                 
+            
+                              }).catch((error) => {
+                                console.error(new Error("失败"));
+                              })
+                            
+                          }).catch((error) => {
+                            console.error(new Error("失败"));
+                          })
+                        }
+                          var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+            
+                                var promise = getItem("longstreak").then((result) => {
+                                  // alert(result)
+                                  if(parseInt(result)<streak1){
+                                    var promise = saveItem("longstreak", streak1.toString(), () => { }).then((result) => {
+                                        var promise = getItem("daythings").then((result) => {
+                                          // alert(result)
+            
+                                            let streak1 = 0;
+                                            var promise = saveItem("daythings", streak1.toString(), () => { }).then((result) => {
+                    
+                    
+                                            }).catch((error) => {
+                                              console.error(new Error("失败"));
+                                            })
+                                          
+                                        }).catch((error) => {
+                                          console.error(new Error("失败"));
+                                        })
+            
+                                    }).catch((error) => {
+                                      console.error(new Error("失败"));
+                                    })
+                                  }
+                                }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                })
+                          }).catch((error) => {
+                          console.error(new Error("失败"));
+                          })
+                    }).catch((error) => {
+                      // console.log('1');
+                      })
+                  }else{
+                    let streak = 0;
+                    var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+                        var promise = getItem("daythings").then((result) => {
+                          // alert(result)
+                              let streak1 = 0;
+                              var promise = saveItem("daythings", streak1.toString(), () => { }).then((result) => {
+                                  
+            
+                              }).catch((error) => {
+                                console.error(new Error("失败"));
+                              })
+                          
                         }).catch((error) => {
                           console.error(new Error("失败"));
                         })
-                      }
                     }).catch((error) => {
-                      console.error(new Error("失败"));
+                      
                     })
-              }).catch((error) => {
-              console.error(new Error("失败"));
-              })
-        }).catch((error) => {
-          // console.log('1');
-          })
-      }else{
-        let streak = 0;
-        var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
-            var promise = getItem("daythings").then((result) => {
-              // alert(result)
-                  let streak1 = 0;
-                  var promise = saveItem("daythings", streak1.toString(), () => { }).then((result) => {
-
-
-                  }).catch((error) => {
-                    console.error(new Error("失败"));
-                  })
-              
-            }).catch((error) => {
-              console.error(new Error("失败"));
-            })
-        }).catch((error) => {
-          
-        })
-      }
-          var promise = getItem("texinput2").then((result) => {
-            // alert(result.slice(0,10))
-            if(thisday==result.slice(0,10)){
-              this.setState({textInput2:result.slice(11),ban2:false,image2:true})
-            }
-                var promise = getItem("texinput3").then((result) => {
-                  // alert(result.slice(0,10))
-                  if(thisday==result.slice(0,10)){
-                    this.setState({textInput3:result.slice(11),ban3:false,image3:true})
                   }
                 
                   }).catch((error) => {
@@ -301,19 +301,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                       let daythings = parseInt(result)+1;
                         
                         var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
-                          var promise = getItem("exp").then((result) => {
-                            let exp = parseInt(result)+10;
-                              
-                              var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                                  this._alert(10)
-    
-                              }).catch((error) => {
-                                console.error(new Error("失败"));
-                              })
-                            
-                          }).catch((error) => {
-                            console.error(new Error("失败"));
-                          })
+                            this.setState({ban2:true});
 
                         }).catch((error) => {
                           console.error(new Error("失败"));
@@ -358,19 +346,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     let daythings = parseInt(result)+1;
                       
                       var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
-                        var promise = getItem("exp").then((result) => {
-                          let exp = parseInt(result)+10;
-                            
-                            var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                              this._alert(10)
-  
-                            }).catch((error) => {
-                              console.error(new Error("失败"));
-                            })
-                          
-                        }).catch((error) => {
-                          console.error(new Error("失败"));
-                        })
+                          this.setState({ban3:true})
 
                       }).catch((error) => {
                         console.error(new Error("失败"));
@@ -475,7 +451,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
       <ScrollView style={styles.container}>
           <View style={{flexDirection:'row',backgroundColor:'#fff',borderColor:'#666',borderBottomWidth:1}}>
                 <View style={styles.topView}>
-                      <Text style={styles.topText}>Journl</Text>
+                      <Text style={styles.topText}>Journal</Text>
                       
                 </View>
                 <Image style={{height:40,width:40,alignItems:'center',justifyContent:'center'}} 
@@ -485,7 +461,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
         </View>
           <View >
             <Text style={styles.welcome} >
-              What went will tody?
+              What went well today?
             </Text>
           
           </View>
@@ -612,10 +588,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#13227a',
   },
   welcome: {
-    fontSize: 30,
+    fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    color:'#fff'
+    color:'#fff',
+    height:30,
   },
   instructions: {
     textAlign: 'center',
@@ -623,14 +600,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   inputView:{
-    height:200,
+    height:(height-220)/3,
     flex:1,
     backgroundColor:'#fff',
     margin:25,
-    marginTop:10,
+    marginBottom:15,
+    marginTop:0,
     borderRadius:15,
     flexDirection:'row',
-    padding:15
+    padding:10
   },
   inputViewLeft:{
     flex:2,
@@ -650,12 +628,12 @@ const styles = StyleSheet.create({
   leftImageTop:{
     height:24,
     flex:1,
-    marginBottom:30,
+    marginBottom:5,
   },
   leftImageBottom:{
     height:24,
     flex:1,
-    marginTop:20,
+    marginTop:5,
   },
   TextInputStyle:{
     // flex:1,

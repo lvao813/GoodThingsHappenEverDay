@@ -259,7 +259,7 @@ import ImagePicker from 'react-native-image-picker'
             </View>
             <View style={styles.BoxView}>
               <Text style={styles.BoxTextS1}>{this.state.dayS}</Text>
-              <Text style={styles.BoxTextS2}>Total Complained Days</Text>
+              <Text style={styles.BoxTextS2}>Total Completed Days</Text>
             </View>
             <View style={styles.BoxView}>
               <Text style={styles.BoxTextS1}>{this.state.things}</Text>

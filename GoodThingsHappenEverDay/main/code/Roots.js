@@ -46,7 +46,7 @@ export default class Roots extends React.Component {
                 hidden={this.state.hide}
             >
                 <TabBar.Item
-                    title="Calender"
+                    title="Calendar"
                     // badge={2}
                     // icon={require('../../images/alipay.png')}
                     // selectedIcon={require('../../images/alipay_sel.png')}
@@ -67,7 +67,7 @@ export default class Roots extends React.Component {
                 <TabBar.Item
                     // icon={require('../../images/friend.png')}
                     // selectedIcon={require('../../images/friend_sel.png')}
-                    title="Journl"
+                    title="Journal"
                     selected={this.state.selectedTab === 'greenTab'}
                     onPress={() => this.onChangeTab('greenTab')}
                 >

@@ -82,7 +82,7 @@ import { StackNavigator } from 'react-navigation';
         contentContainerStyle={styles.contentContainer}
         bounces={false}
         pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={true}
         horizontal={true}>
         <View style={styles.container}>
            
@@ -91,10 +91,10 @@ import { StackNavigator } from 'react-navigation';
                 Good Things Happen Ever Day!
                 </Text>
                 <Text style={styles.instructions}>
-                    In just 5 minuttes a day,increase your
+                    In just 5 minutes a day,increase your
                 </Text>
                 <Text style={styles.instructions}>
-                    happeniness and rewire your brain to
+                    happiness and rewire your brain to
                 </Text>
                 <Text style={styles.instructions}>
                     focus on the positive.
