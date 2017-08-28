@@ -568,7 +568,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
               </View>
           </View>
           {this.state.BottomHeight?
-              <View style={{height:200}}></View>
+              <View style={{height:100}}></View>
               :<View></View>
           
           }
