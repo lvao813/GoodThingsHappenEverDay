@@ -10,7 +10,6 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
-import Modal from 'react-native-root-modal';
 import { getItem, saveItem} from './common/AsyncStorage'
  class Calender extends Component {
      constructor(props) {
