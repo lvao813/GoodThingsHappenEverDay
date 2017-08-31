@@ -9,7 +9,7 @@ import History from './History';
 import Journl from './Journl';
 import Settings from './Settings';
 import Profile from './Profile';
-
+import JPushModule from 'jpush-react-native';
 export default class Roots extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +17,25 @@ export default class Roots extends React.Component {
             selectedTab: 'greenTab',
             hide: true
         };
+    }
+    componentDidMount() {
+        JPushModule.addReceiveNotificationListener((map) => {
+        //   alert('1')
+            // console.log("alertContent: " + map.alertContent);
+            // console.log("extras: " + map.extras);
+            // var extra = JSON.parse(map.extras);
+            // console.log(extra.key + ": " + extra.value);
+        });
+      }
+      componentDidMount() {
+        JPushModule.addReceiveOpenNotificationListener((map) => {
+               alert('Opening notification!');
+                console.log("map.extra: " + map.key);
+            });
+    }
+    componentWillUnmount() {
+        console.log("Will clear all notifications");
+        JPushModule.clearAllNotifications();
     }
 
     onChangeTab(tabName) {
