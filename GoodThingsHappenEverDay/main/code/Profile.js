@@ -82,7 +82,8 @@ import ImagePicker from 'react-native-image-picker'
                                     var promise = getItem("keyarry1").then((result) => { 
                                         let keyarry = JSON.parse(result);
                                           // alert(keyarry.length)
-                                        this.setState({things:keyarry.length})
+                                        let len = Math.ceil(keyarry.length/3)
+                                        this.setState({things:len})
                                     }).catch((error) => {
                                       // console.log('1');
                                     })
@@ -258,11 +259,11 @@ import ImagePicker from 'react-native-image-picker'
               <Text style={styles.BoxTextS2}>Longest Streak</Text>
             </View>
             <View style={styles.BoxView}>
-              <Text style={styles.BoxTextS1}>{this.state.dayS}</Text>
+              <Text style={styles.BoxTextS1}>{this.state.things}</Text>
               <Text style={styles.BoxTextS2}>Total Completed Days</Text>
             </View>
             <View style={styles.BoxView}>
-              <Text style={styles.BoxTextS1}>{this.state.things}</Text>
+              <Text style={styles.BoxTextS1}>{this.state.dayS}</Text>
               <Text style={styles.BoxTextS2}>Total Good Things</Text>
             </View>
         </View>

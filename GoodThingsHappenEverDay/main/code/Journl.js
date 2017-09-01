@@ -95,7 +95,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     var promise = getItem("streak").then((result) => {
                       // alert(result)
                           let streak1 = parseInt(result)
-                          let streak = parseInt(result)+1;
+                          let streak = parseInt(result);
                         if(streak1<30){
                           if(streak1%3==0&&streak1%30!=0){
             
@@ -185,11 +185,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
                           })
                         }
                           var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
-            
-                                var promise = getItem("longstreak").then((result) => {
+                                  
+                                // var promise = getItem("longstreak").then((result) => {
                                   // alert(result)
-                                  if(parseInt(result)<streak1){
-                                    var promise = saveItem("longstreak", streak1.toString(), () => { }).then((result) => {
+                                  // if(parseInt(result)<streak){
+                                  //   var promise = saveItem("longstreak", streak.toString(), () => { }).then((result) => {
                                         var promise = getItem("daythings").then((result) => {
                                           // alert(result)
             
@@ -205,13 +205,13 @@ import { getItem,saveItem} from './common/AsyncStorage'
                                           console.error(new Error("失败"));
                                         })
             
-                                    }).catch((error) => {
-                                      console.error(new Error("失败"));
-                                    })
-                                  }
-                                }).catch((error) => {
-                                  console.error(new Error("失败"));
-                                })
+                                  //   }).catch((error) => {
+                                  //     console.error(new Error("失败"));
+                                  //   })
+                                  // }
+                                // }).catch((error) => {
+                                //   console.error(new Error("失败"));
+                                // })
                           }).catch((error) => {
                           console.error(new Error("失败"));
                           })
@@ -292,10 +292,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
     }else{
           
               
-      var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
-          this.state.keyarry.push(AsyncStorageKey)
-          this.setState({ban1:false,Test1:AsyncStorageKey});
-              var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+      
+          
+         
+              
                   var promise = saveItem("texinput1", input, () => { }).then((result) => {
                     var promise = getItem("daythings").then((result) => {
                       let daythings = parseInt(result)+1;
@@ -315,12 +315,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   console.error(new Error("失败"));
                   })
                   
-              }).catch((error) => {
-              console.error(new Error("失败"));
-              })
-        }).catch((error) => {
-        console.error(new Error("失败"));
-        })
+              
     }
    
 
@@ -337,10 +332,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     if(this.state.textInput2==''){
       this.setState({image2:false})
     }else{
-      var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
-          this.state.keyarry.push(AsyncStorageKey)
-          this.setState({ban2:false}); 
-              var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+      
                 var promise = saveItem("texinput2", input, () => { }).then((result) => {
                   var promise = getItem("daythings").then((result) => {
                     let daythings = parseInt(result)+1;
@@ -360,12 +352,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 console.error(new Error("失败"));
                 })
                   
-              }).catch((error) => {
-              console.error(new Error("失败"));
-              }) 
-        }).catch((error) => {
-        console.error(new Error("失败"));
-        })
+              
     }
   }
 
@@ -376,53 +363,116 @@ import { getItem,saveItem} from './common/AsyncStorage'
     let thisday = newDay.slice(0,10)//yy-mm-dd格式时间
     let timestamp = Date.parse(new Date());//毫秒时间戳
     let AsyncStorageKey =''+timestamp+''
-    let input = thisday+'-'+this.state.textInput3
+    let input = thisday+'-'+this.state.textInput1
     // alert(newDay.slice(0,10))
     if(this.state.textInput3==''){
       this.setState({image3:false,BottomHeight:false})
     }else{
       
       var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
-          this.setState({ban3:false,BottomHeight:false}); 
-          this.state.keyarry.push(AsyncStorageKey);
-              var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
-                var promise = saveItem("texinput3", input, () => { }).then((result) => {
-                  var promise = getItem("daythings").then((result) => {
-                    let daythings = parseInt(result)+1;
-                      
-                      var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
-                        var promise = getItem("exp").then((result) => {
-                          let exp = parseInt(result)+10;
-                            
-                            var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                              this._alert(10)
-  
-                            }).catch((error) => {
-                              console.error(new Error("失败"));
-                            })
-                          
-                        }).catch((error) => {
-                          console.error(new Error("失败"));
-                        })
+        this.state.keyarry.push(AsyncStorageKey)
+        this.setState({ban1:false,Test1:AsyncStorageKey});
+            var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+              //input2
+              let newDate = new Date();
+              let newDay = newDate.toJSON();
+              let thisday = newDay.slice(0,10)
+              let timestamp = Date.parse(new Date());
+              let AsyncStorageKey =''+timestamp+''
+              let input = thisday+'-'+this.state.textInput2
+              var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+                this.state.keyarry.push(AsyncStorageKey)
+                this.setState({ban2:false,Test1:AsyncStorageKey});
+                    var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+                          //input3
+                          let newDate = new Date();
+                          let newDay = newDate.toJSON();
+                          let thisday = newDay.slice(0,10)
+                          let timestamp = Date.parse(new Date());
+                          let AsyncStorageKey =''+timestamp+''
+                          let input = thisday+'-'+this.state.textInput3
+                                                            var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+                                                                this.setState({ban3:false,BottomHeight:false}); 
+                                                                this.state.keyarry.push(AsyncStorageKey);
+                                                                    var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
+                                                                      var promise = saveItem("texinput3", input, () => { }).then((result) => {
+                                                                        var promise = getItem("daythings").then((result) => {
+                                                                          let daythings = parseInt(result)+1;
+                                                                            
+                                                                            var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
+                                                                              var promise = getItem("exp").then((result) => {
+                                                                                let exp = parseInt(result)+10;
+                                                                                  
+                                                                                  var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+                                                                                    var promise = getItem("streak").then((result) => {
+                                                                                      // alert(result)
+                                                                                          let streak1 = parseInt(result)
+                                                                                          let streak = parseInt(result)+1;
+                                                                                          var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+                                                                                            
+                                                                                              var promise = getItem("longstreak").then((result) => {
 
-                      }).catch((error) => {
-                        console.error(new Error("失败"));
-                      })
-                    
-                  }).catch((error) => {
-                    console.error(new Error("失败"));
-                  })
-                  
-                }).catch((error) => {
-                console.error(new Error("失败"));
-                })
-                  
-              }).catch((error) => {
-              console.error(new Error("失败"));
-              })  
-        }).catch((error) => {
-        console.error(new Error("失败"));
-        })
+                                                                                                if(parseInt(result)<streak){
+                                                                                                  var promise = saveItem("longstreak", streak.toString(), () => { }).then((result) => {
+
+                                                                                                  }).catch((error) => {
+                                                                                                    console.error(new Error("失败"));
+                                                                                                  })
+                                                                                                  }
+                                                                                              }).catch((error) => {
+                                                                                                console.error(new Error("失败"));
+                                                                                              })
+                                                                                            }).catch((error) => {
+                                                                                              console.error(new Error("失败"));
+                                                                                            })
+                                                                                        }).catch((error) => {
+                                                                                          console.error(new Error("失败"));
+                                                                                        })
+                                                                                    this._alert(10)
+                                                        
+                                                                                  }).catch((error) => {
+                                                                                    console.error(new Error("失败"));
+                                                                                  })
+                                                                                
+                                                                              }).catch((error) => {
+                                                                                console.error(new Error("失败"));
+                                                                              })
+
+                                                                            }).catch((error) => {
+                                                                              console.error(new Error("失败"));
+                                                                            })
+                                                                          
+                                                                        }).catch((error) => {
+                                                                          console.error(new Error("失败"));
+                                                                        })
+                                                                        
+                                                                      }).catch((error) => {
+                                                                      console.error(new Error("失败"));
+                                                                      })
+                                                                        
+                                                                    }).catch((error) => {
+                                                                    console.error(new Error("失败"));
+                                                                    })  
+                                                              }).catch((error) => {
+                                                              console.error(new Error("失败"));
+                                                              })
+       
+                                        }).catch((error) => {
+                                          console.error(new Error("失败"));
+                                        })
+                                      
+                                    }).catch((error) => {
+                                      console.error(new Error("失败"));
+                                    })
+                                    
+                                  }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                  })
+                                    
+                                  }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                  })  
+                                                                               
     }
    
 
