@@ -80,17 +80,17 @@ import { getItem,saveItem} from './common/AsyncStorage'
       // alert(result.slice(0,10))
         // alert(thisday.slice(9,10)-result.slice(9,10))
       if(thisday==result.slice(0,10)){
-        this.setState({textInput1:result.slice(11),ban1:false,image1:true,ban2:true})
+        this.setState({textInput1:result.slice(11),image1:true,ban2:true})
       }
           var promise = getItem("texinput2").then((result) => {
             // alert(result.slice(0,10))
             if(thisday==result.slice(0,10)){
-              this.setState({textInput2:result.slice(11),ban2:false,image2:true,ban3:true})
+              this.setState({textInput2:result.slice(11),image2:true,ban3:true})
             }
                 var promise = getItem("texinput3").then((result) => {
                   // alert(result.slice(0,10))
                   if(thisday==result.slice(0,10)){
-                    this.setState({textInput3:result.slice(11),ban3:false,image3:true})
+                    this.setState({textInput3:result.slice(11),ban1:false,ban2:false,ban3:false,image3:true})
                   }else if(thisday.slice(9,10)-result.slice(9,10)==1){
                     var promise = getItem("streak").then((result) => {
                       // alert(result)
@@ -363,13 +363,13 @@ import { getItem,saveItem} from './common/AsyncStorage'
     let thisday = newDay.slice(0,10)//yy-mm-dd格式时间
     let timestamp = Date.parse(new Date());//毫秒时间戳
     let AsyncStorageKey =''+timestamp+''
-    let input = thisday+'-'+this.state.textInput1
+    let input1 = thisday+'-'+this.state.textInput1
     // alert(newDay.slice(0,10))
     if(this.state.textInput3==''){
       this.setState({image3:false,BottomHeight:false})
     }else{
       
-      var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+      var promise = saveItem(AsyncStorageKey, input1, () => { }).then((result) => {
         this.state.keyarry.push(AsyncStorageKey)
         this.setState({ban1:false,Test1:AsyncStorageKey});
             var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
@@ -379,8 +379,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
               let thisday = newDay.slice(0,10)
               let timestamp = Date.parse(new Date());
               let AsyncStorageKey =''+timestamp+''
-              let input = thisday+'-'+this.state.textInput2
-              var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+              let input2 = thisday+'-'+this.state.textInput2
+              var promise = saveItem(AsyncStorageKey, input2, () => { }).then((result) => {
                 this.state.keyarry.push(AsyncStorageKey)
                 this.setState({ban2:false,Test1:AsyncStorageKey});
                     var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
@@ -390,8 +390,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
                           let thisday = newDay.slice(0,10)
                           let timestamp = Date.parse(new Date());
                           let AsyncStorageKey =''+timestamp+''
-                          let input = thisday+'-'+this.state.textInput3
-                                                            var promise = saveItem(AsyncStorageKey, input, () => { }).then((result) => {
+                          let input3 = thisday+'-'+this.state.textInput3
+                                                            var promise = saveItem(AsyncStorageKey, input3, () => { }).then((result) => {
                                                                 this.setState({ban3:false,BottomHeight:false}); 
                                                                 this.state.keyarry.push(AsyncStorageKey);
                                                                     var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {

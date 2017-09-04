@@ -12,6 +12,7 @@ import {  List } from 'antd-mobile';
 import { NavBar, Icon } from 'antd-mobile';
 import Activity from './common/ModalActivity';
 import * as WeChat from 'react-native-wechat';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -29,6 +30,9 @@ const Brief = Item.Brief;
         disabled: false,
         changeTxt:'是否接受通知？',
         activtityVisible:false,
+        isDateTimePickerVisible: false,
+        timepicker:'',
+        
        
         };
         WeChat.registerApp('wx6000a418f168ac83');
@@ -47,6 +51,20 @@ const Brief = Item.Brief;
       }
     }).catch(err => console.error('An error occurred', err));
   }
+
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+  
+    _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+  
+    _handleDatePicked = (date) => {
+      console.log('A date has been picked: ', date);
+      // alert(date)
+      let newdate =''+date+'';
+      let time = newdate.slice(16,24)
+      this.setState({timepicker:time});
+      this._hideDateTimePicker();
+    };
+
   _alert(exp){
     Alert.alert(
       'Congratulations to gain experience',
@@ -114,13 +132,13 @@ const Brief = Item.Brief;
         <Item   extra={<Switch value={this.state.value} onValueChange={(value)=>{
                         this.setState({
                             value:value,
-                            changeTxt:value?'switch 打开了':'switch 关闭了'
+                            changeTxt:value?'接受通知':'关闭通知'
                         });
 
 
                     }}/>}>{this.state.changeTxt}</Item>
         {this.state.value?
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {} }>time</Item>
+          <Item extra={this.state.timepicker} arrow="horizontal" multipleLine='true' onClick={this._showDateTimePicker }>time</Item>
           :<View></View>}
         
       </List>
@@ -138,6 +156,12 @@ const Brief = Item.Brief;
       
         
       <Activity visible={this.state.activtityVisible} />
+          <DateTimePicker
+          mode='time'
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+          />
       </View>
       
     );

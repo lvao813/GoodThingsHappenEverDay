@@ -3,18 +3,43 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
-
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import { StackNavigator } from 'react-navigation';
  export default class About extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDateTimePickerVisible: false,
+    };
+    
+  }
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
   
+    _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+  
+    _handleDatePicked = (date) => {
+      console.log('A date has been picked: ', date);
+      // alert(date)
+      let newdate =''+date+'';
+      let time = newdate.slice(16,24)
+      alert(time)
+      this._hideDateTimePicker();
+    };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome} >
-          This is About!
-        </Text>
+        <TouchableOpacity onPress={this._showDateTimePicker}>
+        <Text>Show TimePicker</Text>
+        </TouchableOpacity>
+        <DateTimePicker
+          mode='time'
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+        />
       
       </View>
     );
