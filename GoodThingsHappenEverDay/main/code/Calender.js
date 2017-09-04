@@ -33,10 +33,10 @@ import { getItem, saveItem} from './common/AsyncStorage'
           newMinDate.setDate(newMinDate.getDate()+days); 
           let mDay = newMinDate.toJSON();
           let minday = mDay.slice(0,10);
-          console.log('====================================');
-          console.log(newMinDate);
-          console.log(minday)
-          console.log('====================================');
+          // console.log('====================================');
+          // console.log(newMinDate);
+          // console.log(minday)
+          // console.log('====================================');
           this.setState({today:thisday,minday:minday})
           // alert('1')
         }).catch((error) => {

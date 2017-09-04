@@ -13,6 +13,7 @@ import { NavBar, Icon } from 'antd-mobile';
 import Activity from './common/ModalActivity';
 import * as WeChat from 'react-native-wechat';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { getItem,saveItem} from './common/AsyncStorage';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -38,6 +39,37 @@ const Brief = Item.Brief;
         WeChat.registerApp('wx6000a418f168ac83');
         
       }
+      componentWillMount() {
+        var promise = getItem("swith").then((result) => {
+           if(result==null){
+
+           }else{
+             if(result=='1'){
+               let swith = true;
+              this.setState({
+                value:swith,
+                changeTxt:'接受通知'
+              });
+             }
+           
+              var promise = getItem("time12").then((result) => {
+                if(result==null){
+                  // alert('1')
+                }else{
+                  // alert(result)
+                  this.setState({timepicker:result})
+                }
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          }
+      }).catch((error) => {
+        console.error(new Error("失败"));
+      })
+        
+
+      }
+
    _Link(Url) {
     // alert('1')
     // 打开外部URL链接
@@ -57,12 +89,22 @@ const Brief = Item.Brief;
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
   
     _handleDatePicked = (date) => {
-      console.log('A date has been picked: ', date);
+      // console.log('A date has been picked: ', date);
       // alert(date)
       let newdate =''+date+'';
       let time = newdate.slice(16,24)
-      this.setState({timepicker:time});
-      this._hideDateTimePicker();
+      var promise = saveItem("time12", time, () => { }).then((result) => {
+        this.setState({timepicker:time});
+        this._hideDateTimePicker();
+        
+      }).catch((error) => {
+        console.error(new Error("失败"));
+      })
+      
+
+      // this.setState({timepicker:time});
+      // this._hideDateTimePicker();
+      
     };
 
   _alert(exp){
@@ -113,7 +155,27 @@ const Brief = Item.Brief;
       }
     });
   }
-
+  _swith(value){
+    // alert(value)
+    let swvalue = value
+    // alert('1')
+    if(value){
+      swvalue = '1'
+      // alert(value)
+    }else{
+      swvalue = '0'
+    }
+    var promise = saveItem("swith", swvalue, () => { }).then((result) => {
+        this.setState({
+            value:value,
+            changeTxt:value?'接受通知':'关闭通知'
+        });
+      
+    }).catch((error) => {
+      console.error(new Error("失败"));
+    })
+        
+  }
   render() {
    
     return (
@@ -129,14 +191,7 @@ const Brief = Item.Brief;
                 >1</Text></Image>
         </View>
       <List renderHeader={() => ''} className="my-list">
-        <Item   extra={<Switch value={this.state.value} onValueChange={(value)=>{
-                        this.setState({
-                            value:value,
-                            changeTxt:value?'接受通知':'关闭通知'
-                        });
-
-
-                    }}/>}>{this.state.changeTxt}</Item>
+        <Item   extra={<Switch value={this.state.value} onValueChange={(value)=>{this._swith(value) }}/>}>{this.state.changeTxt}</Item>
         {this.state.value?
           <Item extra={this.state.timepicker} arrow="horizontal" multipleLine='true' onClick={this._showDateTimePicker }>time</Item>
           :<View></View>}
