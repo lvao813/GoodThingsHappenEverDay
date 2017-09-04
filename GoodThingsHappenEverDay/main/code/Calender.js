@@ -14,11 +14,30 @@ import { getItem, saveItem} from './common/AsyncStorage'
  class Calender extends Component {
      constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+          minday:'',
+          today:'',
+          selected:'',
+
+
+        };
         this.onDayPress = this.onDayPress.bind(this);
       }
   componentWillMount() {
     var promise = saveItem("one", '3', () => { }).then((result) => {
+          let newDate = new Date();
+          let newDay = newDate.toJSON();
+          let thisday = newDay.slice(0,10);
+          let days = -3;
+          let newMinDate = new Date();
+          newMinDate.setDate(newMinDate.getDate()+days); 
+          let mDay = newMinDate.toJSON();
+          let minday = mDay.slice(0,10);
+          console.log('====================================');
+          console.log(newMinDate);
+          console.log(minday)
+          console.log('====================================');
+          this.setState({today:thisday,minday:minday})
           // alert('1')
         }).catch((error) => {
           console.error(new Error("失败"));
@@ -39,33 +58,14 @@ import { getItem, saveItem} from './common/AsyncStorage'
                 >1</Text></Image>
             </View>
         <Text style={styles.text}>Calendar with selectable date and arrows</Text>
-         <Calendar
-          style={styles.calendar}
-          current={'2017-08-16'}
-          minDate={'2017-08-10'}
-          displayLoadingIndicator
-          markingType={'interactive'}
-          theme={{
-            calendarBackground: '#333248',
-            textSectionTitleColor: 'white',
-            dayTextColor: 'white',
-            todayTextColor: 'white',
-            selectedDayTextColor: 'white',
-            monthTextColor: 'white',
-            selectedDayBackgroundColor: '#333248',
-            arrowColor: 'white'
-          }}
-          markedDates={{
-            '2017-08-08': [{textColor: '#666'}],
-            '2017-08-09': [{textColor: '#666'}],
-            '2017-08-14': [{startingDay: true, color: 'blue'}, {endingDay: true, color: 'blue'}],
-            '2017-08-21': [{startingDay: true, color: 'blue'}],
-            '2017-08-22': [{endingDay: true, color: 'gray'}],
-            '2017-08-24': [{startingDay: true, color: 'gray'}],
-            '2017-08-25': [{color: 'gray'}],
-            '2017-08-26': [{endingDay: true, color: 'gray'}]}}
-          hideArrows={false}
-        />
+        <Calendar
+        minDate={this.state.minday}
+        maxDate={this.state.today}
+        onDayPress={this.onDayPress}
+        style={styles.calendar}
+        hideExtraDays
+        markedDates={{[this.state.selected]: {selected: true}}}
+      />
        
        
       </ScrollView>

@@ -395,7 +395,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                                                                 this.setState({ban3:false,BottomHeight:false}); 
                                                                 this.state.keyarry.push(AsyncStorageKey);
                                                                     var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
-                                                                      var promise = saveItem("texinput3", input, () => { }).then((result) => {
+                                                                      var promise = saveItem("texinput3", input3, () => { }).then((result) => {
                                                                         var promise = getItem("daythings").then((result) => {
                                                                           let daythings = parseInt(result)+1;
                                                                             
@@ -411,7 +411,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
                                                                                           var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
                                                                                             
                                                                                               var promise = getItem("longstreak").then((result) => {
-
+                                                                                                    const { navigate } = this.props.navigation;
+                                                                                                    navigate('Roots');
                                                                                                 if(parseInt(result)<streak){
                                                                                                   var promise = saveItem("longstreak", streak.toString(), () => { }).then((result) => {
 
