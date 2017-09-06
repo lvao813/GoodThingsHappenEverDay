@@ -64,7 +64,7 @@ import { getItem, saveItem} from './common/AsyncStorage'
         onDayPress={this.onDayPress}
         style={styles.calendar}
         hideExtraDays
-        markedDates={{[this.state.selected]: {selected: true}}}
+        
       />
        
        
@@ -73,9 +73,14 @@ import { getItem, saveItem} from './common/AsyncStorage'
     );
   }
   onDayPress(day) {
-    this.setState({
-      selected: day.dateString
-    });
+    let tday = day.timestamp-28800000+1;
+    var promise = saveItem("Calender", tday.toString(), () => { }).then((result) => {
+      // console.log(day.timestamp-28800000+1)
+      const { navigate } = this.props.navigation;
+      navigate('Roots');
+    }).catch((error) => {
+      console.error(new Error("失败"));
+    })
   }
 }
 

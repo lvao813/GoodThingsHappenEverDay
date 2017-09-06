@@ -37,43 +37,64 @@ import { getItem,saveItem} from './common/AsyncStorage'
         WeChat.registerApp('wx6000a418f168ac83');
       }
   componentWillMount() {
-      var promise = getItem("NaverAsk").then((result) => {
+      // var promise = getItem("NaverAsk").then((result) => {
           
-          if(result=='1'){
+      //     if(result=='1'){
               
+      //     }else{
+      //         Alert.alert(
+      //             '是否登陆？',
+      //             '登陆之后可以保存数据，避免数据丢失',
+      //             [
+      //               {text: '不再提示', onPress: () => {this._NaverAsk()}},
+      //               {text: '登陆', onPress: () => {this._ononLine()}, style: 'cancel'},
+      //               {text: '取消', onPress: () => console.log('OK Pressed')},
+      //             ],
+      //             { cancelable: false }
+      //           )
+      //     }
+          
+      //   }).catch((error) => {
+      //     // console.log('1');
+      //   })
+      var promise = getItem("keyarry1").then((result) => {
+        // alert(JSON.parse(result)) 
+        // this._alert(30)
+        // alert(7%3)
+        var promise = getItem("Calender").then((result) => {
+          if(parseInt(result)==0){
+              // alert(parseInt(result))
           }else{
-              Alert.alert(
-                  '是否登陆？',
-                  '登陆之后可以保存数据，避免数据丢失',
-                  [
-                    {text: '不再提示', onPress: () => {this._NaverAsk()}},
-                    {text: '登陆', onPress: () => {this._ononLine()}, style: 'cancel'},
-                    {text: '取消', onPress: () => console.log('OK Pressed')},
-                  ],
-                  { cancelable: false }
-                )
+            alert(parseInt(result))
           }
-              var promise = getItem("keyarry1").then((result) => {
-                        // alert(JSON.parse(result)) 
-                        // this._alert(30)
-                        // alert(7%3)
-                        this.setState({keyarry:JSON.parse(result)})
-                        // alert(this.state.keyarry)
-              }).catch((error) => {
-                // console.log('1');
-                
-                
-              })
-        }).catch((error) => {
-          // console.log('1');
+          // console.console.log('====================================');
+          // console.log(result);
+          // console.log('====================================');
+            
+          }).catch((error) => {
+            // console.log('1');
+          })
+        this.setState({keyarry:JSON.parse(result)})
+        // alert(this.state.keyarry)
+      }).catch((error) => {
+      // console.log('1');
+      })
+        
           
-          
-        })
-    
-          
+  }
+  componentWillUnmount() {
+    var promise = saveItem("Calender", '0', () => { }).then((result) => {
+     
+    }).catch((error) => {
+      console.error(new Error("失败"));
+    })
+  
   }
   componentDidMount() {
     let newDate = new Date();
+    let cc = newDate.toLocaleDateString()+'/ 00:00:00';
+    var nTime=Date.parse(cc);
+    console.log(nTime);
     let newDay = newDate.toJSON();
     let thisday = newDay.slice(0,10)
       var promise = getItem("texinput1").then((result) => {
@@ -90,7 +111,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 var promise = getItem("texinput3").then((result) => {
                   // alert(result.slice(0,10))
                   if(thisday==result.slice(0,10)){
-                    this.setState({textInput3:result.slice(11),ban1:false,ban2:false,ban3:false,image3:true})
+                    this.setState({textInput3:result.slice(11),ban1:false,ban2:false,ban3:true,image3:true})
                   }else if(thisday.slice(9,10)-result.slice(9,10)==1){
                     var promise = getItem("streak").then((result) => {
                       // alert(result)
@@ -270,8 +291,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
       { cancelable: false }
     )
   }
-  textI1(){
-    
+  textI1(date){
+    // alert(date);
     let newDate = new Date();
     let newDay = newDate.toJSON();
     let thisday = newDay.slice(0,10)//yy-mm-dd格式时间
@@ -362,6 +383,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
     let newDay = newDate.toJSON();
     let thisday = newDay.slice(0,10)//yy-mm-dd格式时间
     let timestamp = Date.parse(new Date());//毫秒时间戳
+    console.log(timestamp)
+    console.log(timestamp+1)
     let AsyncStorageKey =''+timestamp+''
     let input1 = thisday+'-'+this.state.textInput1
     // alert(newDay.slice(0,10))
@@ -374,22 +397,22 @@ import { getItem,saveItem} from './common/AsyncStorage'
         this.setState({ban1:false,Test1:AsyncStorageKey});
             var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
               //input2
-              let newDate = new Date();
-              let newDay = newDate.toJSON();
-              let thisday = newDay.slice(0,10)
-              let timestamp = Date.parse(new Date());
-              let AsyncStorageKey =''+timestamp+''
-              let input2 = thisday+'-'+this.state.textInput2
+              let newDate1 = new Date();
+              let newDay1 = newDate1.toJSON();
+              let thisday1 = newDay1.slice(0,10)
+              let timestamp1 = Date.parse(new Date())+100;
+              let AsyncStorageKey =''+timestamp1+''
+              let input2 = thisday1+'-'+this.state.textInput2
               var promise = saveItem(AsyncStorageKey, input2, () => { }).then((result) => {
                 this.state.keyarry.push(AsyncStorageKey)
                 this.setState({ban2:false,Test1:AsyncStorageKey});
                     var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
                           //input3
-                          let newDate = new Date();
-                          let newDay = newDate.toJSON();
-                          let thisday = newDay.slice(0,10)
-                          let timestamp = Date.parse(new Date());
-                          let AsyncStorageKey =''+timestamp+''
+                          let newDate2 = new Date();
+                          let newDay2 = newDate2.toJSON();
+                          let thisday2 = newDay2.slice(0,10)
+                          let timestamp2 = Date.parse(new Date())+200;
+                          let AsyncStorageKey =''+timestamp2+''
                           let input3 = thisday+'-'+this.state.textInput3
                                                             var promise = saveItem(AsyncStorageKey, input3, () => { }).then((result) => {
                                                                 this.setState({ban3:false,BottomHeight:false}); 
@@ -492,6 +515,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
           });
         } else {
           alert('没有安装微信软件，请您安装微信之后再试');
+          // alert(this.state.keyarry)
+          // console.log(this.state.keyarry)
         }
       });
     }
@@ -547,7 +572,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
                     onFocus={() => {this.setState({image1:true})}}//当文本框获得焦点的时候调用此回调函数
-                    onBlur={() => {this.textI1()}}//当文本框失去焦点的时候调用此回调函数
+                    onBlur={() => {this.textI1(0)}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
