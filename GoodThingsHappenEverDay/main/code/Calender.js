@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { NavigationActions } from 'react-navigation';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -73,13 +74,18 @@ import { getItem, saveItem} from './common/AsyncStorage'
     );
   }
   onDayPress(day) {
-    let tday = day.timestamp-28800000+1;
-    var promise = saveItem("Calender", tday.toString(), () => { }).then((result) => {
-      // console.log(day.timestamp-28800000+1)
-      const { navigate } = this.props.navigation;
-      navigate('Roots');
+    let tday = day.timestamp;
+    var promise = saveItem("Calenderday", day.dateString, () => { }).then((result) => {
+      
+        var promise = saveItem("Calender", tday.toString(), () => { }).then((result) => {
+          // console.log(day.timestamp-28800000+1)
+          const { navigate } = this.props.navigation;
+          navigate('Roots');
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
     }).catch((error) => {
-      console.error(new Error("失败"));
+        console.error(new Error("失败"));
     })
   }
 }

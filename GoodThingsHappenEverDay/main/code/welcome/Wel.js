@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { getItem, saveItem} from '../common/AsyncStorage'
 import { toastLong} from '../common/ToastUtils'
+import { NavigationActions } from 'react-navigation';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -50,8 +51,26 @@ import { StackNavigator } from 'react-navigation';
                                         // 最长记录
                                         var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
                                             // 几件事
-                                            const { navigate } = this.props.navigation;
-                                            navigate('Roots');
+                                            let newDate = new Date();
+                                            let newDay = newDate.toJSON();
+                                            let thisday = newDay.slice(0,10)
+                                            var promise = saveItem("Calender", '0', () => { }).then((result) => {
+                                              var promise = saveItem("Calenderday", thisday, () => { }).then((result) => {
+                                                const resetAction = NavigationActions.reset({
+                                                    index: 0,
+                                                    actions: [
+                                                    NavigationActions.navigate({routeName: 'Roots'})
+                                                    ]
+                                                })
+                                                
+                                                this.props.navigation.dispatch(resetAction); 
+                                               }).catch((error) => {
+                                                 console.error(new Error("失败"));
+                                               })
+                                            }).catch((error) => {
+                                              console.error(new Error("失败"));
+                                            })
+                                            
                                         }).catch((error) => {
                                         console.error(new Error("失败"));
                                         })

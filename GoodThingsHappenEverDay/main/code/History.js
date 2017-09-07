@@ -34,7 +34,7 @@ var ScreenWidth = Dimensions.get('window').width;
     let thistime = ''+timestamp+''
     let Yeartime = thistime-31536000000
     let Monthtime = thistime-2592000000
-    let Weektime = thistime-86400000
+    let Weektime = thistime-604800000
     var promise = getItem("keyarry1").then((result) => {
       // alert(JSON.parse(result)) 
       this.setState({keyarry:JSON.parse(result)})
