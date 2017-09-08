@@ -186,6 +186,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
             //   this.setState({image2:true,ban3:true})
             // } 
             var promise = getItem("texinput2").then((result) => {
+              // alert('lalalallalal')
               if(this.state.dayArry[0].slice(0,10)!=''&&this.state.dayArry[0].slice(0,10)!=''){
                 // alert(this.state.dayArry[2])
                
@@ -195,17 +196,17 @@ import { getItem,saveItem} from './common/AsyncStorage'
               }
                 var promise = getItem("tomorrow").then((result) => {
                   // alert(result.slice(0,10))
-                  // alert(this.state.dayArry)
+                  alert('lalalallalal')
                   // alert(result)
                   let nTime= new Date(new Date().setHours(0,0,0,0));
                   let newtime = Date.parse(nTime);
-                  let inputime = ''+newtime+'';//界定是否隔天的时间戳
+                  // let inputime = ''+newtime+'';//界定是否隔天的时间戳
                   let tinput = newtime+86400000;
-                  let tomorrowtime = ''+tinput+''
+                  // let tomorrowtime = ''+tinput+''
                   
                   if(newtime==parseInt(result)){//判断间隔天数
-                    // alert('lalallala')
-                    var promise = saveItem("tomorrow", tomorrowtime.toString(), () => { }).then((result) => {
+                    alert('lalallala')
+                    var promise = saveItem("tomorrow", tinput.toString(), () => { }).then((result) => {
                     var promise = getItem("streak").then((result) => {
                       // alert(result)
                           let streak1 = parseInt(result)+1;
@@ -298,7 +299,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                             console.error(new Error("失败"));
                           })
                         }
-                          var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+                          var promise = saveItem("streak1", streak.toString(), () => { }).then((result) => {
                                   
                                 // var promise = getItem("longstreak").then((result) => {
                                   // alert(result)
@@ -658,12 +659,12 @@ import { getItem,saveItem} from './common/AsyncStorage'
   }
   _streak(date){
     if(date==3){
-    var promise = getItem("streak").then((result) => {
+    var promise = getItem("streak1").then((result) => {
       // alert(date)
      
           let streak1 = parseInt(result)
           let streak = parseInt(result)+1;
-          var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+          var promise = saveItem("streak1", streak.toString(), () => { }).then((result) => {
             let nTime= new Date(new Date().setHours(0,0,0,0))
             let newtime = Date.parse(nTime);
             let inputime = ''+newtime+''//界定是否隔天的时间戳
@@ -671,9 +672,9 @@ import { getItem,saveItem} from './common/AsyncStorage'
               var promise = getItem("daythings").then((result) => {
                 let daythings = parseInt(result)+1;
               var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
-                var promise = getItem("longstreak").then((result) => {
+                var promise = getItem("longstreak1").then((result) => {
                 if(parseInt(result)<streak){
-                  var promise = saveItem("longstreak", streak.toString(), () => { }).then((result) => {
+                  var promise = saveItem("longstreak1", streak.toString(), () => { }).then((result) => {
 
                   }).catch((error) => {
                     console.error(new Error("失败"));
