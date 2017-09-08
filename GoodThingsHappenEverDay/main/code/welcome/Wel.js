@@ -46,9 +46,9 @@ import { StackNavigator } from 'react-navigation';
                             // alert(uuid)
                              var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
                                 // 经验值
-                                var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+                                var promise = saveItem("streak1", streak.toString(), () => { }).then((result) => {
                                     // 连续记录
-                                    var promise = saveItem("longstreak", longstreak.toString(), () => { }).then((result) => {
+                                    var promise = saveItem("longstreak1", longstreak.toString(), () => { }).then((result) => {
                                         // 最长记录
                                         var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
                                             // 几件事
@@ -59,16 +59,28 @@ import { StackNavigator } from 'react-navigation';
                                                 let nTime= new Date(new Date().setHours(0,0,0,0))
                                                 let newtime = Date.parse(nTime);
                                                 // let inputime = ''+newtime+''//界定是否隔天的时间戳
-                                                var promise = saveItem("tomorrow", inputime.toString(), () => { }).then((result) => {
+                                                var promise = saveItem("tomorrow", newtime.toString(), () => { }).then((result) => {
                                                     var promise = saveItem("Calenderday", thisday, () => { }).then((result) => {
-                                                        const resetAction = NavigationActions.reset({
-                                                            index: 0,
-                                                            actions: [
-                                                            NavigationActions.navigate({routeName: 'Roots'})
-                                                            ]
+                                                        var promise = saveItem("texinput1", '1', () => { }).then((result) => {
+                                                            var promise = saveItem("texinput2", '2', () => { }).then((result) => {
+                                                                var promise = saveItem("texinput3", '3', () => { }).then((result) => {
+                                                                    const resetAction = NavigationActions.reset({
+                                                                        index: 0,
+                                                                        actions: [
+                                                                        NavigationActions.navigate({routeName: 'Roots'})
+                                                                        ]
+                                                                    })
+                                                                    
+                                                                    this.props.navigation.dispatch(resetAction); 
+                                                                }).catch((error) => {
+                                                                    console.error(new Error("失败"));
+                                                                })
+                                                            }).catch((error) => {
+                                                                console.error(new Error("失败"));
+                                                            })
+                                                        }).catch((error) => {
+                                                                console.error(new Error("失败"));
                                                         })
-                                                        
-                                                        this.props.navigation.dispatch(resetAction); 
                                                     }).catch((error) => {
                                                         console.error(new Error("失败"));
                                                     })
