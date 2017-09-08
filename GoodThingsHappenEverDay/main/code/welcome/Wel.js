@@ -11,6 +11,7 @@ import {
 import { getItem, saveItem} from '../common/AsyncStorage'
 import { toastLong} from '../common/ToastUtils'
 import { NavigationActions } from 'react-navigation';
+import Swiper from 'react-native-swiper';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -55,18 +56,26 @@ import { StackNavigator } from 'react-navigation';
                                             let newDay = newDate.toJSON();
                                             let thisday = newDay.slice(0,10)
                                             var promise = saveItem("Calender", '0', () => { }).then((result) => {
-                                              var promise = saveItem("Calenderday", thisday, () => { }).then((result) => {
-                                                const resetAction = NavigationActions.reset({
-                                                    index: 0,
-                                                    actions: [
-                                                    NavigationActions.navigate({routeName: 'Roots'})
-                                                    ]
+                                                let nTime= new Date(new Date().setHours(0,0,0,0))
+                                                let newtime = Date.parse(nTime);
+                                                // let inputime = ''+newtime+''//界定是否隔天的时间戳
+                                                var promise = saveItem("tomorrow", inputime.toString(), () => { }).then((result) => {
+                                                    var promise = saveItem("Calenderday", thisday, () => { }).then((result) => {
+                                                        const resetAction = NavigationActions.reset({
+                                                            index: 0,
+                                                            actions: [
+                                                            NavigationActions.navigate({routeName: 'Roots'})
+                                                            ]
+                                                        })
+                                                        
+                                                        this.props.navigation.dispatch(resetAction); 
+                                                    }).catch((error) => {
+                                                        console.error(new Error("失败"));
+                                                    })
+                                                }).catch((error) => {
+                                                    console.error(new Error("失败"));
                                                 })
-                                                
-                                                this.props.navigation.dispatch(resetAction); 
-                                               }).catch((error) => {
-                                                 console.error(new Error("失败"));
-                                               })
+
                                             }).catch((error) => {
                                               console.error(new Error("失败"));
                                             })
@@ -95,83 +104,96 @@ import { StackNavigator } from 'react-navigation';
                 })
           }
       }
+    _renderSwiper(){
+        return (
+            <Swiper
+                // style={styles.swiperStyle}
+                height={200}
+                horizontal={true}
+                autoplay={true}
+                autoplayTimeout={3}
+                loop={false}
+                paginationStyle={{bottom:40}}
+                dotStyle={{backgroundColor:'rgba(0,0,0,.2)', width: 6, height: 6}}
+                activeDotStyle={{backgroundColor:'rgba(0,0,0,.5)', width: 6, height: 6}}>
+                        <View style={styles.container}>
+                        
+                            <Image  source={require('../image/BigSmile.png')}></Image>
+                            <Text style={styles.welcome} >
+                            Good Things Happen Ever Day!
+                            </Text>
+                            <Text style={styles.instructions}>
+                                In just 5 minutes a day,increase your
+                            </Text>
+                            <Text style={styles.instructions}>
+                                happiness and rewire your brain to
+                            </Text>
+                            <Text style={styles.instructions}>
+                                focus on the positive.
+                            </Text>
+                        
+                    </View>
+                    <View style={styles.container}>
+                        
+                            <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/brush.png')}></Image>
+                            <Text style={styles.welcome} >
+                            Log Your Highlights
+                            </Text>
+                            <Text style={styles.instructions} >
+                            Studies have shown that writing down
+                            </Text>
+                            <Text style={styles.instructions}>
+                                there good Things every day has
+                            </Text>
+                            <Text style={styles.instructions}>
+                                lasting effects on one's happiness,
+                            </Text>
+                            <Text style={styles.instructions}>
+                                positivity,and optimism.
+                            </Text>
+                        
+                    </View>
+                    <View style={styles.container}>
+                        
+                            <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/medal.png')}></Image>
+                            <Text style={styles.welcome} >
+                            Engage and Improve
+                            </Text>
+                            <Text style={styles.instructions} >
+                            Level up,gain experience points(XP),
+                            </Text>
+                            <Text style={styles.instructions}>
+                                view previous entries,set a
+                            </Text>
+                            <Text style={styles.instructions}>
+                                customizable notification,choose a
+                            </Text>
+                            <Text style={styles.instructions}>
+                                profile picture,and more.
+                            </Text>
+                            <TextInput
+                                underlineColorAndroid="transparent"
+                                autoCapitalize='words'
+                                placeholder="Enter your name here to get started!"
+                                onBlur={() =>{this.seve()}}
+                                onChangeText={(Text) => {this.setState({name:Text})}}
+                                style={styles.TextInputSt}
+                            ></TextInput>
+                        
+                    </View>
+            </Swiper>
+        )
+    }
   render() {
     return (
-        <ScrollView style={{flex: 1}}
-        contentContainerStyle={styles.contentContainer}
-        bounces={false}
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={true}
-        horizontal={true}>
-        <View style={styles.container}>
-           
-                <Image  source={require('../image/BigSmile.png')}></Image>
-                <Text style={styles.welcome} >
-                Good Things Happen Ever Day!
-                </Text>
-                <Text style={styles.instructions}>
-                    In just 5 minutes a day,increase your
-                </Text>
-                <Text style={styles.instructions}>
-                    happiness and rewire your brain to
-                </Text>
-                <Text style={styles.instructions}>
-                    focus on the positive.
-                </Text>
-            
-        </View>
-        <View style={styles.container}>
-            
-                <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/brush.png')}></Image>
-                <Text style={styles.welcome} >
-                Log Your Highlights
-                </Text>
-                <Text style={styles.instructions} >
-                Studies have shown that writing down
-                </Text>
-                <Text style={styles.instructions}>
-                    there good Things every day has
-                </Text>
-                <Text style={styles.instructions}>
-                    lasting effects on one's happiness,
-                </Text>
-                <Text style={styles.instructions}>
-                    positivity,and optimism.
-                </Text>
-           
-        </View>
-        <View style={styles.container}>
-           
-                <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/medal.png')}></Image>
-                <Text style={styles.welcome} >
-                Engage and Improve
-                </Text>
-                <Text style={styles.instructions} >
-                Level up,gain experience points(XP),
-                </Text>
-                <Text style={styles.instructions}>
-                    view previous entries,set a
-                </Text>
-                <Text style={styles.instructions}>
-                    customizable notification,choose a
-                </Text>
-                <Text style={styles.instructions}>
-                    profile picture,and more.
-                </Text>
-                <TextInput
-                    underlineColorAndroid="transparent"
-                    autoCapitalize='words'
-                    placeholder="Enter your name here to get started!"
-                    onBlur={() =>{this.seve()}}
-                    onChangeText={(Text) => {this.setState({name:Text})}}
-                    style={styles.TextInputSt}
-                ></TextInput>
-           
-        </View>
-      </ScrollView>
+        <View style={{flex: 1}}>
+        {this._renderSwiper()}
+        
+      </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
     contentContainer: {
@@ -183,8 +205,7 @@ const styles = StyleSheet.create({
       height:height,
     },
   container: {
-    height:height,
-    width:width,
+    flex:1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
@@ -220,4 +241,9 @@ const styles = StyleSheet.create({
     color:'#13227a'
 
   },
+  swiperItem:{
+    flex:1,
+    justifyContent:'center',
+    backgroundColor:'transparent',
+},
 });

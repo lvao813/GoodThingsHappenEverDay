@@ -12,9 +12,10 @@ import {
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
-import { getItem, saveItem} from './common/AsyncStorage'
-import { toastLong} from './common/ToastUtils'
-import ImagePicker from 'react-native-image-picker'
+import { getItem, saveItem} from './common/AsyncStorage';
+import { toastLong} from './common/ToastUtils';
+import ImagePicker from 'react-native-image-picker';
+import { Header } from './common/constants';
 
  class Profile extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ import ImagePicker from 'react-native-image-picker'
             progress:0,//进度
             badge:1,//徽章
             nextexp:0,
-            img:'http://tupian.enterdesk.com/2014/xll/11/15/4/touxiang5.jpg',
+            img:Header,
             exp:0,
 
         };
@@ -206,16 +207,16 @@ import ImagePicker from 'react-native-image-picker'
   render() {
     return (
       <ScrollView style={{backgroundColor:'#cdccc8'}}>
-          <View style={{flexDirection:'row',backgroundColor:'#fff',borderColor:'#666',borderBottomWidth:1,}}>
-                <View style={styles.topView}>
-                      <Text style={styles.topText}>Profile</Text>
-                      
-                </View>
-                <Image style={{height:40,width:40,alignItems:'center',justifyContent:'center',}} 
-                      source={require('./image/hot.png')}
-                      ><Text style={{textAlign:'center',fontWeight:'bold',fontSize:20}}
-                >1</Text></Image>
-        </View>
+            <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
+            <View style={styles.topView}>
+                 
+                  
+            </View>
+            <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
+                  
+            ><Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
+            >等级3</Text></View>
+            </View>
 
         <View style={styles.TopView2}>
             <View style={styles.TopView3}>
@@ -296,13 +297,13 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
-    backgroundColor:'#fff'
+    backgroundColor:'#4FA4FF'
   },
   topText:{
     textAlign:'center',
     fontSize:20,
     fontWeight:'bold',
-    color:'#000',
+    color:'#F6FCFF',
     paddingLeft:20,
   },
   TopView2:{

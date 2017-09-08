@@ -180,15 +180,15 @@ const Brief = Item.Brief;
    
     return (
       <View >
-      <View style={{flexDirection:'row',backgroundColor:'#fff',borderColor:'#666',borderBottomWidth:1}}>
-          <View style={styles.topView}>
-                <Text style={styles.topText}>Settings</Text>
-                
+        <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
+                <View style={styles.topView}>
+                      <Text style={styles.topText}>Settings</Text>
+                      
                 </View>
-                <Image style={{height:40,width:40,alignItems:'center',justifyContent:'center'}} 
-                source={require('./image/hot.png')}
-                ><Text style={{textAlign:'center',fontWeight:'bold',fontSize:20}}
-                >1</Text></Image>
+                <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
+                      
+                      ><Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
+                >等级3</Text></View>
         </View>
       <List renderHeader={() => ''} className="my-list">
         <Item   extra={<Switch value={this.state.value} onValueChange={(value)=>{this._swith(value) }}/>}>{this.state.changeTxt}</Item>
@@ -247,13 +247,14 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
+    backgroundColor:'#4FA4FF'
   },
   topText:{
     textAlign:'center',
     fontSize:20,
     fontWeight:'bold',
-    color:'#000',
-    paddingLeft:20
-  }
+    color:'#F6FCFF',
+    paddingLeft:20,
+  },
 });
 export default Settings
