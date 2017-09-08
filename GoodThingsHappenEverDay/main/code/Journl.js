@@ -120,10 +120,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 this._makeUp(newtime);
                 // alert('1')
               }else if(result==null){//第一次登陆且是今天
-                alert('15464161')
+                // alert('15464161')
                 this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3});
                 this._makeUp(parseInt(newtime));
               }else{
+                alert('e')
                 this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3});
                 this._makeUp(parseInt(newtime));
               }
@@ -187,16 +188,19 @@ import { getItem,saveItem} from './common/AsyncStorage'
             // } 
             var promise = getItem("texinput2").then((result) => {
               // alert('lalalallalal')
-              if(this.state.dayArry[0].slice(0,10)!=''&&this.state.dayArry[0].slice(0,10)!=''){
+              if(this.state.dayArry==''){
                 // alert(this.state.dayArry[2])
                
-                  this._filling()
+                  
                   
                  
+              }else{
+               
+                this._filling()
               }
                 var promise = getItem("tomorrow").then((result) => {
                   // alert(result.slice(0,10))
-                  alert('lalalallalal')
+                  // alert('lalalallalal')
                   // alert(result)
                   let nTime= new Date(new Date().setHours(0,0,0,0));
                   let newtime = Date.parse(nTime);
@@ -205,12 +209,12 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   // let tomorrowtime = ''+tinput+''
                   
                   if(newtime==parseInt(result)){//判断间隔天数
-                    alert('lalallala')
+                    // alert('lalallala')
                     var promise = saveItem("tomorrow", tinput.toString(), () => { }).then((result) => {
-                    var promise = getItem("streak").then((result) => {
+                    var promise = getItem("streak1").then((result) => {
                       // alert(result)
-                          let streak1 = parseInt(result)+1;
-                          let streak = parseInt(result)+1;
+                          let streak1 = parseInt(result);
+                          let streak = parseInt(result);
                         if(streak1<30){
                           if(streak1%3==0&&streak1%30!=0){
             
@@ -232,7 +236,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                               let exp = parseInt(result)+20;
                                 
                                 var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                                   
+                                  
             
                                 }).catch((error) => {
                                   console.error(new Error("失败"));
@@ -246,7 +250,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                               let exp = parseInt(result)+30;
                                 
                                 var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
-                                   
+                                  
             
                                 }).catch((error) => {
                                   console.error(new Error("失败"));
@@ -257,11 +261,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
                             })
                           }else if(streak1%14==0&&streak1%28!=0){
                             var promise = getItem("exp").then((result) => {
-                              let exp = parseInt(result)+30;
+                              let exp = parseInt(result)+50;
                                 
                                 var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
                                    
-            
+                                 
                                 }).catch((error) => {
                                   console.error(new Error("失败"));
                                 })
@@ -269,13 +273,13 @@ import { getItem,saveItem} from './common/AsyncStorage'
                             }).catch((error) => {
                               console.error(new Error("失败"));
                             })
-                          }else if(streak1%30==0){
+                          }else if(streak1%30==0&&streak1!=0){
                             var promise = getItem("exp").then((result) => {
-                              let exp = parseInt(result)+30;
+                              let exp = parseInt(result)+100;
                                 
                                 var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
                                    
-            
+                                  // alert(100)
                                 }).catch((error) => {
                                   console.error(new Error("失败"));
                                 })
@@ -284,13 +288,15 @@ import { getItem,saveItem} from './common/AsyncStorage'
                               console.error(new Error("失败"));
                             })
                           }
+                        }else if(streak1==0){
+
                         }else{
                           var promise = getItem("exp").then((result) => {
                             let exp = parseInt(result)+5;
                               
                               var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
                                  
-            
+                                // alert(5)
                               }).catch((error) => {
                                 console.error(new Error("失败"));
                               })
@@ -301,10 +307,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
                         }
                           var promise = saveItem("streak1", streak.toString(), () => { }).then((result) => {
                                   
-                                // var promise = getItem("longstreak").then((result) => {
+                                var promise = getItem("longstreak1").then((result) => {
                                   // alert(result)
-                                  // if(parseInt(result)<streak){
-                                  //   var promise = saveItem("longstreak", streak.toString(), () => { }).then((result) => {
+                                  if(parseInt(result)<streak){
+                                    var promise = saveItem("longstreak1", streak.toString(), () => { }).then((result) => {
                                         var promise = getItem("daythings").then((result) => {
                                           // alert(result)
             
@@ -320,13 +326,13 @@ import { getItem,saveItem} from './common/AsyncStorage'
                                           console.error(new Error("失败"));
                                         })
             
-                                  //   }).catch((error) => {
-                                  //     console.error(new Error("失败"));
-                                  //   })
-                                  // }
-                                // }).catch((error) => {
-                                //   console.error(new Error("失败"));
-                                // })
+                                    }).catch((error) => {
+                                      console.error(new Error("失败"));
+                                    })
+                                  }
+                                }).catch((error) => {
+                                  console.error(new Error("失败"));
+                                })
                           }).catch((error) => {
                           console.error(new Error("失败"));
                           })
@@ -341,7 +347,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                         this.setState({NU:1})
                   }else{
                     let streak = 0;
-                    var promise = saveItem("streak", streak.toString(), () => { }).then((result) => {
+                    var promise = saveItem("streak1", streak.toString(), () => { }).then((result) => {
                         var promise = getItem("daythings").then((result) => {
                           // alert(result)
                               let streak1 = 0;
@@ -404,6 +410,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
       // alert(this.state.dayArry)
   }
   _filling(){
+         
 
     if(this.state.dayArry[0].slice(0,10)==''){
       // this.setState({image1:true,ban2:true})
@@ -595,7 +602,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                                                                       var promise = saveItem("texinput3", input3, () => { }).then((result) => {
                                                                         // alert(this.state.keyarry)
                                                                        
-                                                                            if (this.state.textSt1==0){this._streak(this.state.NU)}
+                                                                            if (this.state.textSt1==0){this._streak(this.state.textSt1)}
                                                                             
                                                                               var promise = getItem("exp").then((result) => {
                                                                                 let exp = parseInt(result)+this.state.exp;
@@ -658,40 +665,14 @@ import { getItem,saveItem} from './common/AsyncStorage'
 
   }
   _streak(date){
-    if(date==3){
+    if(date==0){
     var promise = getItem("streak1").then((result) => {
       // alert(date)
      
-          let streak1 = parseInt(result)
+          
           let streak = parseInt(result)+1;
           var promise = saveItem("streak1", streak.toString(), () => { }).then((result) => {
-            let nTime= new Date(new Date().setHours(0,0,0,0))
-            let newtime = Date.parse(nTime);
-            let inputime = ''+newtime+''//界定是否隔天的时间戳
-            var promise = saveItem("tomorrow", inputime.toString(), () => { }).then((result) => {
-              var promise = getItem("daythings").then((result) => {
-                let daythings = parseInt(result)+1;
-              var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
-                var promise = getItem("longstreak1").then((result) => {
-                if(parseInt(result)<streak){
-                  var promise = saveItem("longstreak1", streak.toString(), () => { }).then((result) => {
-
-                  }).catch((error) => {
-                    console.error(new Error("失败"));
-                  })
-                  }
-              }).catch((error) => {
-                console.error(new Error("失败"));
-              })
-            }).catch((error) => {
-              console.error(new Error("失败"));
-            })
-          }).catch((error) => {
-            console.error(new Error("失败"));
-          })
-            }).catch((error) => {
-              console.error(new Error("失败"));
-            })
+            
           }).catch((error) => {
             console.error(new Error("失败"));
           })

@@ -68,23 +68,34 @@ import { Header } from './common/constants';
 
                   }else{this.setState({img:result})}
                   var promise = getItem("exp").then((result) => { 
-                      // alert(parseInt(result)+30)
+                      // alert(parseInt(result))
 
                       this._level(parseInt(result))
-                        var promise = getItem("streak").then((result) => { 
-                          
+                        var promise = getItem("streak1").then((result) => { 
+                          let streak1 = parseInt(result)
+                            // alert(parseInt(result)+1)
                             this.setState({current:result})
-                            var promise = getItem("longstreak").then((result) => { 
-                              
+                            var promise = getItem("longstreak1").then((result) => { 
+                              if(streak1>parseInt(result)){
+                                var promise = saveItem("longstreak1", streak1.toString(), () => { }).then((result) => {
+                                  // alert('good')
+                                  this.setState({longest:streak1})
+                                }).catch((error) => {
+                                  // console.log('1');
+                                  // alert('错误')
+                                })
+                              }else{
                                 this.setState({longest:result})
+                              }
+                                
                                 var promise = getItem("daythings").then((result) => { 
                                   
-                                    this.setState({dayS:result})
+                                    // this.setState({dayS:result})
                                     var promise = getItem("keyarry1").then((result) => { 
                                         let keyarry = JSON.parse(result);
                                           // alert(keyarry.length)
                                         let len = Math.ceil(keyarry.length/3)
-                                        this.setState({things:len})
+                                        this.setState({things:len,dayS:keyarry.length})
                                     }).catch((error) => {
                                       // console.log('1');
                                     })
@@ -206,69 +217,92 @@ import { Header } from './common/constants';
   }
   render() {
     return (
-      <ScrollView style={{backgroundColor:'#cdccc8'}}>
-            <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
-            <View style={styles.topView}>
-                 
-                  
-            </View>
-            <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
-                  
-            ><Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
-            >等级3</Text></View>
-            </View>
+      <View style={{backgroundColor:'#cdccc8',flex:1}}>
+           
 
         <View style={styles.TopView2}>
-            <View style={styles.TopView3}>
-                  <TouchableOpacity style={styles.LifeView}
+          <Image source={require('./image/me-bg.png')} style={{height:height/3,resizeMode:'cover',width:width}} >
+              <View style={{flexDirection:'row',}}>
+                  <View style={styles.topView}>
+                        
+                          
+                    </View>
+                  <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row',marginRight:8}} >
+                    <Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/>
+                      <Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}>等级3</Text>
+                  </View>
+              </View>
+              <View style={{flex:3,flexDirection:'row',marginBottom:10}}>
+                <TouchableOpacity style={styles.LifeView}
                     onPress={()=>{this._showImagePicker()}}
                   >
-                      <Image source={{uri:this.state.img}} style={{height:90,width:90,borderRadius:50, resizeMode:'cover',marginTop:10}}></Image>
+                      <Image source={{uri:this.state.img}} style={{height:50,width:50,borderRadius:50, resizeMode:'cover',marginTop:10}}></Image>
                   </TouchableOpacity>
-                  <View style={styles.RightView}>
+                <View style={styles.RightView}>
                       <TextInput
                         underlineColorAndroid="transparent"
                         autoCapitalize='words'
+                        maxLength={15}
                         onBlur={() =>{this.seve()}}
                         value={this.state.name}
                         style={styles.RightInp}
                         onChangeText={(Text) => {this.setState({name:Text})}}
                       ></TextInput>
-                      
-                      <View style={styles.RighitTV}>
-                          <Text style={styles.RightText}>Level  </Text>
-                          <Text style={styles.RightText}>{this.state.level}</Text>
+                      <View style={{flex:3,justifyContent:'center',alignItems:'center',}}>
+                        <View style={styles.TopView4}>
+                          <ProgressBarAndroid  color="#F2743C" styleAttr='Horizontal' progress={this.state.progress}  
+                            indeterminate={false} style={{width:150}} />  
+                          <View style={styles.TopView4B}>
+                          <Text style={styles.View4BText}>加油~还有{this.state.nextexp}xp就可以升级</Text></View>
+                        </View>
                       </View>
+                      
 
                   </View>
+              </View>       
+              <View style={{flex:3,flexDirection:'row',margin:10,marginTop:5,backgroundColor:'#fff',borderRadius:8}}>
+                  <View style={{flex:5,}}>
+                    <View style={styles.TopleftView}>
+                        <Text style={{fontSize:20,color:'#FDDE80'}}>{this.state.level}</Text>
+                    </View>
+                    <View style={styles.TopleftView}>
+                        <Text style={{fontSize:15,color:'#8B8B8B'}}>当前等级</Text>
+                    </View>
+                  </View>
+                  <View style={{flex:4,}}>
+                     <View style={styles.TopleftView}>
+                        <Text style={{fontSize:20,color:'#EB854F'}}>50</Text>
+                    </View>
+                    <View style={styles.TopleftView}>
+                        <Text style={{fontSize:15,color:'#8B8B8B'}}>推荐好友人数</Text>
+                    </View>
+                  </View>
+              </View>
             
-            </View>
-            <View style={styles.TopView4}>
-               <ProgressBarAndroid  color="green" styleAttr='Horizontal' progress={this.state.progress}  
-            indeterminate={false} style={{width:250}} />  
-              <View style={styles.TopView4B}>
-              <Text style={styles.View4BText}>{this.state.nextexp} xp To Next Level</Text></View>
-            </View>
+          </Image> 
         </View>
-        <View style={styles.AllBoxView}>
-            <View style={styles.BoxView}>
-              <Text style={styles.BoxTextS1}>{this.state.current}</Text>
-              <Text style={styles.BoxTextS2}>Current Streak</Text>
-            </View>
-            <View style={styles.BoxView}>
-              <Text style={styles.BoxTextS1}>{this.state.longest}</Text>
-              <Text style={styles.BoxTextS2}>Longest Streak</Text>
-            </View>
-            <View style={styles.BoxView}>
-              <Text style={styles.BoxTextS1}>{this.state.things}</Text>
-              <Text style={styles.BoxTextS2}>Total Completed Days</Text>
-            </View>
-            <View style={styles.BoxView}>
-              <Text style={styles.BoxTextS1}>{this.state.dayS}</Text>
-              <Text style={styles.BoxTextS2}>Total Good Things</Text>
-            </View>
+        <View style={styles.TopView3}>
+          <View style={{flex:4,backgroundColor:'#fff'}}>
+              <View style={{flex:1,flexDirection:'row',}}>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>当前连续记录的天数</Text></View>
+                <View style={{flex:2,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.current}</Text></View>
+              </View>
+              <View style={{flex:1,flexDirection:'row'}}>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>最长连续记录天数</Text></View>
+                <View style={{flex:2,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.longest}</Text></View>
+              </View>
+              <View style={{flex:1,flexDirection:'row'}}>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>完成的天数</Text></View>
+                <View style={{flex:2,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.things}</Text></View>
+              </View>
+              <View style={{flex:1,flexDirection:'row'}}>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10,}}><Text style={{fontSize:15,color:'#8B8B8B'}}>记录的美好事情</Text></View>
+                <View style={{flex:2,justifyContent:'center',alignItems:'center',}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.dayS}</Text></View>
+              </View>
+          </View>
+          <View style={{flex:1}}></View>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -292,12 +326,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   topView:{
-    height:50,
-    width:width-50,
+    flex:1,
+    width:width-40,
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
-    backgroundColor:'#4FA4FF'
+   
   },
   topText:{
     textAlign:'center',
@@ -307,31 +341,32 @@ const styles = StyleSheet.create({
     paddingLeft:20,
   },
   TopView2:{
-    backgroundColor:'#cdccc8',
-    height:180,
-    width:width,
+    backgroundColor:'#FAFAFA',
+    flex:4,
+
+    
   },
   TopView3:{
-    flexDirection:'row',
-    height:100,
-    width:width,
+    backgroundColor:'#FAFAFA',
+    flex:6,
+   
+    padding:10,
   },
   LifeView:{
-    flex:1,
-    
+    marginLeft:40,
   },
   RightView:{
-    flex:3,
     
-    justifyContent:'center'
+    
+    
     
   },
   RightInp:{
-    fontSize:25,
-    color:'#13227a',
-    fontWeight:'bold',
-    marginTop:30,
-    height:50,
+    fontSize:16,
+    color:'#F6FCFF',
+    flex:2,
+    marginLeft:10,
+    width:140,
     
 
   },
@@ -344,10 +379,9 @@ const styles = StyleSheet.create({
     color:'#13227a',
   },
   TopView4:{
-    height:50,
-    width:width,
-    justifyContent:'center',
-    alignItems:'center',
+    marginLeft:15,
+    
+    
   },
   TopView4T:{
     justifyContent:'center',
@@ -362,11 +396,12 @@ const styles = StyleSheet.create({
   TopView4B:{
     
     justifyContent:'center',
-    alignItems:'center',
-    marginTop:5,
+    // alignItems:'center',
+    width:150,
   },
   View4BText:{
-    color:'#13227a'
+    color:'#F6FCFF',
+    fontSize:12,
   },
   AllBoxView:{
       justifyContent:'center',
@@ -391,6 +426,11 @@ const styles = StyleSheet.create({
   BoxTextS2:{
     fontSize:23,
     color:'#13227a',
+  },
+  TopleftView:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
   },
 
 });
