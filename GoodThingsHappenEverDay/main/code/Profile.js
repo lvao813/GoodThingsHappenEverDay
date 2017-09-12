@@ -15,7 +15,7 @@ var height = Dimensions.get('window').height;
 import { getItem, saveItem} from './common/AsyncStorage';
 import { toastLong} from './common/ToastUtils';
 import ImagePicker from 'react-native-image-picker';
-import { Header } from './common/constants';
+import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
 
  class Profile extends Component {
   constructor(props) {
@@ -32,6 +32,7 @@ import { Header } from './common/constants';
             nextexp:0,
             img:Header,
             exp:0,
+            badgeImge:Badeg1,
 
         };
           this.options = {
@@ -188,6 +189,15 @@ import { Header } from './common/constants';
           }
             
       }
+      componentDidMount() {
+        if(this.state.badge==2){
+          this.setState({badgeImge:Badeg2})
+        }else if(this.state.badge==3){
+          this.setState({badgeImge:Badeg3})
+        }else if(this.state.badge==4){
+          this.setState({badgeImge:Badeg4})
+        }
+      }
     _showImagePicker() {//头像选择，相机，相册
     ImagePicker.showImagePicker(this.options, (response) => {
       if (response.didCancel) {
@@ -239,6 +249,7 @@ import { Header } from './common/constants';
                       <Image source={{uri:this.state.img}} style={{height:50,width:50,borderRadius:50, resizeMode:'cover',marginTop:10}}></Image>
                   </TouchableOpacity>
                 <View style={styles.RightView}>
+                      <View style={styles.RightInpView}>
                       <TextInput
                         underlineColorAndroid="transparent"
                         autoCapitalize='words'
@@ -247,7 +258,7 @@ import { Header } from './common/constants';
                         value={this.state.name}
                         style={styles.RightInp}
                         onChangeText={(Text) => {this.setState({name:Text})}}
-                      ></TextInput>
+                      ></TextInput><Image source={{uri:this.state.badgeImge}} style={{height:18,width:15,marginTop:18}}/></View>
                       <View style={{flex:3,justifyContent:'center',alignItems:'center',}}>
                         <View style={styles.TopView4}>
                           <ProgressBarAndroid  color="#F2743C" styleAttr='Horizontal' progress={this.state.progress}  
@@ -260,7 +271,7 @@ import { Header } from './common/constants';
 
                   </View>
               </View>       
-              <View style={{flex:3,flexDirection:'row',margin:10,marginTop:5,backgroundColor:'#fff',borderRadius:8}}>
+              <View style={{flex:3,flexDirection:'row',margin:10,marginTop:5,backgroundColor:'#fff',borderRadius:8,elevation: 4,  }}>
                   <View style={{flex:5,}}>
                     <View style={styles.TopleftView}>
                         <Text style={{fontSize:20,color:'#FDDE80'}}>{this.state.level}</Text>
@@ -282,7 +293,7 @@ import { Header } from './common/constants';
           </Image> 
         </View>
         <View style={styles.TopView3}>
-          <View style={{flex:4,backgroundColor:'#fff'}}>
+          <View style={{flex:4,backgroundColor:'#fff',elevation: 4,  }}>
               <View style={{flex:1,flexDirection:'row',}}>
                 <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>当前连续记录的天数</Text></View>
                 <View style={{flex:2,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.current}</Text></View>
@@ -365,9 +376,15 @@ const styles = StyleSheet.create({
     fontSize:16,
     color:'#F6FCFF',
     flex:2,
-    marginLeft:10,
+    
     width:140,
     
+
+  },
+  RightInpView:{
+    width:160,
+    marginLeft:15,
+    flexDirection:'row',
 
   },
   RighitTV:{

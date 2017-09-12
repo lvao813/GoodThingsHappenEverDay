@@ -43,6 +43,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
             NU:0,
             textSt1:0,
             exp:0,
+            Calenderday:'',
+            datetime:0,
+            leftban:true,
+            rightban:false,
         };
         WeChat.registerApp('wx6000a418f168ac83');
       }
@@ -73,6 +77,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
         // this._alert(30)
         // alert(7%3)
         // alert(HTEDJurnal)
+        
+         
         var promise = getItem("Calenderday").then((result) => {
           // alert(result)
           let YMD = result;
@@ -84,9 +90,9 @@ import { getItem,saveItem} from './common/AsyncStorage'
               // let cc = newDate.toLocaleDateString()+'/ 00:00:00';
               // let nTime=Date.parse(cc);
                 let nTime= new Date(new Date().setHours(0,0,0,0))
-                let newtime = Date.parse(nTime);
+                let newtime = Date.parse(nTime)+28800000;
                 let timess =  parseInt(result)+1
-
+               
                 //今天的时间
                 let newDate = new Date();
                 let newDay = newDate.toJSON();
@@ -97,16 +103,17 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 let thisday = yday.slice(0,10);
               // console.log(nTime);
               // alert(newtime)
+              alert(nTime+'-'+yday+'-'+result+'-'+newtime)
               if(parseInt(result)>0){//某一天
                   // alert(parseInt(parseInt(result)*1000))
                   // alert(timess)
                   if(thisday==tday){
                     // alert('050')
-                    this.setState({dayDate:parseInt(result),textSt1:0,exp:10})
+                    this.setState({dayDate:parseInt(result),textSt1:0,exp:10,Calenderday:tday})
                     this._makeUp(parseInt(result))
                   }else{
                     // alert('150')
-                    this.setState({dayDate:parseInt(result),textSt1:1,exp:5})
+                    this.setState({dayDate:parseInt(result),textSt1:1,exp:5,Calenderday:thisday})
                     this._makeUp(parseInt(result))
                   }
                   
@@ -116,16 +123,16 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 // console.log(ntime);
                 // console.log('====================================');
                 // alert('010')
-                this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3});
+                this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3,Calenderday:tday});
                 this._makeUp(newtime);
                 // alert('1')
               }else if(result==null){//第一次登陆且是今天
                 // alert('15464161')
-                this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3});
+                this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3,Calenderday:tday});
                 this._makeUp(parseInt(newtime));
               }else{
-                alert('e')
-                this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3});
+                // alert('e')
+                this.setState({dayDate:newtime,textSt1:0,exp:10,NU:3,Calenderday:tday});
                 this._makeUp(parseInt(newtime));
               }
               // console.console.log('====================================');
@@ -138,11 +145,13 @@ import { getItem,saveItem} from './common/AsyncStorage'
             }).catch((error) => {
               // console.log('1');
             })
+         
         this.setState({keyarry:JSON.parse(result)})
         // alert(this.state.keyarry)
       }).catch((error) => {
       // console.log('1');
       })
+  
         
           
   }
@@ -173,7 +182,9 @@ import { getItem,saveItem} from './common/AsyncStorage'
       // this.setState({NU:result})
       let keyin = this.state.dayArry;
 
-      var promise = getItem("texinput1").then((result) => {
+      var promise = getItem("leftday").then((result) => {
+        // alert(parseInt(result))
+          this.setState({datetime:result})
       // alert(result.slice(0,10))
         // alert(thisday.slice(9,10)-result.slice(9,10))
         
@@ -182,7 +193,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
       // }
           var promise = getItem("texinput2").then((result) => {
             // alert(result.slice(0,10))
-          
+            // alert(this.state.datetime)
             // if(thisday==result.slice(0,10)){
             //   this.setState({image2:true,ban3:true})
             // } 
@@ -384,7 +395,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
   }  
   _makeUp(day){
     // alert(day)
-   
+      // 
       let endday = day+86400000;
       let keyarry = this.state.keyarry; 
       // alert(endday)
@@ -411,7 +422,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
   }
   _filling(){
          
-
+      // alert(this.state.dayArry)
     if(this.state.dayArry[0].slice(0,10)==''){
       // this.setState({image1:true,ban2:true})
     }else if(this.state.dayArry[0].slice(0,10)==null){
@@ -562,6 +573,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     // let coon = unixTimestamp.toLocaleString();
     // let ymd = coon.getFullYear()+'-'+coon.getMonth()+'-'+coon.getDate()
     //  alert(coon);
+    alert(thisday)
     let AsyncStorageKey =''+timestamp+''
     let input1 = thisday+'-'+this.state.textInput1
     // alert(newDay.slice(0,10))
@@ -582,7 +594,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
               let AsyncStorageKey =''+timestamp1+''
               let input2 = thisday1+'-'+this.state.textInput2
               var promise = saveItem(AsyncStorageKey, input2, () => { }).then((result) => {
-                // alert('1')
+                // alert(timestamp1)
                 this.state.keyarry.push(AsyncStorageKey)
                 this.setState({ban4:false,Test1:AsyncStorageKey});
                     var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
@@ -681,6 +693,229 @@ import { getItem,saveItem} from './common/AsyncStorage'
         })
       }
   }
+   _filling1(data){
+         
+      // alert(data)
+    if(data==null){
+      alert('1')
+    }else if(data==''){
+      this.setState({textInput1:'',textInput2:'',textInput3:'',image1:false,image2:false,image3:false,
+      ban1:true,ban4:false,ban3:false,})
+    }else{
+      // alert(data)
+    if(data[0].slice(0,10)==''){
+      // this.setState({image1:true,ban2:true})
+    }else if(data[0].slice(0,10)==null){
+      // this.setState({image1:true,ban2:true})
+    }else{
+      this.setState({textInput1:data[0].slice(11),image1:true,ban4:true})
+      if(data[1].slice(0,10)==''){
+        // this.setState({image1:true,ban2:true})
+      }else if(data[1].slice(0,10)==null){
+        // this.setState({image1:true,ban2:true})
+      }else{
+        this.setState({textInput2:data[1].slice(11),image2:true,ban3:true})
+        if(data[2].slice(0,10)==''){
+          // this.setState({image1:true,ban2:true})
+        }else if(data[2].slice(0,10)==null){
+          // this.setState({image1:true,ban2:true})
+        }else{
+          this.setState({textInput3:data[2].slice(11),ban1:false,ban4:false,ban3:false,image3:true})
+        }
+      }
+    }
+  }
+  }
+  _makeUp1(day){
+    // alert(day)
+      // 
+      let endday = day+86400000;
+      let keyarry = this.state.keyarry; 
+      // alert(endday)
+      // alert(keyarry)
+      let daysArry = [];
+      var promise = getItem("streak1").then((result) => {
+        // alert(date)
+        for(let i in this.state.keyarry){
+          // alert(keyarry[i])
+          if(keyarry[i]>day&&keyarry[i]<endday){
+  
+            var promise = getItem(keyarry[i]).then((result) => {
+             daysArry.push(result)
+              // this.state.lkayArry.push(keyarry[i])
+                // alert()
+            }).catch((error) => {
+              
+            })
+            // alert(this.state.dayArry)
+              // this.state.WeekArry.push()
+              // alert(this.state.WeekArry)
+            // alert(keyarry[1])
+          }
+          
+        }
+            
+            
+        var promise = getItem("streak1").then((result) => {
+              //  alert(daysArry)
+                this._filling1(daysArry)
+                var promise = getItem("streak1").then((result) => {
+                  // daysArry=[]
+                // alert(daysArry)
+                
+                }).catch((error) => {
+                  console.error(new Error("失败"));
+                })
+            
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          }).catch((error) => {
+            console.error(new Error("失败"));
+          })
+      
+      // alert(this.state.dayArry)
+  }
+  _leftbotton(){
+    let newDate = new Date();
+    let newDay = newDate.toJSON();
+    let tday = newDay.slice(0,10)//yy-mm-dd格式时间
+    //传入的时间
+    let nTime= new Date(new Date().setHours(0,0,0,0))
+    let newtime = Date.parse(nTime)+28800000;
+    var promise = getItem("Calender").then((result) => {
+      let Calenderint = parseInt(result);
+      
+      if(parseInt(result)==0){
+          Calenderint = newtime
+      }else{
+        Calenderint = parseInt(result)
+      }
+        var promise = getItem("leftday").then((result) => {
+          // alert(result)
+          // let ko = []
+          // this.setState({dayArry:ko})
+          // this.state.dayArry.length=0;
+          // alert(86400000*parseInt(result))
+          // let days = parseInt(result);
+          // alert(days)
+          // alert(newtime)
+       
+        let testtime = newtime-parseInt(result);
+       
+        let lastday = 86400000*2;
+        let newCalenderint = Calenderint-86400000;
+        let lastdaytime = newtime-lastday;
+        // alert(Calenderint-lastdaytime)
+        alert(new Date( Calenderint )+'----'+new Date( lastdaytime ))
+        if(Calenderint<lastdaytime){
+          // alert(testtime)
+          // alert(Calenderint-lastdaytime)
+          this.setState({leftban:false})
+        }else{
+          // alert(Calenderint+'-----'+lastdaytime)
+          let  leftbo = Calenderint-86400000;
+          var promise = saveItem("Calender", leftbo.toString(), () => { }).then((result) => {
+            let unixTimestamp = new Date( leftbo );
+            let yday = unixTimestamp.toJSON();
+            let thisday = yday.slice(0,10);
+            if(leftbo<lastdaytime){
+              this.setState({dayDate:leftbo,textSt1:1,exp:15,Calenderday:thisday,leftban:false})
+              this._makeUp1(leftbo)
+            }else  {
+              this.setState({dayDate:leftbo,textSt1:1,exp:5,Calenderday:thisday,rightban:true,})
+              this._makeUp1(leftbo)
+            }
+            
+            // alert(new Date( leftbo ))
+            
+            var promise = getItem("leftday").then((result) => {
+              // this._filling1()
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          }).catch((error) => {
+            console.error(new Error("失败"));
+          })
+        }
+
+        // alert(thisday)
+        }).catch((error) => {
+              console.error(new Error("失败"));
+        })
+    }).catch((error) => {
+      console.error(new Error("失败"));
+    })
+   
+  }
+  _rightbotton(){
+    let newDate = new Date();
+    let newDay = newDate.toJSON();
+    let tday = newDay.slice(0,10)//yy-mm-dd格式时间
+    //传入的时间
+    let nTime= new Date(new Date().setHours(0,0,0,0))
+    let newtime = Date.parse(nTime)+28800000;
+    var promise = getItem("Calender").then((result) => {
+      let Calenderint = parseInt(result)
+      if(parseInt(result)==0){
+          Calenderint = newtime
+      }
+          var promise = getItem("leftday").then((result) => {
+            // alert(result)
+            // let ko = []
+            // this.setState({dayArry:ko})
+            // this.state.dayArry.length=0;
+            // alert(86400000*parseInt(result))
+            // let days = parseInt(result);
+            // alert(this.state.dayDate)
+          // alert(Calenderint)
+          let testtime = this.state.dayDate+86400000;
+          
+          let lastday = 86400000*2;
+          // alert(new Date(Calenderint-lastday))
+          let lastdaytime = Calenderint-lastday
+
+          if(Calenderint==newtime){
+            // alert(testtime)
+            this.setState({rightban:false});
+          }else if (Calenderint>newtime){
+
+          }else{
+           
+            let  leftbo = Calenderint+86400000;
+            var promise = saveItem("Calender", leftbo.toString(), () => { }).then((result) => {
+              let unixTimestamp = new Date( leftbo );
+              let yday = unixTimestamp.toJSON();
+              let thisday = yday.slice(0,10);
+              if(leftbo==newtime){
+                this.setState({dayDate:leftbo,textSt1:0,exp:10,Calenderday:thisday,leftban:false})
+                this._makeUp1(leftbo)
+              }else{
+                this.setState({dayDate:leftbo,textSt1:1,exp:5,Calenderday:thisday,leftban:true})
+                this._makeUp1(leftbo)
+              }
+              
+              
+              var promise = getItem("leftday").then((result) => {
+                // this._filling1(
+                  
+              }).catch((error) => {
+                console.error(new Error("失败"));
+              })
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          }
+
+          // alert(thisday)
+          }).catch((error) => {
+                console.error(new Error("失败"));
+          })
+     }).catch((error) => {
+          console.error(new Error("失败"));
+     })
+   
+  }
   _weixin1(text){
     if(text==''){
         toastLong('请输入内容')
@@ -729,26 +964,32 @@ import { getItem,saveItem} from './common/AsyncStorage'
                       ><Image source={require('./image/level.png')} style={{height:11,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
                 >等级3</Text></View>
             </View>
-          <View >
-            <Text style={styles.welcome} >
-              What went well today?
-            </Text>
+          <View style={{flexDirection:'row',height:80,width:width,backgroundColor:'#fff'}}>
+            <View style={{flex:1,justifyContent:'center'}}>
+            {this.state.leftban?
+             
+              <TouchableOpacity onPress={()=>{this._leftbotton()}}><Image source={require('./image/back.png')} style={{height:30,width:30,}}></Image></TouchableOpacity>
+              : <View style={{height:30,width:30,}}/>
+            }
+            </View>
+            <View style={{flex:3,}}>
+              <View style={{flex:1,justifyContent:'flex-end',alignItems:'center'}}>
+                <Text style={{color:'#4FA4FF',fontWeight:'bold'}}>{this.state.Calenderday}</Text>
+              </View>
+              <View style={{flex:1,justifyContent:'flex-start',alignItems:'center'}}>
+                <Text style={{color:'#4FA4FF',fontWeight:'bold'}}>今天发生了哪些美好的事情？</Text>
+              </View>
+            </View>
+            <View style={{flex:1,justifyContent:'center',alignItems:'flex-end'}}>
+            {this.state.rightban?
+              <TouchableOpacity onPress={()=>{this._rightbotton()}}><Image source={require('./image/more.png')} style={{height:30,width:30,}}></Image></TouchableOpacity>
+              :<View style={{height:30,width:30,}}/>
+              }
+            </View>
           
           </View>
           <View style={ styles.inputView}>
-              <View style={styles.inputViewLeft}>
-                  <View style={styles.leftImageTop}></View>
-                  <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
-                  {this.state.image1?
-                      <TouchableOpacity style={styles.leftImageBottom} 
-                        onPress={() => {this._weixin1(this.state.textInput1)}}
-                      >
-                          <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
-                      </TouchableOpacity>
-                      :<View style={styles.leftImageBottom}/>
-                  }
-                  
-              </View>
+              
               <View style={styles.inputViewRight}>
                   <TextInput
                     style={styles.TextInputStyle}
@@ -757,7 +998,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     multiline={true}
                     numberOfLines={20}
                     maxLength={100}
-                    placeholder="Press here to begin typing..."
+                    placeholder="点击开始记录..."
                     autoCapitalize='sentences'
                     clearButtonMode='never'
                     editable={this.state.ban1}//如果值为假，文本是不可编辑，默认值为真
@@ -769,21 +1010,22 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     onBlur={() => {this.textI1(this.state.textSt1)}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
+
               </View>
-          </View>
-          <View style={ styles.inputView}>
-              <View style={styles.inputViewLeft}>
-                  <View style={styles.leftImageTop}></View>
-                  <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
-                  {this.state.image2?
-                      <TouchableOpacity style={styles.leftImageBottom}
-                          onPress={() => {this._weixin1(this.state.textInput2)}}
+              <View style={{height:30,width:width-50,alignItems:'flex-end'}}>
+                {this.state.image1?
+                      <TouchableOpacity style={styles.leftImageBottom} 
+                        onPress={() => {this._weixin1(this.state.textInput1)}}
                       >
-                          <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
+                          <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
                       </TouchableOpacity>
                       :<View style={styles.leftImageBottom}/>
                   }
               </View>
+          </View>
+          <View style={ styles.inputView}>
+              
+                 
               <View style={styles.inputViewRight}>
                   <TextInput
                     style={styles.TextInputStyle}
@@ -803,21 +1045,19 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
+              <View style={{height:30,width:width-50,alignItems:'flex-end'}}>
+              {this.state.image2?
+                    <TouchableOpacity style={styles.leftImageBottom} 
+                      onPress={() => {this._weixin1(this.state.textInput2)}}
+                    >
+                        <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
+                    </TouchableOpacity>
+                    :<View style={styles.leftImageBottom}/>
+                }
+              </View>
           </View>
           <View style={ styles.inputView} >
-              <View style={styles.inputViewLeft}>
-                 <View style={styles.leftImageTop}></View>
-                  <Image style={styles.leftImage} source={require('./image/Smile.png')} ></Image>
-                  {this.state.image3?
-                      <TouchableOpacity style={styles.leftImageBottom}
-                          onPress={() => {this._weixin1(this.state.textInput3)}}
-                      
-                      >
-                          <Image style={{height:24,width:24}} source={require('./image/weixin.png')}></Image>
-                      </TouchableOpacity>
-                      :<View style={styles.leftImageBottom}/>
-                  }
-              </View>
+              
               <View style={styles.inputViewRight} >
                   <TextInput
                     style={styles.TextInputStyle}
@@ -836,9 +1076,19 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
+              <View style={{height:30,width:width-50,alignItems:'flex-end'}}>
+              {this.state.image3?
+                    <TouchableOpacity style={styles.leftImageBottom} 
+                      onPress={() => {this._weixin1(this.state.textInput3)}}
+                    >
+                        <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
+                    </TouchableOpacity>
+                    :<View style={styles.leftImageBottom}/>
+                }
+              </View>
           </View>
           {this.state.BottomHeight?
-              <View style={{height:100}}></View>
+              <View style={{height:80}}></View>
               :<View></View>
           
           }
@@ -855,7 +1105,7 @@ const styles = StyleSheet.create({
   
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: '#13227a',
+    backgroundColor: '#FAFAFA',
   },
   welcome: {
     fontSize: 20,
@@ -870,15 +1120,24 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   inputView:{
-    height:(height-220)/3,
+    height:(height-290)/3,
     flex:1,
     backgroundColor:'#fff',
     margin:25,
-    marginBottom:15,
-    marginTop:0,
-    borderRadius:15,
-    flexDirection:'row',
-    padding:10
+    marginBottom:3,
+    marginTop:20,
+    
+    // shadowOffset: {width: 0, height: 5},  
+    // shadowOpacity: 0.5,  
+    // shadowRadius: 5,  
+    // shadowColor: '#333',  
+    //注意：这一句是可以让安卓拥有灰色阴影  
+    elevation: 4,  
+   
+    
+    
+    // flexDirection:'row',
+    // padding:10,
   },
   inputViewLeft:{
     flex:2,
@@ -887,7 +1146,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   inputViewRight:{
-    flex:8,
+    flex:4,
     // backgroundColor:'#465456'
     // alignItems:'flex-start'
   },
@@ -901,16 +1160,17 @@ const styles = StyleSheet.create({
     marginBottom:5,
   },
   leftImageBottom:{
-    height:24,
-    flex:1,
-    marginTop:5,
+    height:30,width:30,
+    // flex:1,
+    // marginTop:5,
   },
   TextInputStyle:{
     // flex:1,
-    padding:0,
+    padding:10,
+    paddingBottom:0,
     // width:200,
     textAlignVertical:'top',//改变编辑框的初始位置
-    fontSize:20,
+    // fontSize:20,
     fontWeight:'bold',
     
   },topView:{

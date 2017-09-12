@@ -67,16 +67,18 @@ export default class Roots extends React.Component {
                 <TabBar.Item
                     title="Calendar"
                     // badge={2}
-                    // icon={require('../../images/alipay.png')}
-                    // selectedIcon={require('../../images/alipay_sel.png')}
+                    icon={require('./image/calendardefault.png')}
+                    selectedIcon={require('./image/calendar.png')}
+                    iconStyle={{width:20,height:20}}
                     selected={this.state.selectedTab === 'blueTab'}
                     onPress={() => this.onChangeTab('blueTab')}
                 >
                     <Calender navigation={this.props.navigation} />
                 </TabBar.Item>
                 <TabBar.Item
-                    // icon={require('../../images/koubei.png')}
-                    // selectedIcon={require('../../images/koubei_sel.png')}
+                    icon={require('./image/historydefault.png')}
+                    selectedIcon={require('./image/history.png')}
+                    iconStyle={{width:20,height:20}}
                     title="History"
                     selected={this.state.selectedTab === 'redTab'}
                     onPress={() => this.onChangeTab('redTab')}
@@ -84,8 +86,9 @@ export default class Roots extends React.Component {
                      <History navigation={this.props.navigation} />
                 </TabBar.Item>
                 <TabBar.Item
-                    // icon={require('../../images/friend.png')}
-                    // selectedIcon={require('../../images/friend_sel.png')}
+                    icon={require('./image/journaldefault.png')}
+                    selectedIcon={require('./image/journal.png')}
+                    iconStyle={{width:20,height:20}}
                     title="Journal"
                     selected={this.state.selectedTab === 'greenTab'}
                     onPress={() => this.onChangeTab('greenTab')}
@@ -93,8 +96,9 @@ export default class Roots extends React.Component {
                     <Journl navigation={this.props.navigation} />
                 </TabBar.Item>
                 <TabBar.Item
-                    // icon={require('../../images/busi.png')}
-                    // selectedIcon={require('../../images/busi_sel.png')}
+                    icon={require('./image/medefault.png')}
+                    selectedIcon={require('./image/me.png')}
+                    iconStyle={{width:20,height:20}}
                     title="Profile"
                     selected={this.state.selectedTab === 'yellowTab'}
                     onPress={() => this.onChangeTab('yellowTab')}
@@ -102,8 +106,9 @@ export default class Roots extends React.Component {
                     <Profile navigation={this.props.navigation}/>
                 </TabBar.Item>
                  <TabBar.Item
-                    // icon={require('../../images/koubei.png')}
-                    // selectedIcon={require('../../images/koubei_sel.png')}
+                    icon={require('./image/settingdefault.png')}
+                    selectedIcon={require('./image/setting.png')}
+                    iconStyle={{width:20,height:20}}
                     title="Settings"
                     selected={this.state.selectedTab === 'blackTab'}
                     onPress={() => this.onChangeTab('blackTab')}

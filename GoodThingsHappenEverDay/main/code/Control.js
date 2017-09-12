@@ -18,6 +18,7 @@ import { getItem, saveItem} from './common/AsyncStorage';
       }
   componentWillMount() {
     var promise = saveItem("Calender", '0', () => { }).then((result) => {
+      var promise = saveItem("leftday", '86400000', () => { }).then((result) => {
         var promise = getItem("name1").then((result) => {
           
               this.goTo(result);
@@ -26,6 +27,10 @@ import { getItem, saveItem} from './common/AsyncStorage';
               console.error(new Error("失败"));
               this.goTo();
             })
+          }).catch((error) => {
+            console.error(new Error("失败"));
+            this.goTo();
+          })    
       }).catch((error) => {
         console.error(new Error("失败"));
         this.goTo();

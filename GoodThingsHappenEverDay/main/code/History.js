@@ -43,7 +43,7 @@ var ScreenWidth = Dimensions.get('window').width;
       for(let i in this.state.keyarry){
         var promise = getItem(keyarry[i]).then((result) => {
           this.state.AllArry.push(result)
-            
+            // alert('12')
         }).catch((error) => {
           
         })
@@ -96,89 +96,159 @@ var ScreenWidth = Dimensions.get('window').width;
   }
   _renderItemWeek = (item) => {
     let journltext = item.item.slice(11)
-    let thtime = item.item.slice(0,10)
+    let thtime = item.item.slice(0,7)
+    let day =  item.item.slice(8,10)
+    let date = item.item.slice(0,4)+'.'+item.item.slice(5,7)
     return ( 
-              <View style={styles.card}>
-                <Text >{thtime}</Text>
-                <Text style={{fontSize:20,color:'#13227a',fontWeight:'bold'}}>{journltext}</Text>
+              <View style={styles.allCard}>
+                <View style={{flex:2,justifyContent:'flex-start',alignItems:'center',}}>
+                  <Text style={{fontSize:18,color:'#F2E0A9',lineHeight:18}}>{day}</Text>
+                </View>
+                <View style={{flex:15,}}>
+                  <View style={{flexDirection:'row',height:15,}}>
+                    <Image source={require('./image/history-icon.png')} style={{height:10,width:10}}></Image>
+                    <Text style={{fontSize:10,lineHeight:10,color:'#b3b3b3'}}>{date}</Text>
+                  </View> 
+                  
+                  <Text style={{fontSize:14,color:'#666',}}>{journltext}</Text>
+                </View>
+                
+               
               </View>
       )
   }
   _renderItemMonth = (item) => {
     let journltext = item.item.slice(11)
-    let thtime = item.item.slice(0,10)
+    let thtime = item.item.slice(0,7)
+    let day =  item.item.slice(8,10)
+    let date = item.item.slice(0,4)+'.'+item.item.slice(5,7)
     return ( 
-              <View style={styles.card}>
-                <Text >{thtime}</Text>
-                <Text style={{fontSize:20,color:'#13227a',fontWeight:'bold'}}>{journltext}</Text>
+              <View style={styles.allCard}>
+                <View style={{flex:2,justifyContent:'flex-start',alignItems:'center',}}>
+                  <Text style={{fontSize:18,color:'#F2E0A9',lineHeight:18}}>{day}</Text>
+                </View>
+                <View style={{flex:15,}}>
+                  <View style={{flexDirection:'row',height:15,}}>
+                    <Image source={require('./image/history-icon.png')} style={{height:10,width:10}}></Image>
+                    <Text style={{fontSize:10,lineHeight:10,color:'#b3b3b3'}}>{date}</Text>
+                  </View> 
+                  
+                  <Text style={{fontSize:14,color:'#666',}}>{journltext}</Text>
+                </View>
+                
+               
               </View>
       )
   }
   _renderItemYear = (item) => {
     let journltext = item.item.slice(11)
-    let thtime = item.item.slice(0,10)
+    let thtime = item.item.slice(0,7)
+    let day =  item.item.slice(8,10)
+    let date = item.item.slice(0,4)+'.'+item.item.slice(5,7)
     return ( 
-              <View style={styles.card}>
-                <Text >{thtime}</Text>
-                <Text style={{fontSize:20,color:'#13227a',fontWeight:'bold'}}>{journltext}</Text>
+              <View style={styles.allCard}>
+                <View style={{flex:2,justifyContent:'flex-start',alignItems:'center',}}>
+                  <Text style={{fontSize:18,color:'#F2E0A9',lineHeight:18}}>{day}</Text>
+                </View>
+                <View style={{flex:15,}}>
+                  <View style={{flexDirection:'row',height:15,}}>
+                    <Image source={require('./image/history-icon.png')} style={{height:10,width:10}}></Image>
+                    <Text style={{fontSize:10,lineHeight:10,color:'#b3b3b3'}}>{date}</Text>
+                  </View> 
+                  
+                  <Text style={{fontSize:14,color:'#666',}}>{journltext}</Text>
+                </View>
+                
+               
               </View>
       )
   }
   _renderItemAll = (item) => {
     let journltext = item.item.slice(11)
-    let thtime = item.item.slice(0,10)
+    let thtime = item.item.slice(0,7)
+    let day =  item.item.slice(8,10)
+    let date = item.item.slice(0,4)+'.'+item.item.slice(5,7)
     return ( 
-              <View style={styles.card}>
-                <Text >{thtime}</Text>
-                <Text style={{fontSize:20,color:'#13227a',fontWeight:'bold'}}>{journltext}</Text>
+              <View style={styles.allCard}>
+                <View style={{flex:2,justifyContent:'flex-start',alignItems:'center',}}>
+                  <Text style={{fontSize:18,color:'#F2E0A9',lineHeight:18}}>{day}</Text>
+                </View>
+                <View style={{flex:15,}}>
+                  <View style={{flexDirection:'row',height:15,}}>
+                    <Image source={require('./image/history-icon.png')} style={{height:10,width:10}}></Image>
+                    <Text style={{fontSize:10,lineHeight:10,color:'#b3b3b3'}}>{date}</Text>
+                  </View> 
+                  
+                  <Text style={{fontSize:14,color:'#666',}}>{journltext}</Text>
+                </View>
+                
+               
               </View>
       )
   }
   render() {
     return (
-     
-            
+            <View style={{flex:1,}}>
+                <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
+                    <View style={styles.topView}>
+                          <Text style={styles.topText}>Journl</Text>
+                          
+                    </View>
+                    <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
+                          
+                          ><Image source={require('./image/level.png')} style={{height:11,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
+                    >等级3</Text></View>
+                </View>
             <ScrollableTabView
-                  style={{marginTop: 20, }}
+                  style={{marginTop: 0, }}
                   renderTabBar={() => <DefaultTabBar />}
                   tabBarUnderlineStyle={styles.lineStyle}
-                  tabBarActiveTextColor='#FF0000'>
+                  tabBarInactiveTextColor='#666'
+
+                  tabBarActiveTextColor='#4FA4FF'
                 
-                  <ScrollView tabLabel="Past Week" style={styles.tabView}>
+                  >
+                  
+                
+                  <ScrollView tabLabel="本周" style={styles.tabView}>
                       <FlatList
                     
                       ItemSeparatorComponent={this._separator}
                       renderItem={this._renderItemWeek}
                       data={this.state.WeekArry}>
                       </FlatList>
+                      <View style={styles.bottomView}></View>
                 </ScrollView>
-                <ScrollView tabLabel="Past Month" style={styles.tabView}>
+                <ScrollView tabLabel="本月" style={styles.tabView}>
                     <FlatList
                     
                       ItemSeparatorComponent={this._separator}
                       renderItem={this._renderItemMonth}
                       data={this.state.MonthArry}>
                       </FlatList>
+                      <View style={styles.bottomView}></View>
                 </ScrollView>
-                <ScrollView tabLabel="Past Year" style={styles.tabView}>
+                <ScrollView tabLabel="今年" style={styles.tabView}>
                       <FlatList
                       
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItemYear}
                         data={this.state.YearArry}>
                         </FlatList>
+                        <View style={styles.bottomView}></View>
               </ScrollView>
-              <ScrollView tabLabel="All Time" style={styles.tabView}>
+              <ScrollView tabLabel="全部" style={styles.tabView}>
                       <FlatList
                       
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItemAll}
                         data={this.state.AllArry}>
                         </FlatList>
+                        <View style={styles.bottomView}></View>
               </ScrollView>
                   
             </ScrollableTabView>
-      
+            </View>
     );
   }
 }
@@ -208,7 +278,7 @@ const styles = StyleSheet.create({
      lineStyle: {
          width:ScreenWidth/4,
          height: 2,
-         backgroundColor: '#FF0000',
+         backgroundColor: '#4FA4FF',
      },
      textStyle: {
          flex: 1,
@@ -222,13 +292,13 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
-    backgroundColor:'#fff'
+    backgroundColor:'#4FA4FF'
   },
   topText:{
     textAlign:'center',
     fontSize:20,
     fontWeight:'bold',
-    color:'#000',
+    color:'#F6FCFF',
     paddingLeft:20,
   },
   tabView: {
@@ -249,5 +319,17 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     borderRadius:10,
   },
+  allCard:{
+    height: 130,
+    margin: 5,
+    // height: 100,
+    padding: 15,
+    borderRadius:10,
+    elevation: 2,
+    flexDirection:'row'
+  },
+  bottomView:{
+    height:20,
+  }
 });
 export default History
