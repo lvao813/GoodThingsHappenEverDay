@@ -13,6 +13,7 @@ var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 import { getItem, saveItem} from './common/AsyncStorage';
+import { Profile1,Level,Exp1,Exp2,TLevel,Recommended,Streak,LongStreak,Days,Things,MSG,NameT,LibraryButton,TakePhoto,Cacel,ImageTitle} from './common/constants_titel';
 import { toastLong} from './common/ToastUtils';
 import ImagePicker from 'react-native-image-picker';
 import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
@@ -33,13 +34,14 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
             img:Header,
             exp:0,
             badgeImge:Badeg1,
+            friends:0,
 
         };
           this.options = {
-      title: '请选择',
-      cancelButtonTitle: '取消',
-      takePhotoButtonTitle: '拍照',
-      chooseFromLibraryButtonTitle: '从照片库选择...',
+      title: ImageTitle,
+      cancelButtonTitle: Cacel,
+      takePhotoButtonTitle: TakePhoto,
+      chooseFromLibraryButtonTitle: LibraryButton,
 
       // durationLimit: 10,
       // maxWidth: 100,
@@ -76,6 +78,7 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
                           let streak1 = parseInt(result)
                             // alert(parseInt(result)+1)
                             this.setState({current:result})
+                              this._levelseve()
                             var promise = getItem("longstreak1").then((result) => { 
                               if(streak1>parseInt(result)){
                                 var promise = saveItem("longstreak1", streak1.toString(), () => { }).then((result) => {
@@ -97,6 +100,12 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
                                           // alert(keyarry.length)
                                         let len = Math.ceil(keyarry.length/3)
                                         this.setState({things:len,dayS:keyarry.length})
+                                        var promise = getItem("friends").then((result) => {
+                                          // alert(parseInt(result))
+                                          this.setState({friends:parseInt(result)})
+                                        }).catch((error) => {
+                                          console.error(new Error("失败"));
+                                        })
                                     }).catch((error) => {
                                       // console.log('1');
                                     })
@@ -121,12 +130,21 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
           
         })
     }
+    _levelseve(){
+      let level1 = this.state.level
+      var promise = saveItem("level", level1.toString(), () => { }).then((result) => {
+        // alert(parseInt(result))
+        // alert('ok')
+      }).catch((error) => {
+        console.error(new Error("失败"));
+      })
+    }
       seve(){
           if(this.state.name==''){
-              toastLong('请输入您的姓名')
+              toastLong(NameT)
           }else{
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
-                   toastLong('修改成功');
+                   toastLong(MSG);
                    
                 }).catch((error) => {
                 console.log('1');
@@ -207,7 +225,7 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
       } else {
         this.setState({img:response.uri})
         var promise = saveItem("img", response.uri, () => { }).then((result) => {
-                   toastLong('修改成功');
+                   toastLong(MSG);
                    
                 }).catch((error) => {
                 console.log('1');
@@ -239,7 +257,7 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
                     </View>
                   <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row',marginRight:8}} >
                     <Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/>
-                      <Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}>等级3</Text>
+                      <Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}>{Level}{this.state.level}</Text>
                   </View>
               </View>
               <View style={{flex:3,flexDirection:'row',marginBottom:10}}>
@@ -264,7 +282,7 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
                           <ProgressBarAndroid  color="#F2743C" styleAttr='Horizontal' progress={this.state.progress}  
                             indeterminate={false} style={{width:150}} />  
                           <View style={styles.TopView4B}>
-                          <Text style={styles.View4BText}>加油~还有{this.state.nextexp}xp就可以升级</Text></View>
+                          <Text style={styles.View4BText}>{Exp1}{this.state.nextexp}{Exp2}</Text></View>
                         </View>
                       </View>
                       
@@ -277,15 +295,15 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
                         <Text style={{fontSize:20,color:'#FDDE80'}}>{this.state.level}</Text>
                     </View>
                     <View style={styles.TopleftView}>
-                        <Text style={{fontSize:15,color:'#8B8B8B'}}>当前等级</Text>
+                        <Text style={{fontSize:15,color:'#8B8B8B'}}>{TLevel}</Text>
                     </View>
                   </View>
                   <View style={{flex:4,}}>
                      <View style={styles.TopleftView}>
-                        <Text style={{fontSize:20,color:'#EB854F'}}>50</Text>
+                        <Text style={{fontSize:20,color:'#EB854F'}}>{this.state.friends}</Text>
                     </View>
                     <View style={styles.TopleftView}>
-                        <Text style={{fontSize:15,color:'#8B8B8B'}}>推荐好友人数</Text>
+                        <Text style={{fontSize:15,color:'#8B8B8B'}}>{Recommended}</Text>
                     </View>
                   </View>
               </View>
@@ -295,19 +313,19 @@ import { Header,Badeg1,Badeg2,Badeg3,Badeg4 } from './common/constants';
         <View style={styles.TopView3}>
           <View style={{flex:4,backgroundColor:'#fff',elevation: 4,  }}>
               <View style={{flex:1,flexDirection:'row',}}>
-                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>当前连续记录的天数</Text></View>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>{Streak}</Text></View>
                 <View style={{flex:2,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.current}</Text></View>
               </View>
               <View style={{flex:1,flexDirection:'row'}}>
-                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>最长连续记录天数</Text></View>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>{LongStreak}</Text></View>
                 <View style={{flex:2,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.longest}</Text></View>
               </View>
               <View style={{flex:1,flexDirection:'row'}}>
-                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>完成的天数</Text></View>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10}}><Text style={{fontSize:15,color:'#8B8B8B'}}>{Days}</Text></View>
                 <View style={{flex:2,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.things}</Text></View>
               </View>
               <View style={{flex:1,flexDirection:'row'}}>
-                <View style={{flex:9,justifyContent:'center',marginLeft:10,}}><Text style={{fontSize:15,color:'#8B8B8B'}}>记录的美好事情</Text></View>
+                <View style={{flex:9,justifyContent:'center',marginLeft:10,}}><Text style={{fontSize:15,color:'#8B8B8B'}}>{Things}</Text></View>
                 <View style={{flex:2,justifyContent:'center',alignItems:'center',}}><Text style={{fontSize:20,color:'#64C0E5'}}>{this.state.dayS}</Text></View>
               </View>
           </View>

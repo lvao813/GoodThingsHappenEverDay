@@ -10,6 +10,7 @@ import Journl from './Journl';
 import Settings from './Settings';
 import Profile from './Profile';
 import JPushModule from 'jpush-react-native';
+import { Calender1,Jurnal1,Setting1,Profile1,History1} from './common/constants_titel';
 export default class Roots extends React.Component {
     constructor(props) {
         super(props);
@@ -65,7 +66,7 @@ export default class Roots extends React.Component {
                 hidden={this.state.hide}
             >
                 <TabBar.Item
-                    title="Calendar"
+                    title={Calender1}
                     // badge={2}
                     icon={require('./image/calendardefault.png')}
                     selectedIcon={require('./image/calendar.png')}
@@ -79,7 +80,7 @@ export default class Roots extends React.Component {
                     icon={require('./image/historydefault.png')}
                     selectedIcon={require('./image/history.png')}
                     iconStyle={{width:20,height:20}}
-                    title="History"
+                    title={History1}
                     selected={this.state.selectedTab === 'redTab'}
                     onPress={() => this.onChangeTab('redTab')}
                 >
@@ -89,7 +90,7 @@ export default class Roots extends React.Component {
                     icon={require('./image/journaldefault.png')}
                     selectedIcon={require('./image/journal.png')}
                     iconStyle={{width:20,height:20}}
-                    title="Journal"
+                    title={Jurnal1}
                     selected={this.state.selectedTab === 'greenTab'}
                     onPress={() => this.onChangeTab('greenTab')}
                 >
@@ -99,7 +100,7 @@ export default class Roots extends React.Component {
                     icon={require('./image/medefault.png')}
                     selectedIcon={require('./image/me.png')}
                     iconStyle={{width:20,height:20}}
-                    title="Profile"
+                    title={Profile1}
                     selected={this.state.selectedTab === 'yellowTab'}
                     onPress={() => this.onChangeTab('yellowTab')}
                 >
@@ -109,7 +110,7 @@ export default class Roots extends React.Component {
                     icon={require('./image/settingdefault.png')}
                     selectedIcon={require('./image/setting.png')}
                     iconStyle={{width:20,height:20}}
-                    title="Settings"
+                    title={Setting1}
                     selected={this.state.selectedTab === 'blackTab'}
                     onPress={() => this.onChangeTab('blackTab')}
                 >

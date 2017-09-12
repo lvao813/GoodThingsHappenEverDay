@@ -12,6 +12,7 @@ import { getItem, saveItem} from '../common/AsyncStorage'
 import { toastLong} from '../common/ToastUtils'
 import { NavigationActions } from 'react-navigation';
 import Swiper from 'react-native-swiper';
+import {NameT,WELT11,WELT12,WELT13,WELT21,WELT22,WELT23,WELT24,WELT31,WELT32,WELT33} from '../common/constants_titel';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -37,11 +38,12 @@ import { StackNavigator } from 'react-navigation';
         let longstreak = 0;
         let daythings = 0; 
           if(this.state.name==''){
-              toastLong('请输入您的姓名')
+              toastLong(NameT)
           }else{
                 var promise = saveItem("name1", this.state.name, () => { }).then((result) => {
                     var promise = saveItem("uuid", uuid, () => { }).then((result) => {
                         // alert(uuid)
+                        var promise = saveItem("level", '1', () => { }).then((result) => {
                         var promise = saveItem("keyarry1", JSON.stringify(keyarry1), () => { }).then((result) => {
                             // alert(uuid)
                              var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
@@ -63,6 +65,7 @@ import { StackNavigator } from 'react-navigation';
                                                     var promise = saveItem("Calenderday", thisday, () => { }).then((result) => {
                                                         var promise = saveItem("texinput1", '1', () => { }).then((result) => {
                                                             var promise = saveItem("texinput2", '2', () => { }).then((result) => {
+                                                                var promise = saveItem("friends", '0', () => { }).then((result) => {
                                                                 var promise = saveItem("texinput3", '3', () => { }).then((result) => {
                                                                     const resetAction = NavigationActions.reset({
                                                                         index: 0,
@@ -74,6 +77,10 @@ import { StackNavigator } from 'react-navigation';
                                                                     this.props.navigation.dispatch(resetAction); 
                                                                 }).catch((error) => {
                                                                     console.error(new Error("失败"));
+                                                                })
+                                                                }).catch((error) => {
+                                                                console.error(new Error("失败"));
+                                                                this.goTo();
                                                                 })
                                                             }).catch((error) => {
                                                                 console.error(new Error("失败"));
@@ -105,6 +112,9 @@ import { StackNavigator } from 'react-navigation';
                             console.error(new Error("失败"));
                             })
                         }).catch((error) => {
+                            console.error(new Error("失败"));
+                            })
+                        }).catch((error) => {
                         console.error(new Error("失败"));
                         })
                     }).catch((error) => {
@@ -132,57 +142,48 @@ import { StackNavigator } from 'react-navigation';
                         
                             <Image  source={require('../image/BigSmile.png')}></Image>
                             <Text style={styles.welcome} >
-                            Good Things Happen Ever Day!
+                            {WELT11}
                             </Text>
                             <Text style={styles.instructions}>
-                                In just 5 minutes a day,increase your
+                            {WELT12}
                             </Text>
                             <Text style={styles.instructions}>
-                                happiness and rewire your brain to
+                            {WELT13}
                             </Text>
-                            <Text style={styles.instructions}>
-                                focus on the positive.
-                            </Text>
+                           
                         
                     </View>
                     <View style={styles.container}>
                         
                             <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/brush.png')}></Image>
                             <Text style={styles.welcome} >
-                            Log Your Highlights
+                            {WELT21}
                             </Text>
                             <Text style={styles.instructions} >
-                            Studies have shown that writing down
+                            {WELT22}
                             </Text>
                             <Text style={styles.instructions}>
-                                there good Things every day has
+                            {WELT23}
                             </Text>
                             <Text style={styles.instructions}>
-                                lasting effects on one's happiness,
+                            {WELT24}
                             </Text>
-                            <Text style={styles.instructions}>
-                                positivity,and optimism.
-                            </Text>
+                           
                         
                     </View>
                     <View style={styles.container}>
                         
                             <Image style={{height:100,width:100,marginBottom:30}} source={require('../image/medal.png')}></Image>
                             <Text style={styles.welcome} >
-                            Engage and Improve
+                            {WELT31}
                             </Text>
                             <Text style={styles.instructions} >
-                            Level up,gain experience points(XP),
+                            {WELT32}
                             </Text>
                             <Text style={styles.instructions}>
-                                view previous entries,set a
+                            {WELT33}
                             </Text>
-                            <Text style={styles.instructions}>
-                                customizable notification,choose a
-                            </Text>
-                            <Text style={styles.instructions}>
-                                profile picture,and more.
-                            </Text>
+                            
                             <TextInput
                                 underlineColorAndroid="transparent"
                                 autoCapitalize='words'

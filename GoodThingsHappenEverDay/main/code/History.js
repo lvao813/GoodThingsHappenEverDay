@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { getItem,saveItem} from './common/AsyncStorage'
  import ScrollableTabView, {DefaultTabBar,ScrollableTabBar} from 'react-native-scrollable-tab-view';
+ import { History1,Level,Week,Months,Year,All} from './common/constants_titel';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -24,6 +25,7 @@ var ScreenWidth = Dimensions.get('window').width;
         MonthArry:[],
         YearArry:[],
         AllArry:[],
+        level1:1,
       
     };
     
@@ -85,11 +87,12 @@ var ScreenWidth = Dimensions.get('window').width;
     // this.setState({WeekArry:WeekArry})
   }
   componentDidMount() {
-    // this.interval = setInterval(() => {
-    //  alert(this.state.WeekArry)
-
-    // }, 1000);
-    // // alert(this.state.WeekArry)
+    var promise = getItem("level").then((result) => {
+      // alert(parseInt(result))
+      this.setState({level1:parseInt(result)})
+    }).catch((error) => {
+      console.error(new Error("失败"));
+    })
   }
   _separator = () => {
     return <View style={{height:2,}}/>;
@@ -191,13 +194,13 @@ var ScreenWidth = Dimensions.get('window').width;
             <View style={{flex:1,}}>
                 <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
                     <View style={styles.topView}>
-                          <Text style={styles.topText}>Journl</Text>
+                          <Text style={styles.topText}>{History1}</Text>
                           
                     </View>
                     <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
                           
                           ><Image source={require('./image/level.png')} style={{height:11,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
-                    >等级3</Text></View>
+                    >{Level}{this.state.level1}</Text></View>
                 </View>
             <ScrollableTabView
                   style={{marginTop: 0, }}
@@ -210,7 +213,7 @@ var ScreenWidth = Dimensions.get('window').width;
                   >
                   
                 
-                  <ScrollView tabLabel="本周" style={styles.tabView}>
+                  <ScrollView tabLabel={Week} style={styles.tabView}>
                       <FlatList
                     
                       ItemSeparatorComponent={this._separator}
@@ -219,7 +222,7 @@ var ScreenWidth = Dimensions.get('window').width;
                       </FlatList>
                       <View style={styles.bottomView}></View>
                 </ScrollView>
-                <ScrollView tabLabel="本月" style={styles.tabView}>
+                <ScrollView tabLabel={Months} style={styles.tabView}>
                     <FlatList
                     
                       ItemSeparatorComponent={this._separator}
@@ -228,7 +231,7 @@ var ScreenWidth = Dimensions.get('window').width;
                       </FlatList>
                       <View style={styles.bottomView}></View>
                 </ScrollView>
-                <ScrollView tabLabel="今年" style={styles.tabView}>
+                <ScrollView tabLabel={Year} style={styles.tabView}>
                       <FlatList
                       
                         ItemSeparatorComponent={this._separator}
@@ -237,7 +240,7 @@ var ScreenWidth = Dimensions.get('window').width;
                         </FlatList>
                         <View style={styles.bottomView}></View>
               </ScrollView>
-              <ScrollView tabLabel="全部" style={styles.tabView}>
+              <ScrollView tabLabel={All} style={styles.tabView}>
                       <FlatList
                       
                         ItemSeparatorComponent={this._separator}

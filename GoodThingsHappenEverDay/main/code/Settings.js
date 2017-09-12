@@ -13,6 +13,8 @@ import { NavBar, Icon } from 'antd-mobile';
 import Activity from './common/ModalActivity';
 import * as WeChat from 'react-native-wechat';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { NavigationActions } from 'react-navigation';
+import { Setting1,Time,About1,Suggestions,Developer,RateUs,Wechat1,Microblogging,Friends,ChangTime,Level,WachatTitle,Description,WachatEr,EXPTitle} from './common/constants_titel';
 import { getItem,saveItem} from './common/AsyncStorage';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
@@ -33,6 +35,7 @@ const Brief = Item.Brief;
         activtityVisible:false,
         isDateTimePickerVisible: false,
         timepicker:'',
+        level1:1,
         
        
         };
@@ -59,15 +62,56 @@ const Brief = Item.Brief;
                   // alert(result)
                   this.setState({timepicker:result})
                 }
+                
             }).catch((error) => {
               console.error(new Error("失败"));
             })
           }
+            var promise = getItem("level").then((result) => {
+                this.setState({level1:parseInt(result)})
+                
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
       }).catch((error) => {
         console.error(new Error("失败"));
       })
         
 
+      }
+      _friends(){
+        var promise = getItem("friends").then((result) => {
+          // alert(parseInt(result))
+          let nu = parseInt(result)+1;
+          // alert(nu)
+
+          var promise = saveItem("friends", nu.toString(), () => { }).then((result) => {
+            const resetAction = NavigationActions.reset({
+              index: 0,
+              actions: [
+              NavigationActions.navigate({routeName: 'Roots'})
+              ]
+            })
+            
+            this.props.navigation.dispatch(resetAction);
+            // _alert(50) 
+          }).catch((error) => {
+            console.error(new Error("失败"));
+          })
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+      }
+      _alert(exp){
+        Alert.alert(
+          EXPTitle,
+          '+'+exp+' exp',
+          [
+            
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
       }
 
    _Link(Url) {
@@ -139,9 +183,10 @@ const Brief = Item.Brief;
     WeChat.isWXAppInstalled()
     .then((isInstalled) => {
       if (isInstalled) {
+        this._friends()
         WeChat.shareToSession({
-          title:'微信好友测试链接',
-          description: '分享自吕翱的APP',
+          title:WachatTitle,
+          description: Description,
           thumbImage: 'http://img.mp.sohu.com/upload/20170624/13254199b97140f380ba30d670abd0c8_th.png',
           type: 'news',
           webpageUrl: 'http://www.marno.cn/'
@@ -151,7 +196,7 @@ const Brief = Item.Brief;
           alert('error')
         });
       } else {
-        alert('没有安装微信软件，请您安装微信之后再试')
+        alert(WachatEr)
       }
     });
   }
@@ -176,10 +221,11 @@ const Brief = Item.Brief;
     })
         
   }
+
   render() {
    
     return (
-      <View >
+      <View style={{backgroundColor:'#FAFAFA'}}>
         <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
                 <View style={styles.topView}>
                       <Text style={styles.topText}>Settings</Text>
@@ -188,25 +234,33 @@ const Brief = Item.Brief;
                 <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
                       
                       ><Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
-                >等级3</Text></View>
+                >{Level}{this.state.level1}</Text></View>
         </View>
-      <List renderHeader={() => ''} className="my-list">
-        <Item   extra={<Switch value={this.state.value} onValueChange={(value)=>{this._swith(value) }}/>}>{this.state.changeTxt}</Item>
+        <View style={{height:10}}></View>
+      <List  className="my-list">
+        <Item   extra={<Switch value={this.state.value} onValueChange={(value)=>{this._swith(value) }}/>}>{Time}</Item>
         {this.state.value?
-          <Item extra={this.state.timepicker} arrow="horizontal" multipleLine='true' onClick={this._showDateTimePicker }>time</Item>
+          <Item extra={this.state.timepicker} arrow="horizontal" multipleLine='true' onClick={this._showDateTimePicker }>{ChangTime}</Item>
           :<View></View>}
         
       </List>
-      <List renderHeader={() => ''} className="my-list2">
+      <View style={{height:10}}></View>
+      <List  className="my-list2">
           <Item  arrow="horizontal" multipleLine='true' onClick={() => {const { navigate } = this.props.navigation;
- +              navigate('About');} }>About</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('mailto:991386280@163.com')}}>Send feedback or suggestions</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('tel:18651833910')}}>Contact the developer</Item>
+ +              navigate('About');} }>{About1}</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('mailto:info@vloveapp.com')}}>{Suggestions}</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('mailto:info@vloveapp.com')}}>{Developer}</Item>
       </List>
-      <List renderHeader={() => ''} className="my-list3">
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._weixin()} }>Love the app? Rate us in the App Store</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://weibo.com/')}}>Facebook</Item>
-          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://www.qq.com/')}}>Twitter</Item>
+      <View style={{height:10}}></View>
+      <List className="my-list4">
+      <Item  arrow="horizontal" multipleLine='true' onClick={() => {}}>{RateUs}</Item>
+      </List>
+      <View style={{height:10}}></View>
+      <List className="my-list3">
+          
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://weibo.com/p/1006066366532562/home?profile_ftype=1&is_all=1#_0')}}>{Microblogging}</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._Link('http://www.qq.com/')}}>{Wechat1}</Item>
+          <Item  arrow="horizontal" multipleLine='true' onClick={() => {this._weixin()} }>{Friends}</Item>
       </List>
       
         

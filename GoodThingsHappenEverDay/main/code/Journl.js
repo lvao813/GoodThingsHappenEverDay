@@ -14,7 +14,8 @@ var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 import { toastLong} from './common/ToastUtils';
-import { HTEDJurnal } from './common/constants'
+import { HTEDJurnal } from './common/constants';
+import { Jurnal1,Today,ThingsToday,onPassIn,EXPTitle,Level,} from './common/constants_titel';
 import * as WeChat from 'react-native-wechat';
 import { NavigationActions } from 'react-navigation';
 
@@ -47,6 +48,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
             datetime:0,
             leftban:true,
             rightban:false,
+            level1:2,
         };
         WeChat.registerApp('wx6000a418f168ac83');
       }
@@ -94,16 +96,18 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 let timess =  parseInt(result)+1
                
                 //今天的时间
-                let newDate = new Date();
+                let newDate = new Date(newtime);
                 let newDay = newDate.toJSON();
                 let tday = newDay.slice(0,10)//yy-mm-dd格式时间
                 //传入的时间
                 let unixTimestamp = new Date( parseInt(result) );
                 let yday = unixTimestamp.toJSON();
                 let thisday = yday.slice(0,10);
+
+                
               // console.log(nTime);
               // alert(newtime)
-              alert(nTime+'-'+yday+'-'+result+'-'+newtime)
+              // alert(nTime+'-'+yday+'-'+result+'-'+newtime)
               if(parseInt(result)>0){//某一天
                   // alert(parseInt(parseInt(result)*1000))
                   // alert(timess)
@@ -113,8 +117,18 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     this._makeUp(parseInt(result))
                   }else{
                     // alert('150')
-                    this.setState({dayDate:parseInt(result),textSt1:1,exp:5,Calenderday:thisday})
-                    this._makeUp(parseInt(result))
+                    let Calenderint = parseInt(result);
+                    let lastday = 86400000*2;
+                    let newCalenderint = Calenderint-86400000;
+                    let lastdaytime = newtime-lastday;
+                    if(Calenderint<lastdaytime){
+                      this.setState({dayDate:parseInt(result),textSt1:1,exp:5,Calenderday:thisday,rightban:true,leftban:false})
+                      this._makeUp(parseInt(result))
+                    }else{
+                      this.setState({dayDate:parseInt(result),textSt1:1,exp:5,Calenderday:thisday,rightban:true})
+                      this._makeUp(parseInt(result))
+                    }
+                    
                   }
                   
               }else if(parseInt(result)==0){//今天
@@ -177,7 +191,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
     //当天凌晨的毫秒数
     let nTime= new Date(new Date().setHours(0,0,0,0))
     let newtime = Date.parse(nTime);
-
+    var promise = getItem("level").then((result) => {
+      this.setState({level1:parseInt(result)})
     var promise = getItem("Calenderday").then((result) => {
       // this.setState({NU:result})
       let keyin = this.state.dayArry;
@@ -392,6 +407,9 @@ import { getItem,saveItem} from './common/AsyncStorage'
     }).catch((error) => {
       // console.log('1');
     })
+  }).catch((error) => {
+    // console.log('1');
+  })
   }  
   _makeUp(day){
     // alert(day)
@@ -455,9 +473,35 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 console.error(new Error("失败"));
                 })
   }
+  _EXPUP(){
+    var promise = getItem("exp").then((result) => {
+      let exp = parseInt(result)+20;
+        
+        var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+          
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+            NavigationActions.navigate({routeName: 'Roots'})
+            ]
+        })
+        
+        this.props.navigation.dispatch(resetAction);  
+                      
+              
+          this._alert(20)
+
+        }).catch((error) => {
+          console.error(new Error("失败11"));
+        })
+      
+    }).catch((error) => {
+      console.error(new Error("失败10"));
+    })
+  }
   _alert(exp){
     Alert.alert(
-      'Congratulations to gain experience',
+      EXPTitle,
       '+'+exp+' exp',
       [
         
@@ -573,7 +617,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     // let coon = unixTimestamp.toLocaleString();
     // let ymd = coon.getFullYear()+'-'+coon.getMonth()+'-'+coon.getDate()
     //  alert(coon);
-    alert(thisday)
+    // alert(thisday)
     let AsyncStorageKey =''+timestamp+''
     let input1 = thisday+'-'+this.state.textInput1
     // alert(newDay.slice(0,10))
@@ -807,7 +851,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
         let newCalenderint = Calenderint-86400000;
         let lastdaytime = newtime-lastday;
         // alert(Calenderint-lastdaytime)
-        alert(new Date( Calenderint )+'----'+new Date( lastdaytime ))
+        // alert(new Date( Calenderint )+'----'+new Date( lastdaytime ))
         if(Calenderint<lastdaytime){
           // alert(testtime)
           // alert(Calenderint-lastdaytime)
@@ -820,7 +864,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
             let yday = unixTimestamp.toJSON();
             let thisday = yday.slice(0,10);
             if(leftbo<lastdaytime){
-              this.setState({dayDate:leftbo,textSt1:1,exp:15,Calenderday:thisday,leftban:false})
+              this.setState({dayDate:leftbo,textSt1:1,exp:5,Calenderday:thisday,leftban:false})
               this._makeUp1(leftbo)
             }else  {
               this.setState({dayDate:leftbo,textSt1:1,exp:5,Calenderday:thisday,rightban:true,})
@@ -888,7 +932,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
               let yday = unixTimestamp.toJSON();
               let thisday = yday.slice(0,10);
               if(leftbo==newtime){
-                this.setState({dayDate:leftbo,textSt1:0,exp:10,Calenderday:thisday,leftban:false})
+                this.setState({dayDate:leftbo,textSt1:0,exp:10,Calenderday:thisday,rightban:false})
                 this._makeUp1(leftbo)
               }else{
                 this.setState({dayDate:leftbo,textSt1:1,exp:5,Calenderday:thisday,leftban:true})
@@ -924,12 +968,12 @@ import { getItem,saveItem} from './common/AsyncStorage'
       .then((isInstalled) => {
         if (isInstalled) { 
           WeChat.shareToTimeline({type: 'text', description: text})
-            this._alert(20)
+            this._EXPUP()
           .catch((error) => {
             toastLong(error.message);
           });
         } else {
-          alert('没有安装微信软件，请您安装微信之后再试');
+          toastLong('没有安装微信软件，请您安装微信之后再试');
           // this._alert(this.state.exp)
           // this._streak(this.state.NU)
           // let newDate = new Date();
@@ -951,18 +995,28 @@ import { getItem,saveItem} from './common/AsyncStorage'
     }
     
   }
+  _today(){
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+      NavigationActions.navigate({routeName: 'Roots'})
+      ]
+    })
+    
+    this.props.navigation.dispatch(resetAction);  
+  }
   render() {
     return (
       <ScrollView style={styles.container}>
                 <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
                 <View style={styles.topView}>
-                      <Text style={styles.topText}>Journl</Text>
+                      <Text style={styles.topText}>{Jurnal1}</Text>
                       
                 </View>
                 <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
                       
-                      ><Image source={require('./image/level.png')} style={{height:11,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
-                >等级3</Text></View>
+                      ><Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
+                >{Level}{this.state.level1}</Text></View>
             </View>
           <View style={{flexDirection:'row',height:80,width:width,backgroundColor:'#fff'}}>
             <View style={{flex:1,justifyContent:'center'}}>
@@ -977,7 +1031,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 <Text style={{color:'#4FA4FF',fontWeight:'bold'}}>{this.state.Calenderday}</Text>
               </View>
               <View style={{flex:1,justifyContent:'flex-start',alignItems:'center'}}>
-                <Text style={{color:'#4FA4FF',fontWeight:'bold'}}>今天发生了哪些美好的事情？</Text>
+                <Text style={{color:'#4FA4FF',fontWeight:'bold'}}>{ThingsToday}</Text>
               </View>
             </View>
             <View style={{flex:1,justifyContent:'center',alignItems:'flex-end'}}>
@@ -998,7 +1052,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     multiline={true}
                     numberOfLines={20}
                     maxLength={100}
-                    placeholder="点击开始记录..."
+                    placeholder={onPassIn}
                     autoCapitalize='sentences'
                     clearButtonMode='never'
                     editable={this.state.ban1}//如果值为假，文本是不可编辑，默认值为真
@@ -1033,7 +1087,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     multiline={true}
                     numberOfLines={20}
                     maxLength={100}
-                   
+                    placeholder={onPassIn}
                     autoCapitalize='sentences'
                     clearButtonMode='never'
                     editable={this.state.ban4}//如果值为假，文本是不可编辑，默认值为真
@@ -1065,6 +1119,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     multiline={true}
                     numberOfLines={20}
                     maxLength={100}
+                    placeholder={onPassIn}
                     autoCapitalize='sentences'
                     clearButtonMode='never'
                     editable={this.state.ban3}//如果值为假，文本是不可编辑，默认值为真

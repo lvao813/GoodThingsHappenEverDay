@@ -8,10 +8,11 @@ import {
 } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { NavigationActions } from 'react-navigation';
+import { Level,Calender1} from './common/constants_titel';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
-import { getItem, saveItem} from './common/AsyncStorage'
+import { getItem, saveItem} from './common/AsyncStorage';
  class Calender extends Component {
      constructor(props) {
         super(props);
@@ -19,6 +20,7 @@ import { getItem, saveItem} from './common/AsyncStorage'
           minday:'',
           today:'',
           selected:'',
+          level1:1,
 
 
         };
@@ -39,6 +41,12 @@ import { getItem, saveItem} from './common/AsyncStorage'
           // console.log(minday)
           // console.log('====================================');
           this.setState({today:thisday,minday:minday})
+            var promise = getItem("level").then((result) => {
+              // alert(parseInt(result))
+              this.setState({level1:parseInt(result)})
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
           // alert('1')
         }).catch((error) => {
           console.error(new Error("失败"));
@@ -50,13 +58,13 @@ import { getItem, saveItem} from './common/AsyncStorage'
       <ScrollView style={styles.container}>
             <View style={{flexDirection:'row',backgroundColor:'#4FA4FF'}}>
                 <View style={styles.topView}>
-                      <Text style={styles.topText}>Calendar</Text>
+                      <Text style={styles.topText}>{Calender1}</Text>
                       
                 </View>
                 <View style={{height:50,width:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}} 
                       
                       ><Image source={require('./image/level.png')} style={{height:12,width:15,marginRight:2}}/><Text style={{textAlign:'center',fontSize:12,color:'#F6FCFF'}}
-                >等级3</Text></View>
+                >{Level}{this.state.level1}</Text></View>
             </View>
         
         <Calendar

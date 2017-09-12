@@ -20,8 +20,9 @@ import { getItem, saveItem} from './common/AsyncStorage';
     var promise = saveItem("Calender", '0', () => { }).then((result) => {
       var promise = saveItem("leftday", '86400000', () => { }).then((result) => {
         var promise = getItem("name1").then((result) => {
-          
-              this.goTo(result);
+            
+                this.goTo(result);
+                
               
             }).catch((error) => {
               console.error(new Error("失败"));
