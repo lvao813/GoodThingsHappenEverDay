@@ -16,8 +16,8 @@ export const Exp2 = 'xp可以升级';
 export const TLevel = '当前等级';
 export const Recommended = '推荐好友人数';
 export const Streak = '当前连续记录天数';
-export const LongStreak = '最长连续记录的天数';
-export const Days = '完成的天数';
+export const LongStreak = '最长连续记录天数';
+export const Days = '完成天数';
 export const Things = '记录的美好事情';
 export const Time = '每日提醒';
 export const ChangTime = '选择时间';
@@ -33,6 +33,7 @@ export const MSG = '修改成功';
 export const WachatTitle = '美好的一天';
 export const Description = '记录美好的一天';
 export const WachatEr = '没有安装微信软件，请您安装微信之后再试';
+export const WachatNull = '请输入内容';
 export const ImageTitle = '请选择';
 export const Cacel = '取消';
 export const TakePhoto = '拍照';
@@ -48,6 +49,14 @@ export const WELT24 = '帮助养成积极和乐观的思维习惯';
 export const WELT31 = '现在加入，开启您的美好一天';
 export const WELT32 = '累积经验，升级，获取勋章，自定义提醒时间，';
 export const WELT33 = '头像设置，和好友分享，以及更多......';
+export const WELINP = '输入您的名字就开始吧！';
+export const ModalST = '您已连续记录';
+export const ModalDay = '天';
+export const ModalOK = '确定';
+export const ModalGoal = '记录完成：';
+export const ModalStaek = '连续记录';
+export const Modal2Msg = '恭喜您!';
+export const Modal2Happ = '您的幸福指数已经升级至';
 
 
 

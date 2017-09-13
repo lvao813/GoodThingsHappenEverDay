@@ -12,7 +12,7 @@ import { getItem, saveItem} from '../common/AsyncStorage'
 import { toastLong} from '../common/ToastUtils'
 import { NavigationActions } from 'react-navigation';
 import Swiper from 'react-native-swiper';
-import {NameT,WELT11,WELT12,WELT13,WELT21,WELT22,WELT23,WELT24,WELT31,WELT32,WELT33} from '../common/constants_titel';
+import {NameT,WELT11,WELT12,WELT13,WELT21,WELT22,WELT23,WELT24,WELT31,WELT32,WELT33,WELINP} from '../common/constants_titel';
 var Dimensions = require('Dimensions');
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -187,7 +187,7 @@ import { StackNavigator } from 'react-navigation';
                             <TextInput
                                 underlineColorAndroid="transparent"
                                 autoCapitalize='words'
-                                placeholder="Enter your name here to get started!"
+                                placeholder={WELINP}
                                 onBlur={() =>{this.seve()}}
                                 onChangeText={(Text) => {this.setState({name:Text})}}
                                 style={styles.TextInputSt}

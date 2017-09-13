@@ -13,6 +13,7 @@ import { NavBar, Icon } from 'antd-mobile';
 import Activity from './common/ModalActivity';
 import * as WeChat from 'react-native-wechat';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { toastLong} from './common/ToastUtils';
 import { NavigationActions } from 'react-navigation';
 import { Setting1,Time,About1,Suggestions,Developer,RateUs,Wechat1,Microblogging,Friends,ChangTime,Level,WachatTitle,Description,WachatEr,EXPTitle} from './common/constants_titel';
 import { getItem,saveItem} from './common/AsyncStorage';
@@ -193,10 +194,10 @@ const Brief = Item.Brief;
         })
          
         .catch((error) => {
-          alert('error')
+          toastLong('error')
         });
       } else {
-        alert(WachatEr)
+        toastLong(WachatEr)
       }
     });
   }

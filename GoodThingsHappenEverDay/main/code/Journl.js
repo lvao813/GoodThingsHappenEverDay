@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import {  InputItem } from 'antd-mobile';
 var Dimensions = require('Dimensions');
@@ -15,9 +16,11 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 import { toastLong} from './common/ToastUtils';
 import { HTEDJurnal } from './common/constants';
-import { Jurnal1,Today,ThingsToday,onPassIn,EXPTitle,Level,} from './common/constants_titel';
+import { Jurnal1,Today,ThingsToday,onPassIn,EXPTitle,Level,WachatEr,WachatNull,Modal2Happ,Modal2Msg,ModalDay,ModalGoal,
+            ModalST,ModalStaek,ModalOK} from './common/constants_titel';
 import * as WeChat from 'react-native-wechat';
 import { NavigationActions } from 'react-navigation';
+import { toDipsHeight} from './common/PixelRatioUtils'
 
 const weChatAppId = 'wx6000a418f168ac83';
 import { getItem,saveItem} from './common/AsyncStorage'
@@ -48,7 +51,20 @@ import { getItem,saveItem} from './common/AsyncStorage'
             datetime:0,
             leftban:true,
             rightban:false,
-            level1:2,
+            level1:1,
+            InupLen1:100,
+            InupLen2:100,
+            InupLen3:100,
+            InupLen1Ban:false,
+            InupLen2Ban:false,
+            InupLen3Ban:false,
+            modalVisible:false,
+            modalVisible1:false,
+            streak:0,
+            exp2:0,
+
+
+
         };
         WeChat.registerApp('wx6000a418f168ac83');
       }
@@ -191,8 +207,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
     //当天凌晨的毫秒数
     let nTime= new Date(new Date().setHours(0,0,0,0))
     let newtime = Date.parse(nTime);
+    var promise = getItem("streak1").then((result) => {
+      this.setState({streak:parseInt(result)})
     var promise = getItem("level").then((result) => {
       this.setState({level1:parseInt(result)})
+
     var promise = getItem("Calenderday").then((result) => {
       // this.setState({NU:result})
       let keyin = this.state.dayArry;
@@ -241,6 +260,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                       // alert(result)
                           let streak1 = parseInt(result);
                           let streak = parseInt(result);
+                          
                         if(streak1<30){
                           if(streak1%3==0&&streak1%30!=0){
             
@@ -401,8 +421,11 @@ import { getItem,saveItem} from './common/AsyncStorage'
           }).catch((error) => {
             // console.log('1');
             })
+        }).catch((error) => {
+        // console.log('1');
+        })
       }).catch((error) => {
-      // console.log('1');
+        // console.log('1');
       })
     }).catch((error) => {
       // console.log('1');
@@ -529,7 +552,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     
     // alert(this.state.keyarry)
     if(this.state.textInput1==''){
-      this.setState({image1:false})
+      this.setState({image1:false,InupLen1Ban:false})
     }else{
           
               
@@ -544,7 +567,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                       let daythings = parseInt(result)+1;
                         
                         var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
-                            this.setState({ban4:true});
+                            this.setState({ban4:true,InupLen1Ban:false});
 
                         }).catch((error) => {
                           console.error(new Error("失败"));
@@ -558,7 +581,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                   console.error(new Error("失败"));
                   })
                 }else{
-                  this.setState({ban4:true});
+                  this.setState({ban4:true,InupLen1Ban:false});
                 }      
               
     }
@@ -575,7 +598,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     let input = thisday+'-'+this.state.textInput2
     // alert(newDay.slice(0,10))
     if(this.state.textInput2==''){
-      this.setState({image2:false})
+      this.setState({image2:false,InupLen2Ban:false})
     }else{
       if (date==0){
                 var promise = saveItem("texinput2", input, () => { }).then((result) => {
@@ -583,7 +606,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     let daythings = parseInt(result)+1;
                       
                       var promise = saveItem("daythings", daythings.toString(), () => { }).then((result) => {
-                          this.setState({ban3:true})
+                          this.setState({ban3:true,InupLen2Ban:false})
 
                       }).catch((error) => {
                         console.error(new Error("失败"));
@@ -597,7 +620,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                 console.error(new Error("失败"));
                 })
         }else{
-          this.setState({ban3:true})
+          this.setState({ban3:true,InupLen2Ban:false})
         } 
               
     }
@@ -623,7 +646,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
     // alert(newDay.slice(0,10))
     
     if(this.state.textInput3==''){
-      this.setState({image3:false,BottomHeight:false})
+      this.setState({image3:false,BottomHeight:false,InupLen3Ban:false})
     }else{
       
       var promise = saveItem(AsyncStorageKey, input1, () => { }).then((result) => {
@@ -651,7 +674,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
                           let input3 = thisday+'-'+this.state.textInput3
                          
                                                             var promise = saveItem(AsyncStorageKey, input3, () => { }).then((result) => {
-                                                                this.setState({ban3:false,BottomHeight:false}); 
+                                                                this.setState({ban3:false,BottomHeight:false,InupLen3Ban:false}); 
                                                                 this.state.keyarry.push(AsyncStorageKey);
 
                                                                     var promise = saveItem("keyarry1", JSON.stringify(this.state.keyarry), () => { }).then((result) => {
@@ -665,17 +688,10 @@ import { getItem,saveItem} from './common/AsyncStorage'
                                                                                   
                                                                                   var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
                                                                                     
-                                                                                    const resetAction = NavigationActions.reset({
-                                                                                      index: 0,
-                                                                                      actions: [
-                                                                                      NavigationActions.navigate({routeName: 'Roots'})
-                                                                                      ]
-                                                                                  })
-                                                                                  
-                                                                                  this.props.navigation.dispatch(resetAction);  
+                                                                                     
                                                                                                 
                                                                                         
-                                                                                    this._alert(this.state.exp)
+                                                                                    this._streakDays()
                                                         
                                                                                   }).catch((error) => {
                                                                                     console.error(new Error("失败11"));
@@ -728,7 +744,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
           
           let streak = parseInt(result)+1;
           var promise = saveItem("streak1", streak.toString(), () => { }).then((result) => {
-            
+            this.setState({streak:streak})
           }).catch((error) => {
             console.error(new Error("失败"));
           })
@@ -962,7 +978,7 @@ import { getItem,saveItem} from './common/AsyncStorage'
   }
   _weixin1(text){
     if(text==''){
-        toastLong('请输入内容')
+        toastLong(WachatNull)
     }else{
       WeChat.isWXAppInstalled()
       .then((isInstalled) => {
@@ -973,7 +989,8 @@ import { getItem,saveItem} from './common/AsyncStorage'
             toastLong(error.message);
           });
         } else {
-          toastLong('没有安装微信软件，请您安装微信之后再试');
+          // toastLong(WachatEr);
+          this._chelik();
           // this._alert(this.state.exp)
           // this._streak(this.state.NU)
           // let newDate = new Date();
@@ -1004,6 +1021,135 @@ import { getItem,saveItem} from './common/AsyncStorage'
     })
     
     this.props.navigation.dispatch(resetAction);  
+  }
+  _ChangInput1(Text){
+    let inttext = Text;
+    this.setState({textInput1:Text,InupLen1:100-inttext.length})
+    
+  }
+  _ChangInput2(Text){
+    let inttext = Text;
+    this.setState({textInput2:Text,InupLen2:100-inttext.length})
+    
+  }
+  _ChangInput3(Text){
+    let inttext = Text;
+    this.setState({textInput3:Text,InupLen3:100-inttext.length})
+    
+  }
+  _chelik(){
+    this.setState({modalVisible:!this.state.modalVisible})
+  }
+  _chelik1(){
+    this.setState({modalVisible1:!this.state.modalVisible1})
+  }
+  _streakDays(days){
+    let streak1 = days
+    if(streak1<30){
+      if(streak1%3==0&&streak1%30!=0){
+
+        var promise = getItem("exp").then((result) => {
+          let exp = parseInt(result)+10;
+          this.setState({exp2:exp})
+            var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+               this._chelik()
+
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+      }else if(streak1%5==0&&streak1%10!=0&&streak1%15!=0&&streak1%20!=0&&streak1%25!=0&&30){
+        var promise = getItem("exp").then((result) => {
+          let exp = parseInt(result)+20;
+          this.setState({exp2:exp})
+            var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+              
+              this._chelik()
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+      }else if(streak1%7==0&&streak1%14!=0&&streak1%21!=0&&streak1%28!=0){
+        var promise = getItem("exp").then((result) => {
+          let exp = parseInt(result)+30;
+          this.setState({exp2:exp})
+            var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+              this._chelik()
+
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+      }else if(streak1%14==0&&streak1%28!=0){
+        var promise = getItem("exp").then((result) => {
+          let exp = parseInt(result)+50;
+          this.setState({exp2:exp})
+            var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+              this._chelik()
+             
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+      }else if(streak1%30==0&&streak1!=0){
+        var promise = getItem("exp").then((result) => {
+          let exp = parseInt(result)+100;
+          this.setState({exp2:exp})
+            var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+              this._chelik()
+              // alert(100)
+            }).catch((error) => {
+              console.error(new Error("失败"));
+            })
+          
+        }).catch((error) => {
+          console.error(new Error("失败"));
+        })
+      }
+    }else if(streak1==0){
+
+    }else if(streak1<3&&streak1>0){
+      var promise = getItem("exp").then((result) => {
+        let exp = parseInt(result)+1;
+          this.setState({exp2:exp})
+          var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+            this._chelik()
+            // alert(5)
+          }).catch((error) => {
+            console.error(new Error("失败"));
+          })
+        
+      }).catch((error) => {
+        console.error(new Error("失败"));
+      })
+    }else{
+      var promise = getItem("exp").then((result) => {
+        let exp = parseInt(result)+5;
+        this.setState({exp2:exp})
+          var promise = saveItem("exp", exp.toString(), () => { }).then((result) => {
+            this._chelik()
+            // alert(5)
+          }).catch((error) => {
+            console.error(new Error("失败"));
+          })
+        
+      }).catch((error) => {
+        console.error(new Error("失败"));
+      })
+    }
+
   }
   render() {
     return (
@@ -1056,25 +1202,33 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     autoCapitalize='sentences'
                     clearButtonMode='never'
                     editable={this.state.ban1}//如果值为假，文本是不可编辑，默认值为真
-                    onChangeText={(Text) => {this.setState({textInput1:Text})}}
+                    onChangeText={(Text) => {this._ChangInput1(Text)}}
                     value={this.state.textInput1}
                     returnKeyType="join"
                     onChange={() => {}}//当文本框内容变化时调用此回调函数
-                    onFocus={() => {this.setState({image1:true})}}//当文本框获得焦点的时候调用此回调函数
+                    onFocus={() => {this.setState({image1:true,InupLen1Ban:true})}}//当文本框获得焦点的时候调用此回调函数
                     onBlur={() => {this.textI1(this.state.textSt1)}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
 
               </View>
-              <View style={{height:30,width:width-50,alignItems:'flex-end'}}>
-                {this.state.image1?
-                      <TouchableOpacity style={styles.leftImageBottom} 
-                        onPress={() => {this._weixin1(this.state.textInput1)}}
-                      >
-                          <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
-                      </TouchableOpacity>
-                      :<View style={styles.leftImageBottom}/>
+              <View style={{height:30,width:width-50,flexDirection:'row'}}>
+                <View style={{width:30,height:30,justifyContent:'flex-end'}}>
+                  {this.state.InupLen1Ban?
+                  <Text style={{fontSize:10,color:'#b3b3b3',marginLeft:8,marginBottom:5,textAlign:'center'}}>{this.state.InupLen1}</Text>
+                  :<View></View>
                   }
+                </View>
+                  <View style={{width:width-80,height:30,alignItems:'flex-end'}}>
+                    {this.state.image1?
+                          <TouchableOpacity style={styles.leftImageBottom} 
+                            onPress={() => {this._weixin1(this.state.textInput1)}}
+                          >
+                              <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
+                          </TouchableOpacity>
+                          :<View style={styles.leftImageBottom}/>
+                      }
+                  </View>
               </View>
           </View>
           <View style={ styles.inputView}>
@@ -1093,22 +1247,30 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     editable={this.state.ban4}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
                     value={this.state.textInput2}
-                    onChangeText={(Text) => {this.setState({textInput2:Text})}}//当文本框内容变化时调用此回调函数
-                    onFocus={() => {this.setState({image2:true})}}//当文本框获得焦点的时候调用此回调函数
+                    onChangeText={(Text) => {this._ChangInput2(Text)}}//当文本框内容变化时调用此回调函数
+                    onFocus={() => {this.setState({image2:true,InupLen2Ban:true})}}//当文本框获得焦点的时候调用此回调函数
                     onBlur={() => {this.textI2(this.state.textSt1)}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
-              <View style={{height:30,width:width-50,alignItems:'flex-end'}}>
-              {this.state.image2?
-                    <TouchableOpacity style={styles.leftImageBottom} 
-                      onPress={() => {this._weixin1(this.state.textInput2)}}
-                    >
-                        <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
-                    </TouchableOpacity>
-                    :<View style={styles.leftImageBottom}/>
-                }
+              <View style={{height:30,width:width-50,flexDirection:'row'}}>
+              <View style={{width:30,height:30,justifyContent:'flex-end'}}>
+                {this.state.InupLen2Ban?
+                  <Text style={{fontSize:10,color:'#b3b3b3',marginLeft:8,marginBottom:5,textAlign:'center'}}>{this.state.InupLen2}</Text>
+                  :<View></View>
+                  }
               </View>
+                <View style={{width:width-80,height:30,alignItems:'flex-end'}}>
+                  {this.state.image1?
+                        <TouchableOpacity style={styles.leftImageBottom} 
+                          onPress={() => {this._weixin1(this.state.textInput2)}}
+                        >
+                            <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
+                        </TouchableOpacity>
+                        :<View style={styles.leftImageBottom}/>
+                    }
+                </View>
+            </View>
           </View>
           <View style={ styles.inputView} >
               
@@ -1125,29 +1287,79 @@ import { getItem,saveItem} from './common/AsyncStorage'
                     editable={this.state.ban3}//如果值为假，文本是不可编辑，默认值为真
                     returnKeyType="join"
                     value={this.state.textInput3}
-                    onChangeText={(Text) => {this.setState({textInput3:Text})}}//当文本框内容变化时调用此回调函数
-                    onFocus={() => {this.setState({image3:true,BottomHeight:true})}}//当文本框获得焦点的时候调用此回调函数
+                    onChangeText={(Text) => {this._ChangInput3(Text)}}//当文本框内容变化时调用此回调函数
+                    onFocus={() => {this.setState({image3:true,BottomHeight:true,InupLen3Ban:true})}}//当文本框获得焦点的时候调用此回调函数
                     onBlur={() => {this._textI3(this.state.dayDate)}}//当文本框失去焦点的时候调用此回调函数
                     onEndEditing={() => {}}//结束编辑时，调用回调函数
                   ></TextInput>
               </View>
-              <View style={{height:30,width:width-50,alignItems:'flex-end'}}>
-              {this.state.image3?
-                    <TouchableOpacity style={styles.leftImageBottom} 
-                      onPress={() => {this._weixin1(this.state.textInput3)}}
-                    >
-                        <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
-                    </TouchableOpacity>
-                    :<View style={styles.leftImageBottom}/>
-                }
+              <View style={{height:30,width:width-50,flexDirection:'row'}}>
+              <View style={{width:30,height:30,justifyContent:'flex-end'}}>
+                {this.state.InupLen3Ban?
+                  <Text style={{fontSize:10,color:'#b3b3b3',marginLeft:8,marginBottom:5,textAlign:'center'}}>{this.state.InupLen3}</Text>
+                  :<View></View>
+                  }
               </View>
+                <View style={{width:width-80,height:30,alignItems:'flex-end'}}>
+                  {this.state.image1?
+                        <TouchableOpacity style={styles.leftImageBottom} 
+                          onPress={() => {this._weixin1(this.state.textInput3)}}
+                        >
+                            <Image style={{height:30,width:35,resizeMode:'cover'}} source={require('./image/wechat.png')}></Image>
+                        </TouchableOpacity>
+                        :<View style={styles.leftImageBottom}/>
+                    }
+                </View>
+            </View>
+                
           </View>
           {this.state.BottomHeight?
               <View style={{height:80}}></View>
               :<View></View>
           
           }
-          
+          <Modal
+          visible={this.state.modalVisible}
+          animationType={'fade'}
+          transparent = {true}
+          onRequestClose={()=> {}}
+      >
+          <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0,0,0,0.4)'}} onPress={()=>{this._chelik()}}>
+              <View style={{backgroundColor:'#fff',height:250,width:width-130,borderRadius:10}}>
+                  <View style={{flex:6,borderColor:'#333',borderBottomWidth:toDipsHeight(1),justifyContent:'center',alignItems:'center'}}>
+                      <Text style={{color:'#4fa4ff',fontSize:16,}}>{ModalST}</Text>
+                      <Text style={{fontSize:35,fontWeight:'bold',color:'#4fa4ff'}}>1</Text>
+                      <Text style={{color:'#4fa4ff',fontSize:16,}}>{ModalDay}</Text>
+                      <Text style={{color:'#4fa4ff',fontSize:16,}}>{ModalGoal}+{this.state.exp}xp</Text>
+                      <Text style={{color:'#4fa4ff',fontSize:16,}}>{ModalStaek}{ModalDay}：+{this.state.exp2}xp</Text>
+                  </View>
+                  <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'center',}} onPress={()=>{this._chelik()}}>
+                      <Text style={{color:'#4fa4ff',fontSize:16,fontWeight:'bold'}}>{ModalOK}</Text>
+                  </TouchableOpacity>
+              </View>
+          </TouchableOpacity>
+      </Modal>
+      <Modal
+          visible={this.state.modalVisible1}
+          animationType={'fade'}
+          transparent = {true}
+          onRequestClose={()=> {}}
+      >
+          <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0,0,0,0.4)'}} onPress={()=>{this._chelik1()}}>
+              <View style={{backgroundColor:'#fff',height:250,width:width-130,borderRadius:10}}>
+                  <View style={{flex:6,borderColor:'#333',borderBottomWidth:toDipsHeight(1),justifyContent:'center',alignItems:'center'}}>
+                      <Text style={{color:'#4fa4ff',fontSize:16,}}>{Modal2Msg}</Text>
+                      <Text style={{color:'#4fa4ff',fontSize:16,}}>{Modal2Happ}</Text>
+                      <Text style={{fontSize:35,fontWeight:'bold',color:'#4fa4ff'}}>Level 3!</Text>
+                      
+                      
+                  </View>
+                  <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'center',}} onPress={()=>{this._chelik1()}}>
+                      <Text style={{color:'#4fa4ff',fontSize:16,fontWeight:'bold'}}>{ModalOK}</Text>
+                  </TouchableOpacity>
+              </View>
+          </TouchableOpacity>
+      </Modal>
 
       </ScrollView>
     );
