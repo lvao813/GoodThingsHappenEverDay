@@ -112,6 +112,7 @@ const Brief = Item.Brief;
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
           { cancelable: false }
+          
         )
       }
 
